@@ -8,6 +8,7 @@ set clipboard+=unnamed  " 共享系统剪切板
 set mouse=a
 filetype plugin on      " 识别插件的文件类型
 set cursorline          " 高亮当前行
+set list                " 显示换行符
 " General }
 
 " Keys {
