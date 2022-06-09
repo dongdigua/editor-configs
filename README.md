@@ -13,3 +13,12 @@
 - markdown-mode  
 - neotree  
 
+# vim
+- nerdtree
+- vim-airline
+- vim-airline-themes
+- oceanic-next
+- onedark.vim
+- julia-vim
+- vim-elixir
+
