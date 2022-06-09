@@ -34,7 +34,7 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'elixir-editors/vim-elixir'
 call plug#end()
 let g:airline_theme='oceanicnext'
-colorscheme onedark
+colorscheme OceanicNext
 " Plug }
 
 " GUI {
@@ -45,6 +45,6 @@ set guioptions-=L
 set guioptions-=r
 set guioptions-=b
 set guioptions-=e
-set guifont=Source\ Code\ Pro\ 14   " in linux
+set guifont=JetBrains\ Mono\ 16   " in linux
 hi Normal ctermfg=252 ctermbg=none
 " GUI }
