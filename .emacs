@@ -12,7 +12,7 @@
  '(column-number-mode t)
  '(custom-enabled-themes '(tango-dark))
  '(package-selected-packages
-   '(company markdown-mode neotree elixir-mode racket-mode evil))
+   '(atom-one-dark-theme company markdown-mode neotree elixir-mode racket-mode evil))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

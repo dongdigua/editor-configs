@@ -21,4 +21,5 @@
 - onedark.vim
 - julia-vim
 - vim-elixir
-
+- wildfire.vim
+- vim-visual-multi

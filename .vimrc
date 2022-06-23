@@ -32,6 +32,8 @@ Plug 'mhartington/oceanic-next'
 Plug 'joshdick/onedark.vim'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'elixir-editors/vim-elixir'
+Plug 'gcmt/wildfire.vim'
+Plug 'mg979/vim-visual-multi'
 call plug#end()
 let g:airline_theme='oceanicnext'
 colorscheme OceanicNext
