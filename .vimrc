@@ -17,10 +17,13 @@ nmap '' :PlugInstall<CR>
 " Keys }
 
 " Format {
-set tabstop=2           " 主要为了elixir
+set tabstop=4
 set smarttab            " bs时更快
 set autoindent
-set shiftwidth=2        " nnd, 需要手动跟tabstop同步
+set shiftwidth=4        " nnd, 需要手动跟tabstop同步
+set expandtab
+filetype plugin indent on
+autocmd FileType elixir setlocal shiftwidth=2 softtabstop=2 expandtab
 " Format }
 
 " Plug {
@@ -36,9 +39,13 @@ Plug 'gcmt/wildfire.vim'
 Plug 'mg979/vim-visual-multi'
 Plug 'arcticicestudio/nord-vim'
 call plug#end()
+" Plug }
+
+" Color {
 let g:airline_theme='oceanicnext'
 colorscheme OceanicNext
-" Plug }
+hi Normal ctermfg=252 ctermbg=none
+" Color }
 
 " GUI {
 " set lines=30 columns=140
@@ -48,6 +55,5 @@ set guioptions-=L
 set guioptions-=r
 set guioptions-=b
 set guioptions-=e
-set guifont=JetBrains\ Mono\ 16   " in linux
-hi Normal ctermfg=252 ctermbg=none
+set guifont=JetBrainsMono\ Nerd\ Font\ 16   " in linux
 " GUI }
