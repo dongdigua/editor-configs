@@ -1,4 +1,4 @@
-(setq gc-cons-threshold (* 20 1024 1024))
+(setq gc-cons-threshold (* 32 1024 1024))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -19,8 +19,8 @@
 
 ;; ========== package ==========
 (require 'package)
-(setq package-archives '(("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa")
-			 ("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+(setq package-archives'(("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                        ("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 (package-initialize)
 
 ;; ========== ui ==========
@@ -37,9 +37,6 @@
 (setq display-line-numbers-type 't)
 (global-display-line-numbers-mode t)
 
-(setq tab-width 2)
-
-;(setq indent-tabs-mode nil)
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
@@ -50,7 +47,7 @@
 (setq alpha-list '((90 60) (100 100) (70 40)))
 (defun loop-alpha ()
   (interactive)
-  (let ((h (car alpha-list)))                
+  (let ((h (car alpha-list)))
     ((lambda (a ab)
        (set-frame-parameter (selected-frame) 'alpha (list a ab))
        (add-to-list 'default-frame-alist (cons 'alpha (list a ab)))
@@ -59,12 +56,27 @@
 
 ;; ========== custom ==========
 (setq make-backup-files nil)                 ; 关闭文件自动备份
+(setq auto-save-file-name-transforms
+      '((".*" "~/.emacs.d/autosave/" t)))
 
-(require 'neotree)
-(global-set-key [(f3)] 'neotree-toggle)
+(setq default-tab-width 2)
+(setq indent-tabs-mode nil)
 
-(require 'evil)
-(evil-mode 1)
-
+(global-whitespace-mode t)
 ;(add-hook 'after-init-hook 'global-company-mode)
+
+;; ========== use-package ==========
+;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
+(use-package evil
+  :init
+  (evil-mode 1))
+
+(use-package neotree
+  :init
+  (global-set-key [(f3)] 'neotree-toggle))
+
+(use-package elixir-mode
+  :defer t
+  :init
+  (setq tab-width 2))
 
