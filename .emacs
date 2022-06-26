@@ -7,8 +7,9 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
+ '(org-agenda-files '("~/org/TODO.org"))
  '(package-selected-packages
-   '(nord-theme company markdown-mode neotree elixir-mode racket-mode evil)))
+   '(neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -60,23 +61,37 @@
       '((".*" "~/.emacs.d/autosave/" t)))
 
 (setq default-tab-width 2)
-(setq indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)    ; must be setq-default
 
-(global-whitespace-mode t)
+(global-whitespace-mode 1)    ; show tab/whitespace/ret
+
+(global-set-key [(f3)] 'neotree-toggle)
 ;(add-hook 'after-init-hook 'global-company-mode)
 
 ;; ========== use-package ==========
 ;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
 (use-package evil
-  :init
+  :config
   (evil-mode 1))
 
 (use-package neotree
-  :init
-  (global-set-key [(f3)] 'neotree-toggle))
+  :defer t
+  :config
+  (setq neo-theme (if (display-graphic-p) 'icons)))
 
 (use-package elixir-mode
   :defer t
-  :init
+  :config
   (setq tab-width 2))
+
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-items '((recents . 5)
+                          (bookmarks . 5)
+                         ;(projects . 3)
+                          (agenda . 3)))
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t))
 
