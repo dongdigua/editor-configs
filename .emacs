@@ -34,9 +34,10 @@
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 
-(when (display-graphic-p)
-  (load-theme 'nord t)
-  (global-whitespace-mode t))    ; 显示不可见符号
+(if (display-graphic-p)
+    (progn (load-theme 'nord t)
+           (global-whitespace-mode t))    ; 显示不可见符号
+  (load-theme 'tango-dark t))
 
 ;;set transparent effect
 (setq alpha-list '((90 60) (100 100) (70 40)))
@@ -76,6 +77,8 @@
 ;(add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'loop-alpha)
 
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+(setq epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
 
 ;; ========== use-package ==========
 ;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
