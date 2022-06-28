@@ -1,0 +1,24 @@
+OPTIONS=windowtype:curses,toptenwin, color
+OPTIONS=hilite_pet
+# hilite 醒目
+OPTIONS=fixinv,safe_pet,sortpack,tombstone
+OPTIONS=verbose,news,fruit:potato
+
+OPTIONS=dogname:Doge
+OPTIONS=catname:Rex
+OPTIONS=pickup_types:$
+#OPTIONS=nomail
+
+#
+# Some sane menucolor defaults
+#
+
+OPTIONS=menucolors
+MENUCOLOR=" blessed "=green
+MENUCOLOR=" holy "=green
+MENUCOLOR=" uncursed "=yellow
+MENUCOLOR=" cursed "=red
+MENUCOLOR=" unholy "=red
+MENUCOLOR=" cursed .* (being worn)"=orange&underline
+
+
