@@ -3,7 +3,7 @@ Emacs 和 Vim 双料特工
 
 # emacs
 - use-package
-- evil-mode
+- evil
 - elixir-mode
 - company-mode
 - markdown-mode
@@ -12,6 +12,9 @@ Emacs 和 Vim 双料特工
 - dashboard
 - all-the-icons
 - rust-mode
+- evil-mc
+- esup
+- magit
 
 # vim
 - nerdtree

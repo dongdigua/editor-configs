@@ -9,7 +9,7 @@
    '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
  '(org-agenda-files '("~/org/TODO.org"))
  '(package-selected-packages
-   '(neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -111,5 +111,10 @@
                           (bookmarks . 5)
                           (agenda . 3)))
   (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t))
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-banner-logo-title "董地瓜@bilibili")
+  (setq dashboard-set-navigator t))
 
+(use-package evil-mc
+  :config
+  (global-evil-mc-mode 1))
