@@ -1,4 +1,4 @@
-(setq gc-cons-threshold (* 32 1024 1024))
+(setq gc-cons-threshold (* 64 1024 1024))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -52,6 +52,13 @@
      (car h) (car (cdr h)))
     (setq alpha-list (cdr (append alpha-list (list h))))))
 
+; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
+(defun animate-text (text)
+  (interactive "stext: ")  ; s means read-string
+  (switch-to-buffer (get-buffer-create "*butterfly*"))
+  (erase-buffer)
+  (animate-string text 10))
+  
 
 ;; ========== package ==========
 (require 'package)
