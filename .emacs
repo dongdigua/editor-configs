@@ -7,9 +7,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
- '(org-agenda-files '("~/org/TODO.org"))
  '(package-selected-packages
-   '(magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -41,7 +40,7 @@
 
 ;;set transparent effect
 (setq alpha-list '((90 60) (100 100) (70 40)))
-; 其中前一个指定当 Emacs 在使用中时的透明度, 而后一个则指定其它应用在使用中时 Emacs 的透明度
+;; 其中前一个指定当 Emacs 在使用中时的透明度, 而后一个则指定其它应用在使用中时 Emacs 的透明度
 
 (defun loop-alpha ()
   (interactive)
@@ -52,13 +51,6 @@
      (car h) (car (cdr h)))
     (setq alpha-list (cdr (append alpha-list (list h))))))
 
-; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
-(defun animate-text (text)
-  (interactive "stext: ")  ; s means read-string
-  (switch-to-buffer (get-buffer-create "*butterfly*"))
-  (erase-buffer)
-  (animate-string text 10))
-  
 
 ;; ========== package ==========
 (require 'package)
@@ -74,6 +66,7 @@
 
 (setq default-tab-width 2)
 (setq-default indent-tabs-mode nil)    ; must be setq-default
+(setq backward-delete-char-untabify-method 'hungry)
 
 (setq display-line-numbers-type 'relative)    ; relative number, make d-d easier
 (global-display-line-numbers-mode)
@@ -87,6 +80,14 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
 
+;; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
+(defun animate-text (text)
+  (interactive "stext: ")  ; s means read-string
+  (switch-to-buffer (get-buffer-create "*butterfly*"))
+  (erase-buffer)
+  (animate-string text 10))
+
+
 ;; ========== use-package ==========
 ;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
 (use-package evil
@@ -97,31 +98,33 @@
   :defer t
   :config
   (setq neo-theme (if (display-graphic-p) 'icons))
-  ; without this evil mode will conflict with neotree
-  ; ref: https://www.emacswiki.org/emacs/NeoTree
+  ;; without this evil mode will conflict with neotree
+  ;; ref: https://www.emacswiki.org/emacs/NeoTree
   (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
   (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
   (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
   (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
   (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle))
 
-(use-package elixir-mode
-  :defer t
-  :config
-  (setq tab-width 2))
-
 (use-package dashboard
+  :if window-system
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner 'logo)
-  (setq dashboard-items '((recents . 5)
-                          (bookmarks . 5)
-                          (agenda . 3)))
+  (setq dashboard-items '((recents . 7)
+                          (bookmarks . 5)))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "董地瓜@bilibili")
   (setq dashboard-set-navigator t))
 
 (use-package evil-mc
+  :defer 2
   :config
   (global-evil-mc-mode 1))
+
+(use-package smart-hungry-delete
+  :defer 2
+  :config
+  (global-set-key (kbd "<backspace>")
+                  'smart-hungry-delete-backward-char))
