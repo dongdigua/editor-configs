@@ -8,7 +8,7 @@
  '(custom-safe-themes
    '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
  '(package-selected-packages
-   '(smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -21,8 +21,8 @@
 ;; ========== ui (我把ui放在前面因为我感觉这样加载时"感觉"能快一点) ==========
 (tool-bar-mode -1)                           ; 关闭 Tool bar
 (menu-bar-mode -1)
-(setq inhibit-startup-message t)             ; 关闭启动 Emacs 时的欢迎界面
 (toggle-scroll-bar -1)                       ; 关闭滚动条
+(setq inhibit-startup-message t)             ; 关闭启动 Emacs 时的欢迎界面
 (column-number-mode t)                       ; 在 Mode line 上显示列号
 (global-auto-revert-mode t)                  ; 让 Emacs 及时刷新 Buffer
 
@@ -74,7 +74,6 @@
 
 (global-set-key [(f8)] 'loop-alpha)
 (global-set-key [(f3)] 'neotree-toggle)
-;(add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'loop-alpha)
 
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
@@ -112,7 +111,9 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-items '((recents . 7)
-                          (bookmarks . 5)))
+                          (bookmarks . 5)
+                          (agenda . 3)))
+  (setq org-agenda-files '("~/org/TODO.org"))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "董地瓜@bilibili")
@@ -126,5 +127,16 @@
 (use-package smart-hungry-delete
   :defer 2
   :config
-  (global-set-key (kbd "<backspace>")
+  (global-set-key (kbd "C-<backspace>")
                   'smart-hungry-delete-backward-char))
+
+(use-package undo-tree
+  :defer 2
+  :config
+  (global-undo-tree-mode)
+  (setq undo-tree-auto-save-history nil))
+
+(use-package company-mode
+  :defer 3
+  :config
+  (global-company-mode))

@@ -15,6 +15,8 @@ Emacs 和 Vim 双料特工
 - evil-mc
 - esup
 - magit
+- smart-hungry-delete
+- undo-tree
 
 # vim
 - nerdtree
