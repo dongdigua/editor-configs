@@ -37,13 +37,12 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'gcmt/wildfire.vim'
 Plug 'mg979/vim-visual-multi'
-Plug 'arcticicestudio/nord-vim'
 call plug#end()
 " Plug }
 
 " Color {
 let g:airline_theme='oceanicnext'
-colorscheme OceanicNext
+colorscheme onedark
 hi Normal ctermfg=252 ctermbg=none
 " Color }
 

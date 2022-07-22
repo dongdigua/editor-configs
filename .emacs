@@ -70,7 +70,7 @@
 
 (setq display-line-numbers-type 'relative)    ; relative number, make d-d easier
 (global-display-line-numbers-mode)
-
+(setq org-startup-indented t)
 
 (global-set-key [(f8)] 'loop-alpha)
 (global-set-key [(f3)] 'neotree-toggle)
@@ -86,6 +86,10 @@
   (erase-buffer)
   (animate-string text 10))
 
+(defun minecraft ()
+  (interactive)
+  (start-process-shell-command "" "*scratch*"
+                               "cd ~/minecraft; java -jar HMCL*.jar"))
 
 ;; ========== use-package ==========
 ;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
@@ -113,7 +117,7 @@
   (setq dashboard-items '((recents . 7)
                           (bookmarks . 5)
                           (agenda . 3)))
-  (setq org-agenda-files '("~/org/TODO.org"))
+  ;(setq org-agenda-files '("~/org/TODO.org"))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "董地瓜@bilibili")
@@ -136,7 +140,7 @@
   (global-undo-tree-mode)
   (setq undo-tree-auto-save-history nil))
 
-(use-package company-mode
+(use-package company
   :defer 3
   :config
   (global-company-mode))
