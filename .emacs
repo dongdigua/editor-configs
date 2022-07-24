@@ -91,6 +91,22 @@
   (start-process-shell-command "" "*scratch*"
                                "cd ~/minecraft; java -jar HMCL*.jar"))
 
+;; https://caiorss.github.io/Emacs-Elisp-Programming/Elisp_Snippets.html#sec-1-5
+(defun lambda-copy ()
+  (interactive)
+  (with-temp-buffer
+    (insert "λ")
+    (clipboard-kill-region (point-min) (point-max))))
+
+(defun highlight-todo ()
+  (interactive)
+  (defface todo
+    '((((background dark))  :foreground "#66CCFF" :bold t)
+      (((background light)) :foreground "#66CCFF" :bold t))
+    "highlight todo"
+    :group 'basic-faces)
+  (highlight-regexp "// TODO\\|// BUG\\|todo!"     'todo))
+(add-hook 'post-command-hook 'highlight-todo)
 ;; ========== use-package ==========
 ;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
 (use-package evil
@@ -144,3 +160,4 @@
   :defer 3
   :config
   (global-company-mode))
+
