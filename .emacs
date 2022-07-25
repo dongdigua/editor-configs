@@ -8,13 +8,17 @@
  '(custom-safe-themes
    '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
  '(package-selected-packages
-   '(undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+ '(warning-suppress-types '((comp))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
+ '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
+ '(elfeed-search-tag-face  ((t (:foreground "#66ccff"))))
  )
 
 
@@ -133,7 +137,7 @@
   (setq dashboard-items '((recents . 7)
                           (bookmarks . 5)
                           (agenda . 3)))
-  ;(setq org-agenda-files '("~/org/TODO.org"))
+  (setq org-agenda-files '("~/org/TODO.org"))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "董地瓜@bilibili")
@@ -160,4 +164,17 @@
   :defer 3
   :config
   (global-company-mode))
+
+(use-package elfeed
+  :defer 4
+  :config
+  (elfeed-org)
+  (setq elfeed-use-curl t)
+  (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20171"))
+  (elfeed-search-set-filter "@2-weeks-ago"))
+
+(use-package elfeed-org
+  :after elfeed
+  :config
+  (setq rmh-elfeed-org-files '("~/org/elfeed.org")))
 
