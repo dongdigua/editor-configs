@@ -8,8 +8,7 @@
  '(custom-safe-themes
    '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
  '(package-selected-packages
-   '(elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
- '(warning-suppress-types '((comp))))
+   '(elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -22,7 +21,10 @@
  )
 
 
-;; ========== ui (我把ui放在前面因为我感觉这样加载时"感觉"能快一点) ==========
+
+;; =================== ;;
+;; Graphical Interface ;;
+;; =================== ;;
 (tool-bar-mode -1)                           ; 关闭 Tool bar
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)                       ; 关闭滚动条
@@ -38,7 +40,9 @@
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 
 (if (display-graphic-p)
-    (progn (load-theme 'nord t)
+    (progn ;;(load-theme 'nord t)
+           (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
+           (load-theme 'everforest-hard-dark t)
            (global-whitespace-mode t))    ; 显示不可见符号
   (load-theme 'tango-dark t))
 
@@ -56,14 +60,20 @@
     (setq alpha-list (cdr (append alpha-list (list h))))))
 
 
-;; ========== package ==========
+
+;; =============== ;;
+;; package manager ;;
+;; =============== ;;
 (require 'package)
 (setq package-archives'(("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                         ("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 (package-initialize)
 
 
-;; ========== custom ==========
+
+;; ====== ;;
+;; custom ;;
+;; ====== ;;
 (setq make-backup-files nil)
 (setq auto-save-file-name-transforms
       '((".*" "~/.emacs.d/autosave/" t)))
@@ -111,7 +121,12 @@
     :group 'basic-faces)
   (highlight-regexp "// TODO\\|// BUG\\|todo!"     'todo))
 (add-hook 'post-command-hook 'highlight-todo)
-;; ========== use-package ==========
+
+
+
+;; =========== ;;
+;; use-package ;;
+;; =========== ;;
 ;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
 (use-package evil
   :config
@@ -166,15 +181,26 @@
   (global-company-mode))
 
 (use-package elfeed
-  :defer 4
+  :defer t
   :config
   (elfeed-org)
   (setq elfeed-use-curl t)
   (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20171"))
-  (elfeed-search-set-filter "@2-weeks-ago"))
+  (elfeed-search-set-filter "@2-weeks-ago")
+  (custom-set-faces
+   '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
+   '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
+   '(elfeed-search-tag-face  ((t (:foreground "#66ccff"))))))
 
 (use-package elfeed-org
+  :defer t
   :after elfeed
   :config
   (setq rmh-elfeed-org-files '("~/org/elfeed.org")))
 
+(use-package gud
+  :defer t
+  :config
+  (setq gdb-many-windows t)
+  (setq gud-gdb-command-name "rust-gdb -i=mi")
+  (tool-bar-mode t))

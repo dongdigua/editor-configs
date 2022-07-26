@@ -37,12 +37,14 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'gcmt/wildfire.vim'
 Plug 'mg979/vim-visual-multi'
+Plug 'sainnhe/everforest'
+Plug 'rhysd/vim-color-spring-night'
 call plug#end()
 " Plug }
 
 " Color {
 let g:airline_theme='oceanicnext'
-colorscheme onedark
+colorscheme everforest
 hi Normal ctermfg=252 ctermbg=none
 " Color }
 
