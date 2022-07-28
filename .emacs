@@ -8,16 +8,13 @@
  '(custom-safe-themes
    '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
  '(package-selected-packages
-   '(elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
- '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
- '(elfeed-search-tag-face  ((t (:foreground "#66ccff"))))
  )
 
 
@@ -25,12 +22,12 @@
 ;; =================== ;;
 ;; Graphical Interface ;;
 ;; =================== ;;
-(tool-bar-mode -1)                           ; 关闭 Tool bar
-(menu-bar-mode -1)
-(toggle-scroll-bar -1)                       ; 关闭滚动条
-(setq inhibit-startup-message t)             ; 关闭启动 Emacs 时的欢迎界面
-(column-number-mode t)                       ; 在 Mode line 上显示列号
-(global-auto-revert-mode t)                  ; 让 Emacs 及时刷新 Buffer
+(tool-bar-mode               -1) ; 关闭 Tool bar
+(menu-bar-mode               -1) ; should use -1 instead of nil
+(toggle-scroll-bar          nil) ; 关闭滚动条
+(column-number-mode           t) ; 在 Mode line 上显示列号
+(global-auto-revert-mode      t) ; 让 Emacs 及时刷新 Buffer
+(setq inhibit-startup-message t) ; 关闭启动 Emacs 时的欢迎界面
 
 (add-to-list 'default-frame-alist '(width . 80))  ; 设定启动图形界面时的Frame宽度
 (add-to-list 'default-frame-alist '(height . 40)) ; 设定启动图形界面时的Frame高度
@@ -40,16 +37,15 @@
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 
 (if (display-graphic-p)
-    (progn ;;(load-theme 'nord t)
+    (progn ;(load-theme 'nord t)
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
            (load-theme 'everforest-hard-dark t)
            (global-whitespace-mode t))    ; 显示不可见符号
   (load-theme 'tango-dark t))
 
-;;set transparent effect
-(setq alpha-list '((90 60) (100 100) (70 40)))
+;; set transparent effect
 ;; 其中前一个指定当 Emacs 在使用中时的透明度, 而后一个则指定其它应用在使用中时 Emacs 的透明度
-
+(setq alpha-list '((90 80) (100 100) (70 40)))
 (defun loop-alpha ()
   (interactive)
   (let ((h (car alpha-list)))
@@ -93,8 +89,13 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
 
-;; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
+
+
+;; ========= ;;
+;; functions ;;
+;; ========= ;;
 (defun animate-text (text)
+  ;; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
   (interactive "stext: ")  ; s means read-string
   (switch-to-buffer (get-buffer-create "*butterfly*"))
   (erase-buffer)
@@ -105,22 +106,27 @@
   (start-process-shell-command "" "*scratch*"
                                "cd ~/minecraft; java -jar HMCL*.jar"))
 
-;; https://caiorss.github.io/Emacs-Elisp-Programming/Elisp_Snippets.html#sec-1-5
 (defun lambda-copy ()
+  ;; https://caiorss.github.io/Emacs-Elisp-Programming/Elisp_Snippets.html#sec-1-5
   (interactive)
   (with-temp-buffer
     (insert "λ")
     (clipboard-kill-region (point-min) (point-max))))
 
-(defun highlight-todo ()
+(defun highlight-custom ()
   (interactive)
   (defface todo
-    '((((background dark))  :foreground "#66CCFF" :bold t)
-      (((background light)) :foreground "#66CCFF" :bold t))
+    '((((background dark))  :foreground "#66CCFF" :bold t))
     "highlight todo"
     :group 'basic-faces)
-  (highlight-regexp "// TODO\\|// BUG\\|todo!"     'todo))
-(add-hook 'post-command-hook 'highlight-todo)
+  (defface ctf
+    '((((background dark))  :foreground "#39C5BB" :bold t))
+    "highlight ctf mark"
+    :group 'basic-faces)
+  (highlight-regexp "// TODO\\|// BUG\\|todo!" 'todo)
+  (highlight-regexp "<%=\\|%>"                 'todo)
+  (highlight-regexp "// CTF"                   'ctf))
+(add-hook 'post-command-hook 'highlight-custom)
 
 
 
@@ -129,8 +135,10 @@
 ;; =========== ;;
 ;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
 (use-package evil
-  :config
-  (evil-mode 1))
+  :init
+  (evil-mode 1)
+  :bind
+  ("C-r" . isearch-backward))
 
 (use-package neotree
   :defer t
@@ -202,5 +210,11 @@
   :defer t
   :config
   (setq gdb-many-windows t)
-  (setq gud-gdb-command-name "rust-gdb -i=mi")
   (tool-bar-mode t))
+
+(use-package web-mode
+  ;; https://web-mode.org/
+  ;; for elixir eex files
+  :config
+  (add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode))
+  )

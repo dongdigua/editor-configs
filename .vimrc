@@ -45,6 +45,8 @@ call plug#end()
 " Color {
 let g:airline_theme='oceanicnext'
 colorscheme everforest
+set background=dark
+let g:everforest_transparent_background=1
 hi Normal ctermfg=252 ctermbg=none
 " Color }
 
