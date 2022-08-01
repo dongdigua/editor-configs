@@ -74,11 +74,10 @@
 (setq auto-save-file-name-transforms
       '((".*" "~/.emacs.d/autosave/" t)))
 
-(setq default-tab-width 2)
 (setq-default indent-tabs-mode nil)    ; must be setq-default
 (setq backward-delete-char-untabify-method 'hungry)
 
-(setq display-line-numbers-type 'relative)    ; relative number, make d-d easier
+(setq display-line-numbers-type 'relative)    ; relative number, make d d easier
 (global-display-line-numbers-mode)
 (setq org-startup-indented t)
 
@@ -210,11 +209,12 @@
   :defer t
   :config
   (setq gdb-many-windows t)
+  (defalias 'dasm 'gdb-display-disassembly-buffer)
   (tool-bar-mode t))
 
 (use-package web-mode
   ;; https://web-mode.org/
   ;; for elixir eex files
   :config
-  (add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode))
-  )
+  (setq web-mode-markup-indent-offset 2)
+  (add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode)))
