@@ -88,6 +88,7 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
 
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 
 ;; ========= ;;
