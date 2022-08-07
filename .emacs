@@ -74,6 +74,7 @@
 (setq auto-save-file-name-transforms
       '((".*" "~/.emacs.d/autosave/" t)))
 
+(setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)    ; must be setq-default
 (setq backward-delete-char-untabify-method 'hungry)
 
@@ -89,7 +90,8 @@
 (setq epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
 
 (defalias 'yes-or-no-p 'y-or-n-p)
-
+(ido-mode t)
+(electric-pair-mode t)
 
 ;; ========= ;;
 ;; functions ;;
