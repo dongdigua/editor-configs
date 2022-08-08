@@ -14,20 +14,19 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
+# gnome-terminal don't work
 set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu "rofi -show drun"
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/images/miku-wallpaper.png fill
+output * bg ~/Pictures/miku-wallpaper.jpg fill
 #
 # Example configuration:
-#
-output Virtual-1 resolution 1280x720
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 xwayland enabled
@@ -49,12 +48,12 @@ xwayland enabled
 #
 # Example configuration:
 #
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
+input "1739:52781:MSFT0001:01_06CB:CE2D_Touchpad" {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
@@ -172,6 +171,15 @@ xwayland enabled
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
+
+#
+# MultiMedia
+#
+
+    #bindsym Print grim - | wl-copy
+    bindsym Ctrl+Shift+s exec grim - | wl-copy
+    bindsym $mod+Shift+s exec grim
+#
 #
 # Resizing containers:
 #
