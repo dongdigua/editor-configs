@@ -5,9 +5,15 @@
     "modules-right": ["backlight","pulseaudio","cpu","memory","tray"],
 
     "sway/workspaces": {
-            "disable-scroll": true,
-            "all-outputs": true,
-        },
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "E",
+        }
+    },
     "pulseaudio": {
         "tooltip": true,
         "scroll-step": 5,
@@ -49,12 +55,12 @@
         "max-length": 10
     },
     "custom/launcher":{
-        "format": " ",
+        "format": "☭",
         "on-click": "rofi -show drun",
         "on-click-right": "killall rofi"
     },
     "custom/power":{
-        "format": " ",
+        "format": "",
         "on-click": "bash ~/.config/rofi/leave/leave.sh",
     },
 }

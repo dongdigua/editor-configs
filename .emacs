@@ -41,7 +41,11 @@
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
            (load-theme 'everforest-hard-dark t)
            (global-whitespace-mode t))    ; 显示不可见符号
-  (load-theme 'tango-dark t))
+  (progn
+    (set-frame-parameter (selected-frame) 'alpha '(85 85))
+	(load-theme 'tango-dark t)
+    (custom-set-faces
+     '(default ((t (:background "unspecified-bg" :foreground "#eeeeec")))))))
 
 ;; set transparent effect
 ;; 其中前一个指定当 Emacs 在使用中时的透明度, 而后一个则指定其它应用在使用中时 Emacs 的透明度
@@ -224,4 +228,6 @@
 
 (use-package pyim
   :config
-  (setq default-input-method "pyim"))
+  (setq default-input-method "pyim")
+  (setq pyim-dicts
+       '((:name "tsinghua" :file "~/git/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim"))))

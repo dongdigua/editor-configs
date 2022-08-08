@@ -24,7 +24,7 @@ set $menu "rofi -show drun"
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Pictures/miku-wallpaper.jpg fill
+output * bg ~/Pictures/miku-wallpaper-modified.jpg fill
 #
 # Example configuration:
 #
@@ -179,6 +179,9 @@ input "1739:52781:MSFT0001:01_06CB:CE2D_Touchpad" {
     #bindsym Print grim - | wl-copy
     bindsym Ctrl+Shift+s exec grim - | wl-copy
     bindsym $mod+Shift+s exec grim
+    bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume  @DEFAULT_SINK@ -5%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume  @DEFAULT_SINK@ +5%
 #
 #
 # Resizing containers:
