@@ -1,0 +1,26 @@
+configuration {
+  modi: "drun,run,filebrowser,powermenu:~/.config/rofi/powermenu.lua";
+
+  //show-icons: true;
+  //icon-theme: "gnome";
+  //application-fallback-icon: "run-build";
+
+  drun-display-format: " {name} ";
+  run-shell-command: "foot {cmd}";
+  sidebar-mode: true;
+  matching: "fuzzy";
+  scroll-method: 0;
+  disable-history: false;
+
+  display-drun: "Apps";
+  display-run: "Run";
+  display-filebrowser: "Files";
+  display-powermenu: "Power";
+
+  combi-modi: "drun,run";
+
+  filebrowser {
+    directories-first: true;
+    sorting-method: "name";
+  }
+}
