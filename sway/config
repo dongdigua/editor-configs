@@ -48,11 +48,15 @@ xwayland enabled
 #
 # Example configuration:
 #
-input "1739:52781:MSFT0001:01_06CB:CE2D_Touchpad" {
+input "type:touchpad" {
     dwt enabled
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
+}
+
+input "type:keyboard" {
+    repeat_delay 300
 }
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
@@ -177,8 +181,8 @@ input "1739:52781:MSFT0001:01_06CB:CE2D_Touchpad" {
 #
 
     #bindsym Print grim - | wl-copy
-    bindsym Ctrl+Shift+s exec grim - | wl-copy
-    bindsym $mod+Shift+s exec grim
+    bindsym $mod+Ctrl+Shift+s exec grim -g "$(slurp)" - | wl-copy
+    bindsym $mod+Shift+s      exec grim
     bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume  @DEFAULT_SINK@ -5%
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume  @DEFAULT_SINK@ +5%
@@ -218,3 +222,7 @@ bar {
 }
 
 default_border pixel
+gaps inner 10
+
+# DONOT TOUCH
+include /etc/sway/config.d/*

@@ -235,9 +235,6 @@
     background-color: @nord_light;
     color: @nord_dark_font;
 }
-#custom-cpugovernor.perf {
-    
-}
 #temperature {
     background-color: @nord_bg;
     color: #D8DEE9;
