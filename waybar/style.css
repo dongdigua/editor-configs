@@ -28,7 +28,6 @@
 @define-color critical #BF616A;
 @define-color mode #434C5E;
 @define-color workspacesfocused #4d5c78;
-@define-color tray @workspacesfocused;
 @define-color sound #EBCB8B;
 @define-color network #5D7096;
 @define-color memory #546484;
@@ -36,12 +35,8 @@
 @define-color temp #4D5C78;
 @define-color layout #5e81ac;
 @define-color battery #88c0d0;
-@define-color backlight #434C5E;
 @define-color nord_bg #434C5E;
 @define-color nord_bg_blue #546484;
-@define-color nord_light #D8DEE9;
-@define-color nord_light_font #D8DEE9;
-@define-color nord_dark_font #434C5E;
 
 /* Reset all styles */
 * {
@@ -114,7 +109,7 @@
 #temperature.warning,
 #battery.warning {
     background: @warning;
-    color: @nord_dark_font;
+    color: @nord_bg;
 }
 
 /* Each warning that should blink */
@@ -124,103 +119,73 @@
 }
 
 /* And now modules themselves in their respective order */
-
 #mode { /* Shown current Sway mode (resize etc.) */
     color: @light;
     background: @mode;
 }
 
 /* Workspaces stuff */
-
-#workspaces {
- /*   color: #D8DEE9;
-    margin-right: 10px;*/
-}
-
 #workspaces button {
     font-weight: bold; /* Somewhy the bar-wide setting is ignored*/
     padding: 0;
     opacity: 0.3;
     background: @light;
 }
-
 #workspaces button.focused {
     background: @workspacesfocused;
     color: @light;
     opacity: 1;
     padding: 0 0.4em;
 }
-
 #workspaces button.urgent {
     border-color: #c9545d;
     color: #c9545d;
     opacity: 1;
 }
-
 #window {
     margin-right: 40px;
     margin-left: 40px;
     font-weight: normal;
-}
-#bluetooth {
-    background: @nord_bg_blue;
-    font-size: 1.2em;
-    font-weight: bold;
-    padding: 0 0.6em;
 }
 #custom-gpu {
     background: @nord_bg;
     font-weight: bold;
     padding: 0 0.6em;
 }
-#custom-weather {
-    background: @mode;
-    font-weight: bold;
-    padding: 0 0.6em;
-}
 #custom-scratchpad-indicator {
-    background: @nord_light;
-    color: @nord_dark_font;
-    font-weight: bold;
-    padding: 0 0.6em;
-}
-#idle_inhibitor {
-    background: @mode;
-    /*font-size: 1.6em;*/
+    background: @light;
+    color: @nord_bg;
     font-weight: bold;
     padding: 0 0.6em;
 }
 #custom-alsa {
     background: @sound;
 }
-
 #network {
     background: @nord_bg_blue;
 }
-
 #memory {
     background: @memory;
 }
-
 #cpu {
     background: @nord_bg;
-    color: #D8DEE9;
+    color: @light;
 }
 #cpu.critical {
-    color: @nord_dark_font;
+    color: @nord_bg;
 }
 #language {
     background: @nord_bg_blue;
-    color: #D8DEE9;
+    color: @light;
     padding: 0 0.4em;
 }
 #custom-cpugovernor {
-    background-color: @nord_light;
-    color: @nord_dark_font;
+    background-color: @light;
+    color: @nord_bg;
 }
 #temperature {
     background-color: @nord_bg;
-    color: #D8DEE9;
+    color: @light;
 }
 #temperature.critical {
     background:  @critical;
@@ -231,14 +196,12 @@
 #battery {
     background: @battery;
 }
-
 #backlight {
-    background: @backlight;
+    background: @mode;
 }
-
 #clock {
     background: @nord_bg_blue;
-    color: #D8DEE9;
+    color: @light;
 }
 #clock.date {
     background: @mode;
@@ -248,18 +211,16 @@
 }
 #pulseaudio { /* Unsused but kept for those who needs it */
     background: @nord_bg_blue;
-    color: #D8DEE9;
+    color: @light;
 }
 #pulseaudio.muted {
-    background: #BF616A;
-    color: #BF616A;
-    /* No styles */
+    background: @critical;
+    color: @critical;
 }
 #pulseaudio.source-muted {
-    background: #D08770;
-    color: #D8DEE9;
-    /* No styles */
+    background: @sound;
+    color: @light;
 }
 #tray {
-    background: #434C5E;
+    background: @battery;
 }
