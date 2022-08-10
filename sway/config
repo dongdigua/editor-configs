@@ -24,7 +24,9 @@ set $menu "rofi -show drun"
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Pictures/miku-wallpaper-modified.jpg fill
+#output * bg ~/Pictures/wallpaper/crystal-water.jpg fill
+output * bg ~/Pictures/wallpaper/miku-wallpaper-modified.jpg fill
+#output * bg ~/Pictures/wallpaper/centos.jpg fill
 #
 # Example configuration:
 #
@@ -223,6 +225,7 @@ bar {
 
 default_border pixel
 gaps inner 10
+seat seat0 xcursor_theme Oxygen_White
 
 # DONOT TOUCH
 include /etc/sway/config.d/*

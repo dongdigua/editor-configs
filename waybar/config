@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["custom/launcher","sway/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["backlight","pulseaudio","cpu","memory","tray"],
+    "modules-right": ["custom/wallpaper","backlight","pulseaudio","cpu","memory","tray"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -12,6 +12,8 @@
             "1": "",
             "2": "",
             "3": "E",
+            "4": "",
+            "5": ""
         }
     },
     "pulseaudio": {
@@ -61,6 +63,11 @@
     },
     "custom/power":{
         "format": "",
-        "on-click": "bash ~/.config/rofi/leave/leave.sh",
+        "on-click": "bash ~/.config/rofi/leave/leave.sh"
+    },
+    "custom/wallpaper":{
+        "format": "  ",
+        // if use on-click, it will have a bug that all the bar is clickable
+        "on-double-click": "~/.config/waybar/scripts/wallpaper.pl",
     },
 }
