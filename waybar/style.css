@@ -2,43 +2,32 @@
     70% {
         color: @light;
     }
-
     to {
         color: @light;
         background-color: @warning;
     }
 }
-
 @keyframes blink-critical {
     70% {
       color: @light;
     }
-
     to {
         color: @light;
         background-color: @critical;
     }
 }
 
-
 /* -----------------------------------------------------------------------------
  * Styles
  * -------------------------------------------------------------------------- */
 
-/* COLORS */
-
 /* Nord */
 @define-color bg #2E3440;
-/*@define-color bg rgba(18, 20, 25, 50);*/
 @define-color light #D8DEE9;
-/*@define-color dark @nord_dark_font;*/
 @define-color warning #ebcb8b;
 @define-color critical #BF616A;
 @define-color mode #434C5E;
-/*@define-color workspaces @bg;*/
-/*@define-color workspaces @nord_dark_font;*/
-/*@define-color workspacesfocused #434C5E;*/
-@define-color workspacesfocused #4C566A;
+@define-color workspacesfocused #4d5c78;
 @define-color tray @workspacesfocused;
 @define-color sound #EBCB8B;
 @define-color network #5D7096;
@@ -47,8 +36,6 @@
 @define-color temp #4D5C78;
 @define-color layout #5e81ac;
 @define-color battery #88c0d0;
-@define-color date #434C5E;
-@define-color time #434C5E;
 @define-color backlight #434C5E;
 @define-color nord_bg #434C5E;
 @define-color nord_bg_blue #546484;
@@ -84,8 +71,6 @@
 #pulseaudio,
 #temperature,
 #custom-alsa,
-#custom-pacman,
-#custom-weather,
 #custom-gpu,
 #tray,
 #backlight,
@@ -256,18 +241,15 @@
     color: #D8DEE9;
 }
 #clock.date {
-    background: @date;
+    background: @mode;
 }
-
 #clock.time {
     background: @mode;
 }
-
 #pulseaudio { /* Unsused but kept for those who needs it */
     background: @nord_bg_blue;
     color: #D8DEE9;
 }
-
 #pulseaudio.muted {
     background: #BF616A;
     color: #BF616A;
