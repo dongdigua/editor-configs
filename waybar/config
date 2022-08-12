@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["custom/launcher","sway/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["custom/wallpaper","backlight","pulseaudio","cpu","memory","tray"],
+    "modules-right": ["custom/wallpaper","backlight","pulseaudio","cpu","memory","tray","custom/power"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -57,13 +57,13 @@
         "max-length": 10
     },
     "custom/launcher":{
-        "format": "☭",
+        "format": " ☭ ",
         "on-click": "rofi -show drun",
         "on-click-right": "killall rofi"
     },
     "custom/power":{
-        "format": "",
-        "on-click": "bash ~/.config/rofi/leave/leave.sh"
+        "format": "  ",
+        "on-click": "rofi -show powermenu",
     },
     "custom/wallpaper":{
         "format": "  ",

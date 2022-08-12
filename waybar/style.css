@@ -28,11 +28,7 @@
 @define-color critical #BF616A;
 @define-color mode #434C5E;
 @define-color workspacesfocused #4d5c78;
-@define-color sound #EBCB8B;
 @define-color network #5D7096;
-@define-color memory #546484;
-@define-color cpu #596A8D;
-@define-color temp #4D5C78;
 @define-color layout #5e81ac;
 @define-color battery #88c0d0;
 @define-color nord_bg #434C5E;
@@ -159,13 +155,13 @@
     padding: 0 0.6em;
 }
 #custom-alsa {
-    background: @sound;
+    background: @warning;
 }
 #network {
     background: @nord_bg_blue;
 }
 #memory {
-    background: @memory;
+    background: @nord_bg_blue;
 }
 #cpu {
     background: @nord_bg;
@@ -218,9 +214,16 @@
     color: @critical;
 }
 #pulseaudio.source-muted {
-    background: @sound;
+    background: @warning;
     color: @light;
 }
 #tray {
+    background: @nord_bg;
+}
+#custom-power {
     background: @battery;
+}
+#custom-launcher {
+    color: #ffe000;
+    background: @critical;
 }

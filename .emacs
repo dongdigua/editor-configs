@@ -229,5 +229,6 @@
 (use-package pyim
   :config
   (setq default-input-method "pyim")
+  (setq pyim-page-tooltip 'minibuffer)
   (setq pyim-dicts
        '((:name "tsinghua" :file "~/git/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim"))))

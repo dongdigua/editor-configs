@@ -19,7 +19,7 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu "rofi -show drun"
+set $menu "export PATH=$PATH:$HOME/.cargo/bin:$HOME/bin; rofi -show drun"
 
 ### Output configuration
 #
@@ -75,7 +75,7 @@ input "type:keyboard" {
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+Tab exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -226,6 +226,7 @@ bar {
 default_border pixel
 gaps inner 10
 seat seat0 xcursor_theme Oxygen_White
+exec wlsunset -s 18:00
 
 # DONOT TOUCH
 include /etc/sway/config.d/*

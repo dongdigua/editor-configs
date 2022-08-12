@@ -31,7 +31,7 @@ Emacs 和 Vim 双料特工
 - nord-vim (terminal should have nord theme)
 
 # sway
-[some notes](dongdigua.github.io/org_html/wayland)
+[some notes](https://dongdigua.github.io/org_html/wayland)
 ## backgrounds
 [miku](https://wallpapers.com/wallpapers/cute-blue-aesthetic-hatsune-miku-hd-8n3mld5aokfzhjn3.html)
     [i think this is better, but it's for mobile](https://wallpapers.com/wallpapers/cute-blue-aesthetic-hatsune-miku-hd-8n3mld5aokfzhjn3.html)<br>
