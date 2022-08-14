@@ -37,3 +37,7 @@ Emacs 和 Vim 双料特工
     [i think this is better, but it's for mobile](https://wallpapers.com/wallpapers/cute-blue-aesthetic-hatsune-miku-hd-8n3mld5aokfzhjn3.html)<br>
 [crystal-water](https://www.reddit.com/r/wallpaper/comments/wid6qs/crystal_water_theme_1920x1080/)<br>
 [centos](https://wallpaperaccess.com/download/centos-2768386)<br>
+
+# foot
+it's default config is easy to use, than other terminal<br>
+color: catppuccin-macchiato, recommended by [this guy](https://space.bilibili.com/1169981390)<br>

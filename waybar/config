@@ -26,11 +26,10 @@
             "default": ["", "", ""]
         }
     },
-
     "network": {
-        "tooltip": false,
-        "format-wifi": "  {essid}",
-        "format-ethernet": ""
+        "format": "{ifname}",
+        "format-wifi": "{essid} ",
+        "format-ethernet": "{ipaddr}",
     },
     "backlight": {
         "tooltip": false,
@@ -62,10 +61,12 @@
         "on-click-right": "killall rofi"
     },
     "custom/power":{
+        "tooltip": false,
         "format": "  ",
         "on-click": "rofi -show powermenu",
     },
     "custom/wallpaper":{
+        "tooltip": false,
         "format": "  ",
         // if use on-click, it will have a bug that all the bar is clickable
         "on-double-click": "~/.config/waybar/scripts/wallpaper.pl",
