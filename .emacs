@@ -8,7 +8,7 @@
  '(custom-safe-themes
    '("0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" "37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
  '(package-selected-packages
-   '(catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -43,7 +43,7 @@
            (global-whitespace-mode t))    ; 显示不可见符号
   (progn
     (set-frame-parameter (selected-frame) 'alpha '(85 85))
-	(load-theme 'tango-dark t)
+    (load-theme 'tango-dark t)
     (custom-set-faces
      '(default ((t (:background "unspecified-bg" :foreground "#eeeeec")))))))
 
@@ -97,6 +97,11 @@
 (ido-mode t)
 (electric-pair-mode t)
 
+;; erc-sasl and tetris(fedora don't ship tetris)
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+
+
 ;; ========= ;;
 ;; functions ;;
 ;; ========= ;;
@@ -133,6 +138,13 @@
   (highlight-regexp "<%=\\|%>"                 'todo)
   (highlight-regexp "// CTF"                   'ctf))
 (add-hook 'post-command-hook 'highlight-custom)
+
+(defun bili ()
+  ;; well, I always report those fucking video thieves on bilibili,
+  ;; so this tool is helpful, for filter out BVid from link
+  (interactive)
+  (replace-string "https://www.bilibili.com/video/" "")
+  (replace-regexp "?spm_id_from=[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+" ""))
 
 
 
@@ -232,3 +244,29 @@
   (setq pyim-page-tooltip 'minibuffer)
   (setq pyim-dicts
        '((:name "tsinghua" :file "~/git/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim"))))
+
+(use-package beacon
+  ;; from DistroTube
+  :if window-system
+  :config
+  (beacon-mode 1))
+
+(use-package clippy
+  :bind
+  (("C-x c v" . clippy-describe-variable)
+   ("C-x c f" . clippy-describe-function)))
+
+(use-package circe
+  ;; well I don't want to learn keybindings for other irc clients like weechat
+  ;; both erc and rcirc can't use sasl properly
+  :defer t
+  :config
+  (defun irc-password (server)
+    (read-password "password for irc: "))
+  (setq circe-network-options
+        '(("libera"
+           :host "irc.libera.chat"
+           :port 6697
+           :tls t
+           :sasl-username "dongdigua"
+           :sasl-password irc-password))))
