@@ -6,7 +6,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" "37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
+   '("950b1e8c8cd4a32b30cadc9d8b0eb6045538f0093dad8bdc1c24aaeeb64ed43d" "0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" default))
  '(package-selected-packages
    '(circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
@@ -187,7 +187,10 @@
 (use-package evil-mc
   :defer 2
   :config
-  (global-evil-mc-mode 1))
+  (global-evil-mc-mode 1)
+  (evil-define-key 'visual evil-mc-key-map
+    "A" #'evil-mc-make-cursor-in-visual-selection-end
+    "I" #'evil-mc-make-cursor-in-visual-selection-beg))
 
 (use-package smart-hungry-delete
   :defer 2
@@ -236,7 +239,9 @@
   ;; for elixir eex files
   :config
   (setq web-mode-markup-indent-offset 2)
-  (add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode)))
+  (add-to-list 'auto-mode-alist '("\\.eex\\'"  . web-mode))
+  ;; the default html mode sucks
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
 
 (use-package pyim
   :config
@@ -252,6 +257,7 @@
   (beacon-mode 1))
 
 (use-package clippy
+  ;; also from DistroTube
   :bind
   (("C-x c v" . clippy-describe-variable)
    ("C-x c f" . clippy-describe-function)))
@@ -262,11 +268,13 @@
   :defer t
   :config
   (defun irc-password (server)
-    (read-password "password for irc: "))
+    (read-passwd "password for irc: "))
   (setq circe-network-options
         '(("libera"
            :host "irc.libera.chat"
            :port 6697
            :tls t
            :sasl-username "dongdigua"
-           :sasl-password irc-password))))
+           :sasl-password irc-password
+           :reduce-lurker-spam t)))
+  (company-mode nil))
