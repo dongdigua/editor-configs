@@ -164,9 +164,10 @@ input "type:keyboard" {
     #bindsym Print grim - | wl-copy
     bindsym $mod+Ctrl+Shift+s exec grim -g "$(slurp)" - | wl-copy
     bindsym $mod+Shift+s      exec grim
-    bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume  @DEFAULT_SINK@ -5%
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume  @DEFAULT_SINK@ +5%
+    bindsym XF86AudioMute        exec ~/.config/waybar/scripts/audio.pl mute
+    bindsym XF86AudioLowerVolume exec ~/.config/waybar/scripts/audio.pl -
+    bindsym XF86AudioRaiseVolume exec ~/.config/waybar/scripts/audio.pl +
+    bindsym XF86AudioMicMute     exec ~/.config/waybar/scripts/audio.pl mic
 #
 #
 # Resizing containers:

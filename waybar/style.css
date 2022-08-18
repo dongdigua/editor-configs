@@ -222,6 +222,7 @@
 }
 #custom-power {
     background: @battery;
+    color: @critical;
 }
 #custom-launcher {
     color: #ffe000;

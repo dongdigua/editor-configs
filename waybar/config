@@ -62,7 +62,7 @@
     },
     "custom/power":{
         "tooltip": false,
-        "format": "  ",
+        "format": " ⏻ ",
         "on-click": "rofi -show powermenu",
     },
     "custom/wallpaper":{
