@@ -2,7 +2,7 @@
 Emacs 和 Vim 双料特工
 
 # emacs
-too many plugins, just look at my config file
+too many plugins, just look at my config file<br>
 [emacs-devel mail archive: About SASL authentication in rcirc](https://lists.gnu.org/archive/html/emacs-devel/2021-06/msg00876.html)
 
 # vim
