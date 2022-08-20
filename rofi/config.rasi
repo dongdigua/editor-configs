@@ -1,5 +1,5 @@
 configuration {
-  modi: "drun,run,filebrowser,powermenu:~/.config/rofi/powermenu.lua";
+  modi: "drun,run,filebrowser,ssh,powermenu:~/.config/rofi/powermenu.lua";
 
   //show-icons: true;
   //icon-theme: "gnome";
@@ -24,3 +24,4 @@ configuration {
     sorting-method: "name";
   }
 }
+@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"

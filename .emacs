@@ -139,12 +139,51 @@
   (highlight-regexp "// CTF"                   'ctf))
 (add-hook 'post-command-hook 'highlight-custom)
 
-(defun bili ()
+(defun bili ($from $to)
   ;; well, I always report those fucking video thieves on bilibili,
   ;; so this tool is helpful, for filter out BVid from link
-  (interactive)
-  (replace-string "https://www.bilibili.com/video/" "")
-  (replace-regexp "?spm_id_from=[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+" ""))
+  ;; http://xahlee.info/emacs/emacs/elisp_command_working_on_string_or_region.html
+  (interactive "r")
+  (message "%s %s %s %s" (use-region-p) evil-state (region-beginning) (region-end))
+  (let (inputStr outputStr)
+    (setq inputStr (buffer-substring-no-properties $from $to))
+    (setq outputStr
+          (replace-regexp-in-string "?spm_id_from=[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+" ""
+                                    (replace-regexp-in-string "https://www.bilibili.com/video/" "" inputStr)))
+    (save-excursion
+      (delete-region $from $to)
+      (goto-char $from)
+      (insert outputStr))))
+
+(defun convert-punctuation ($from $to)
+  ;; convert Chinese pubctuation to normal
+  ;; http://xahlee.info/emacs/emacs/emacs_zap_gremlins.html
+  (interactive "r")
+  (let (($charMap
+    [
+     ["，" ", "]
+     ["。" ". "]
+     ["？" "? "]
+     ["！" "! "]
+     ["：" ": "]
+     ["；" "; "]
+     ["（" "("]
+     ["）" ")"]
+     ["【" "["]
+     ["】" "]"]
+     ["‘" "'"]
+     ["’" "'"]
+     ["“" "\""]
+     ["”" "\""]
+     ]))
+    (save-restriction
+      (narrow-to-region $from $to)
+      (mapc
+       (lambda ($pair)
+         (goto-char (point-min))
+         (while (re-search-forward (elt $pair 0) (point-max) t)
+           (replace-match (elt $pair 1))))
+       $charMap))))
 
 
 
@@ -170,7 +209,7 @@
   ;; something like wildfire.vim
   :after evil-mc
   :config
-  (global-set-key (kbd "C-=") 'er/expand-region))
+  (global-set-key (kbd "C-<return>") 'er/expand-region))
 
 (use-package neotree
   :defer t
