@@ -9,4 +9,7 @@ cp ~/.config/swaylock/*                swaylock/
 cp ~/.config/rofi/*                    rofi/
 cp ~/.config/qutebrowser/config.py     qutebrowser/
 cp ~/.config/qutebrowser/home.html     qutebrowser/
+cp ~/.config/qutebrowser/home.html     ~/Documents/
+sed -i "s/duckduckgo/bing/g"           ~/Documents/home.html
+cp ~/.config/starship.toml             .
 # cp ~/.config/wayfire.ini .

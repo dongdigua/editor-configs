@@ -1,0 +1,23 @@
+# https://github.com/zimfw/magicmace
+format = "[\\[$directory\b\\]── $git_status─](#66ccff) "
+
+add_newline = false
+
+
+[battery]
+# it takes too long to load each time
+disabled = true
+
+[line_break]
+disabled = true
+
+[package]
+disabled = true
+
+[git_status]
+format = "(\b[\\[$all_status$ahead_behind\\]]($style))"
+
+# [rust]
+# format = "[$symbol($version)]($style)"
+# [elixir]
+# format = '[$symbol($version \(OTP $otp_version\))]($style)'

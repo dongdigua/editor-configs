@@ -8,7 +8,7 @@
  '(custom-safe-themes
    '("950b1e8c8cd4a32b30cadc9d8b0eb6045538f0093dad8bdc1c24aaeeb64ed43d" "0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" default))
  '(package-selected-packages
-   '(expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -144,7 +144,6 @@
   ;; so this tool is helpful, for filter out BVid from link
   ;; http://xahlee.info/emacs/emacs/elisp_command_working_on_string_or_region.html
   (interactive "r")
-  (message "%s %s %s %s" (use-region-p) evil-state (region-beginning) (region-end))
   (let (inputStr outputStr)
     (setq inputStr (buffer-substring-no-properties $from $to))
     (setq outputStr
@@ -220,7 +219,6 @@
   (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
   (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
   (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-  (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
   (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle))
 
 (use-package dashboard
@@ -303,6 +301,7 @@
 
 (use-package clippy
   ;; also from DistroTube
+  :if window-system
   :bind
   (("C-x c v" . clippy-describe-variable)
    ("C-x c f" . clippy-describe-function)))
@@ -323,3 +322,15 @@
            :sasl-password irc-password
            :reduce-lurker-spam t)))
   (company-mode nil))
+
+(use-package go-translate
+  :bind
+  ("C-x M-t" . gts-do-translate)
+  :config
+  (setq gts-translate-list '(("en" "zh")))
+  (setq gts-default-translator
+        (gts-translator
+         :picker (gts-prompt-picker :texter (gts-current-or-selection-texter) :single t)
+         :engines (list (gts-bing-engine))
+         :render (gts-buffer-render)
+         )))

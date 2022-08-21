@@ -203,7 +203,9 @@ bar {
 }
 
 default_border pixel
-gaps inner 10
+#gaps inner 6
+gaps outer 6
+gaps top 0
 
 #
 # Autostart
