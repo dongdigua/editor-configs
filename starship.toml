@@ -1,5 +1,5 @@
-# https://github.com/zimfw/magicmace
-format = "[\\[$directory\b\\]── $git_status─](#66ccff) "
+# catppuccin cyan color is great
+format = "$elixir$rust$package[\\[$directory\b\\]── $git_status$character](cyan)"
 
 add_newline = false
 
@@ -11,13 +11,26 @@ disabled = true
 [line_break]
 disabled = true
 
-[package]
-disabled = true
+[directory]
+style = "bold"
 
 [git_status]
 format = "(\b[\\[$all_status$ahead_behind\\]]($style))"
 
-# [rust]
-# format = "[$symbol($version)]($style)"
-# [elixir]
-# format = '[$symbol($version \(OTP $otp_version\))]($style)'
+[character]
+success_symbol = "[─](cyan)"
+error_symbol = "[─](red)"
+
+[package]
+format = "[$symbol$version]($style) "
+
+[elixir]
+format = "[$symbol]($style)"
+
+[rust]
+format = "[$symbol]($style)"
+
+# [c]
+# available after 1.10 (pull #3631)
+# format = "[$symbol]($style)"
+# symbol = " "

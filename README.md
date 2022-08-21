@@ -30,3 +30,7 @@ too many plugins, just look at my config file<br>
 # foot
 it's default config is easy to use, than other terminal<br>
 color: catppuccin-macchiato, recommended by [this guy](https://space.bilibili.com/1169981390)<br>
+
+# starship
+I found this prompt from KiteAB and EndlessPeak
+https://github.com/zimfw/magicmace
