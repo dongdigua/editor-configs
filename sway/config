@@ -211,7 +211,7 @@ gaps top -6
 #
 seat seat0 xcursor_theme Oxygen_White
 exec wlsunset -s 18:00
-exec libinput-gestures
+exec_always libinput-gestures
 exec mako
 exec /usr/libexec/polkit-gnome-authentication-agent-1
 # contents in .config/libinput-gestures.conf

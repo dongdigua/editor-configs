@@ -8,7 +8,7 @@
  '(custom-safe-themes
    '("950b1e8c8cd4a32b30cadc9d8b0eb6045538f0093dad8bdc1c24aaeeb64ed43d" "0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" default))
  '(package-selected-packages
-   '(fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -160,20 +160,13 @@
   (interactive "r")
   (let (($charMap
     [
-     ["，" ", "]
-     ["。" ". "]
-     ["？" "? "]
-     ["！" "! "]
-     ["：" ": "]
-     ["；" "; "]
-     ["（" "("]
-     ["）" ")"]
-     ["【" "["]
-     ["】" "]"]
-     ["‘" "'"]
-     ["’" "'"]
-     ["“" "\""]
-     ["”" "\""]
+     ["，" ", "] ["。" ". "]
+     ["？" "? "] ["！" "! "]
+     ["：" ": "] ["；" "; "]
+     ["（" "("]  ["）" ")"]
+     ["【" "["]  ["】" "]"]
+     ["‘" "'"]   ["’" "'"]
+     ["“" "\""]  ["”" "\""]
      ]))
     (save-restriction
       (narrow-to-region $from $to)
@@ -252,17 +245,53 @@
   :config
   (global-company-mode))
 
+(use-package valign
+  :commands (valign--space valign--put-overlay)  ; autoload
+  :hook (org-mode . valign-mode))
+
 (use-package elfeed
   :defer t
   :config
   (elfeed-org)
+  (setq shr-use-fonts nil)  ; https://github.com/skeeto/elfeed/issues/318
   (setq elfeed-use-curl t)
-  (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20171"))
+  (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
   (elfeed-search-set-filter "@2-weeks-ago")
   (custom-set-faces
    '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
    '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
-   '(elfeed-search-tag-face  ((t (:foreground "#66ccff"))))))
+   '(elfeed-search-tag-face  ((t (:foreground "#66ccff")))))
+
+  ;; https://github.com/skeeto/elfeed/issues/404
+  ;; https://github.com/chuxubank/cat-emacs/blob/main/cats/+elfeed.el
+  (when (functionp #'valign--put-overlay)
+    (defun elfeed-search-print-valigned-entry (entry)
+      "Print valign-ed ENTRY to the buffer."
+      (let* ((date (elfeed-search-format-date (elfeed-entry-date entry)))
+             (date-width (car (cdr elfeed-search-date-format)))
+             (title (or (elfeed-meta entry :title) (elfeed-entry-title entry) ""))
+             (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+             (feed (elfeed-entry-feed entry))
+             (feed-title (when feed (or (elfeed-meta feed :title) (elfeed-feed-title feed))))
+             (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
+             (tags-str (mapconcat
+                        (lambda (s) (propertize s 'face 'elfeed-search-tag-face))
+                        tags ","))
+             (title-width (- (window-width) 10 elfeed-search-trailing-width))
+             (title-column (elfeed-format-column
+                            title (elfeed-clamp
+                                   elfeed-search-title-min-width
+                                   title-width
+                                   elfeed-search-title-max-width)
+                            :left))
+             (align-to (* (+ date-width 2 (min title-width elfeed-search-title-max-width))
+                          (default-font-width))))
+        (insert (propertize date 'face 'elfeed-search-date-face) " ")
+        (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
+        (valign--put-overlay (1- (point)) (point) 'display (valign--space align-to))
+        (when feed-title (insert (propertize feed-title 'face 'elfeed-search-feed-face) " "))
+        (when tags (insert "(" tags-str ")"))))
+    (setq elfeed-search-print-entry-function #'elfeed-search-print-valigned-entry)))
 
 (use-package elfeed-org
   :defer t
@@ -290,6 +319,7 @@
   :config
   (setq default-input-method "pyim")
   (setq pyim-page-tooltip 'minibuffer)
+  (setq pyim-cloudim 'google)  ; I hate baidu
   (setq pyim-dicts
        '((:name "tsinghua" :file "~/git/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim"))))
 
@@ -332,8 +362,7 @@
         (gts-translator
          :picker (gts-prompt-picker :texter (gts-current-or-selection-texter) :single t)
          :engines (list (gts-bing-engine))
-         :render (gts-buffer-render)
-         )))
+         :render (gts-buffer-render))))
 
 (use-package fzf
   ;; hacker news: How FZF and ripgrep improved my workflow
