@@ -13,12 +13,12 @@ set $left h
 set $down j
 set $up k
 set $right l
-# gnome-terminal don't work
 set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu "export PATH=$PATH:$HOME/.cargo/bin:$HOME/bin; rofi -show drun"
+set $audio ~/.config/waybar/scripts/audio.pl
 
 ### Output configuration
 #
@@ -162,12 +162,12 @@ input "type:keyboard" {
 #
 
     #bindsym Print grim - | wl-copy
-    bindsym $mod+Ctrl+Shift+s exec grim -g "$(slurp)" - | wl-copy
-    bindsym $mod+Shift+s      exec grim
-    bindsym XF86AudioMute        exec ~/.config/waybar/scripts/audio.pl mute
-    bindsym XF86AudioLowerVolume exec ~/.config/waybar/scripts/audio.pl -
-    bindsym XF86AudioRaiseVolume exec ~/.config/waybar/scripts/audio.pl +
-    bindsym XF86AudioMicMute     exec ~/.config/waybar/scripts/audio.pl mic
+    bindsym $mod+Ctrl+Shift+s    exec grim -g "$(slurp)" - | wl-copy
+    bindsym $mod+Shift+s         exec grim
+    bindsym XF86AudioMute        exec $audio mute
+    bindsym XF86AudioLowerVolume exec $audio -
+    bindsym XF86AudioRaiseVolume exec $audio +
+    bindsym XF86AudioMicMute     exec $audio mic
 #
 #
 # Resizing containers:
@@ -217,6 +217,11 @@ exec /usr/libexec/polkit-gnome-authentication-agent-1
 # contents in .config/libinput-gestures.conf
 # gesture: swipe right 3 swaymsg workspace prev
 # gesture: swipe left 3  swaymsg workspace next
+
+# scratchpad autostart youtu.be/q-l7DnDbiiU
+exec $term -T=dropdown-terminal
+for_window [title="dropdown-terminal"] floating enable
+for_window [title="dropdown-terminal"] move scratchpad
 
 
 # DONOT TOUCH
