@@ -39,6 +39,7 @@ input "type:touchpad" {
 
 input "type:keyboard" {
     repeat_delay 300
+    repeat_rate 40
 }
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
@@ -49,6 +50,10 @@ input "type:keyboard" {
 #
     # Start a terminal
     bindsym $mod+Return exec $term
+    # Start a terminal, floating
+    bindsym $mod+Shift+Return exec $term -T=dropdown-terminal
+    for_window [title="dropdown-terminal"] floating enable
+    for_window [title="dropdown-terminal"] border none
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -217,11 +222,6 @@ exec /usr/libexec/polkit-gnome-authentication-agent-1
 # contents in .config/libinput-gestures.conf
 # gesture: swipe right 3 swaymsg workspace prev
 # gesture: swipe left 3  swaymsg workspace next
-
-# scratchpad autostart youtu.be/q-l7DnDbiiU
-exec $term -T=dropdown-terminal
-for_window [title="dropdown-terminal"] floating enable
-for_window [title="dropdown-terminal"] move scratchpad
 
 
 # DONOT TOUCH
