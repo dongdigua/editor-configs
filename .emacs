@@ -8,7 +8,7 @@
  '(custom-safe-themes
    '("950b1e8c8cd4a32b30cadc9d8b0eb6045538f0093dad8bdc1c24aaeeb64ed43d" "0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" default))
  '(package-selected-packages
-   '(zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit esup evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -16,7 +16,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
 
 
 ;; =================== ;;
@@ -29,8 +28,8 @@
 (global-auto-revert-mode      t) ; 让 Emacs 及时刷新 Buffer
 (setq inhibit-startup-message t) ; 关闭启动 Emacs 时的欢迎界面
 
-(add-to-list 'default-frame-alist '(width . 80))  ; 设定启动图形界面时的Frame宽度
-(add-to-list 'default-frame-alist '(height . 40)) ; 设定启动图形界面时的Frame高度
+;(add-to-list 'default-frame-alist '(width . 80))  ; 设定启动图形界面时的Frame宽度
+;(add-to-list 'default-frame-alist '(height . 40)) ; 设定启动图形界面时的Frame高度
 
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
@@ -41,7 +40,7 @@
            ;(add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
            ;(load-theme 'everforest-hard-dark t)
            ;(global-whitespace-mode t))    ; 显示不可见符号
-	   )
+    )
   (progn
     (set-frame-parameter (selected-frame) 'alpha '(85 85))
     (load-theme 'tango-dark t)
@@ -97,6 +96,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (ido-mode t)
 (electric-pair-mode t)
+(setq shr-use-fonts nil)  ; https://github.com/skeeto/elfeed/issues/318
 
 ;; erc-sasl and tetris(fedora don't ship tetris)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
@@ -191,7 +191,7 @@
   ("C-r" . isearch-backward))
 
 (use-package evil-mc
-  :defer 2
+  :defer 1
   :config
   ;; don't need to bind "I" and "A"
   ;; because VIM aalready can do this, but only execute after esc
@@ -230,19 +230,19 @@
   (setq dashboard-set-navigator t))
 
 (use-package smart-hungry-delete
-  :defer 2
+  :defer 1
   :config
   (global-set-key (kbd "C-<backspace>")
                   'smart-hungry-delete-backward-char))
 
 (use-package undo-tree
-  :defer 2
+  :defer 1
   :config
   (global-undo-tree-mode)
   (setq undo-tree-auto-save-history nil))
 
 (use-package company
-  :defer 3
+  :defer 2
   :config
   (global-company-mode))
 
@@ -254,7 +254,6 @@
   :defer t
   :config
   (elfeed-org)
-  (setq shr-use-fonts nil)  ; https://github.com/skeeto/elfeed/issues/318
   (setq elfeed-use-curl t)
   (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
   (elfeed-search-set-filter "@2-weeks-ago")
@@ -306,15 +305,6 @@
   (setq gdb-many-windows t)
   (defalias 'dasm 'gdb-display-disassembly-buffer)
   (tool-bar-mode t))
-
-(use-package web-mode
-  ;; https://web-mode.org/
-  ;; for elixir eex files
-  :config
-  (setq web-mode-markup-indent-offset 2)
-  (add-to-list 'auto-mode-alist '("\\.eex\\'"  . web-mode))
-  ;; the default html mode sucks
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
 
 (use-package pyim
   :config
@@ -370,3 +360,28 @@
   ;; https://news.ycombinator.com/item?id=20360204
   :config
   (setenv "FZF_DEFAULT_COMMAND" "rg --files --hidden"))
+
+(use-package indent-guide
+  :defer 2
+  :config
+  (indent-guide-global-mode))
+
+;; ===================== ;;
+;; use-package/languages ;;
+;; ===================== ;;
+(use-package web-mode
+  ;; https://web-mode.org/
+  ;; for elixir eex files
+  :config
+  (setq web-mode-markup-indent-offset 2)
+  (add-to-list 'auto-mode-alist '("\\.eex\\'"  . web-mode))
+  ;; the default html mode sucks
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
+
+(use-package rust-mode
+  :bind
+  ("C-c C-c c" . rust-compile))
+
+(use-package nim-mode
+  :config
+  (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on")))

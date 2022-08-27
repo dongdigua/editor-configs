@@ -8,6 +8,7 @@ $base_dir = "~/Pictures/wallpaper/";
     "crystal-water.jpg",
     "plain-flower.png",
     "beautiful-ocean.jpg",
+    "f37-day.png",
 );
 
 $ps = `ps l | grep swaybg`;

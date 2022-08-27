@@ -1,5 +1,5 @@
 # catppuccin cyan color is great
-format = "$elixir$rust$c$package[\\[$directory\b\\]─$nix_shell─ $git_status$character](cyan)"
+format = "$elixir$rust$c$julia$nim$package[\\[$directory\b\\]─$nix_shell─ $git_status$character](cyan)"
 
 add_newline = false
 
@@ -26,15 +26,23 @@ format = "[$symbol$version]($style) "
 
 [elixir]
 format = "[$symbol]($style)"
+detect_extensions = []
 
 [rust]
 format = "[$symbol]($style)"
+detect_extensions = []
 
 [c]
 # available after 1.10 (pull #3631)
 # fedora version is TOO LOW, and performance is BAD
 format = "[$symbol]($style)"
 symbol = " "
+
+[nim]
+format = "[$symbol]($style)"
+
+[julia]
+format = "[$symbol]($style)"
 
 [nix_shell]
 format = "[$symbol$state]($style)"
