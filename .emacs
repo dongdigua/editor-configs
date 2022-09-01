@@ -36,11 +36,10 @@
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 
 (if (display-graphic-p)
-    (progn (load-theme 'zenburn t)
+    (progn (load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
            ;(add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
            ;(load-theme 'everforest-hard-dark t)
-           ;(global-whitespace-mode t))    ; 显示不可见符号
-    )
+           )
   (progn
     (set-frame-parameter (selected-frame) 'alpha '(85 85))
     (load-theme 'tango-dark t)
@@ -194,8 +193,7 @@
   :defer 1
   :config
   ;; don't need to bind "I" and "A"
-  ;; because VIM aalready can do this, but only execute after esc
-  ;; but don't need to "grq"
+  ;; because VIM aalready can do this, it only execute after esc and don't need to "grq"
   (global-evil-mc-mode 1))
 
 (use-package expand-region
@@ -371,7 +369,7 @@
 ;; ===================== ;;
 (use-package web-mode
   ;; https://web-mode.org/
-  ;; for elixir eex files
+  ;; for embeded elixir
   :config
   (setq web-mode-markup-indent-offset 2)
   (add-to-list 'auto-mode-alist '("\\.eex\\'"  . web-mode))
@@ -384,4 +382,4 @@
 
 (use-package nim-mode
   :config
-  (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on")))
+  (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on" "--debuginfo:on")))
