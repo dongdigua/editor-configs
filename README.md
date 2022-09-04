@@ -27,6 +27,8 @@ too many plugins, just look at my config file<br>
 [centos](https://wallpaperaccess.com/download/centos-2768386)<br>
 [plain-flower](https://www.reddit.com/r/unixporn/comments/wp3wpm/my_humble_desktop_bspwm)<br>
 [beautiful-ocean](https://www.reddit.com/r/wallpaper/comments/scz5i6/beautiful_ocean_19201080/)<br>
+[mikee](https://steamcommunity.com/sharedfiles/filedetails/?id=2018514041)<br>
+[golden-field](https://steamcommunity.com/sharedfiles/filedetails/?id=2581587068)<br>
 
 # foot
 it's default config is easy to use, than other terminal<br>
