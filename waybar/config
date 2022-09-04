@@ -69,6 +69,6 @@
         "tooltip": false,
         "format": "  ",
         // if use on-click, it will have a bug that all the bar is clickable
-        "on-double-click": "~/.config/waybar/scripts/wallpaper.pl",
+        "on-double-click": "~/.config/waybar/scripts/wallpaper.pl -random",
     },
 }

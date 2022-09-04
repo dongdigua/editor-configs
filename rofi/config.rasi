@@ -1,5 +1,5 @@
 configuration {
-  modi: "drun,run,filebrowser,ssh,powermenu:~/.config/rofi/powermenu.lua";
+  modi: "drun,run,ssh,wallpaper:~/.config/waybar/scripts/wallpaper.pl,powermenu:~/.config/rofi/powermenu.lua";
 
   //show-icons: true;
   //icon-theme: "gnome";

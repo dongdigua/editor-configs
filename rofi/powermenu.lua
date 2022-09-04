@@ -4,6 +4,16 @@
 -- It's also easier to add options or edit them this way
 local options = {
   {
+    name = "Log out",
+    icon = "system-log-out",
+    command = "swaymsg exit"
+  },
+  {
+    name = "Lock",
+    icon = "system-lock-screen",
+    command = "swaylock"
+  },
+  {
     name = "Shut down",
     icon = "system-shutdown",
     command = "systemctl poweroff"
@@ -12,16 +22,6 @@ local options = {
     name = "Restart",
     icon = "system-reboot",
     command = "systemctl reboot"
-  },
-  {
-    name = "Lock",
-    icon = "system-lock-screen",
-    command = "swaylock"
-  },
-  {
-    name = "Log out",
-    icon = "system-log-out",
-    command = "swaymsg exit"
   }
 }
 

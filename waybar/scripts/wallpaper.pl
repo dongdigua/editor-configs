@@ -15,10 +15,25 @@ $base_dir = "~/Pictures/wallpaper/";
 );
 
 $ps = `ps l | grep swaybg`;
-while (true) {
-    $random_one = @list[int(rand(scalar @list))];
-    if ($ps !~ /$random_one/) {
-        last;
+$arg1 = $ARGV[0];
+
+if ($arg1 eq "-random") {
+    while (true) {
+        $random_one = @list[int(rand(scalar @list))];
+        if ($ps !~ /$random_one/) {
+            system("swaymsg output '* bg $base_dir$random_one fill'");
+            last;
+        }
     }
 }
-system("swaymsg output '* bg $base_dir$random_one fill'");
+else {
+    foreach $w (@list) {
+        if ($arg1 eq $w) {
+            system("swaymsg output '* bg $base_dir$w fill' > /dev/null");
+            print "$w\n"
+        }
+        else {
+            print "$w\n"
+        }
+    }
+}
