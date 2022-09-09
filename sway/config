@@ -49,10 +49,11 @@ input "type:keyboard" {
 #
     # Start a terminal
     bindsym $mod+Return exec $term
+    bindsym $mod+x      exec emacs
     # Start a terminal, floating
     bindsym $mod+Shift+Return exec $term -T=dropdown-terminal
     for_window [title="dropdown-terminal"] floating enable
-    for_window [title="dropdown-terminal"] border none
+    for_window [title="dropdown-terminal"] border csd
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -220,8 +221,12 @@ seat seat0 xcursor_theme Oxygen_White
 exec_always {
     mako
     /usr/libexec/polkit-gnome-authentication-agent-1
-    wlsunset -s 18:00
     libinput-gestures
+}
+exec {
+    wlsunset -s 18:00
+    LANG=C activate-linux -f monocraft -x 450
+
 }
 # contents in .config/libinput-gestures.conf
 # gesture: swipe right 3 swaymsg workspace prev
