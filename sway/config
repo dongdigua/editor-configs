@@ -49,7 +49,8 @@ input "type:keyboard" {
 #
     # Start a terminal
     bindsym $mod+Return exec $term
-    bindsym $mod+x      exec emacs
+    # seems working
+    bindsym $mod+x      exec NO_DASHBOARD=true emacs
     # Start a terminal, floating
     bindsym $mod+Shift+Return exec $term -T=dropdown-terminal
     for_window [title="dropdown-terminal"] floating enable

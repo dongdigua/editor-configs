@@ -3,7 +3,6 @@ Emacs 和 Vim 双料特工
 
 # emacs
 too many plugins, just look at my config file<br>
-[emacs-devel mail archive: About SASL authentication in rcirc](https://lists.gnu.org/archive/html/emacs-devel/2021-06/msg00876.html)
 
 # vim
 - nerdtree
@@ -35,5 +34,4 @@ it's default config is easy to use, than other terminal<br>
 color: catppuccin-macchiato, recommended by [this guy](https://space.bilibili.com/1169981390)<br>
 
 # starship
-I found this prompt from KiteAB and EndlessPeak
-https://github.com/zimfw/magicmace
+I found (this prompt)[https://github.com/zimfw/magicmace] from KiteAB and EndlessPeak
