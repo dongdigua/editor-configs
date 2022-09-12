@@ -176,6 +176,16 @@
            (replace-match (elt $pair 1))))
        $charMap))))
 
+(defun switch-browser ()
+  (interactive)
+  (if (eq browse-url-browser-function 'eww-browse-url)
+      (progn
+        (setq browse-url-browser-function 'browse-url-default-browser)
+        (message "browser switched to firefox"))
+    (progn
+      (setq browse-url-browser-function 'eww-browse-url)
+      (message "browser switched to eww"))))
+
 
 
 ;; =========== ;;
@@ -198,7 +208,7 @@
 (use-package org
   :config
   (setq org-startup-indented t)
-  (setq org-return-follows-link t)
+  (setq org-return-follows-link t)  ; in insert mode
   (setq browse-url-browser-function 'eww-browse-url))
 
 (use-package expand-region
@@ -311,12 +321,16 @@
   (tool-bar-mode t))
 
 (use-package pyim
-  :config
+  :init
   (setq default-input-method "pyim")
+  :config
   (setq pyim-page-tooltip 'minibuffer)
   (setq pyim-cloudim 'google)  ; I hate baidu
   (setq pyim-dicts
-       '((:name "tsinghua" :file "~/git/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim"))))
+        '((:name "tsinghua" :file "~/git/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
+  (setq pyim-punctuation-translate-p '(no yes))
+  :bind
+  ("C-|" . pyim-punctuation-toggle))
 
 (use-package beacon
   ;; from DistroTube
@@ -396,7 +410,14 @@
 ;; =========== ;;
 ;; end of init ;;
 ;; =========== ;;
-(setq initial-scratch-message
-      ;; 本来我寻思直接在 dashboard 的 :if 里面直接弄这个, 但是时间不准
-      ;; 后来我寻思在那个地方用 async, 但是看了简书 https://www.jianshu.com/p/75aa9732c570 发现通过 async-start 是创建 emacs 子进程
-      (emacs-init-time ";; %2.4f secs"))
+(if (getenv "NO_DASHBOARD")
+    (progn
+      (insert (emacs-init-time ";; %2.4f secs\n"))
+      (insert-button
+       ";; [config]"
+       'action (lambda (_) (find-file-existing "~/.emacs")))
+      (insert "\n")
+      (insert-button
+       ";; [collections]"
+       'action (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
+      ))
