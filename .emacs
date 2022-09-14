@@ -8,7 +8,7 @@
  '(custom-safe-themes
    '("950b1e8c8cd4a32b30cadc9d8b0eb6045538f0093dad8bdc1c24aaeeb64ed43d" "0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" default))
  '(package-selected-packages
-   '(benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -385,6 +385,12 @@
   :config
   (indent-guide-global-mode))
 
+(use-package nyan-mode
+  :defer 1
+  :config
+  (nyan-mode)
+  (nyan-start-animation))
+
 ;; ===================== ;;
 ;; use-package/languages ;;
 ;; ===================== ;;
@@ -410,14 +416,9 @@
 ;; =========== ;;
 ;; end of init ;;
 ;; =========== ;;
-(if (getenv "NO_DASHBOARD")
-    (progn
-      (insert (emacs-init-time ";; %2.4f secs\n"))
-      (insert-button
-       ";; [config]"
-       'action (lambda (_) (find-file-existing "~/.emacs")))
-      (insert "\n")
-      (insert-button
-       ";; [collections]"
-       'action (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
-      ))
+(setq initial-scratch-message
+      (concat
+       (emacs-init-time ";; %2.4f secs\n")
+       (button-buttonize ";; (config)\n" (lambda (_) (find-file-existing "~/.emacs")))
+       (button-buttonize ";; (collections)\n" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
+       ))
