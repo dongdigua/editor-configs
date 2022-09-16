@@ -209,6 +209,7 @@ bar {
 }
 
 default_border pixel
+smart_gaps on
 gaps inner 6
 gaps top -6
 
@@ -226,7 +227,7 @@ exec_always {
 }
 exec {
     wlsunset -s 18:00
-    LANG=C activate-linux -f monocraft -x 450
+    LANG=C activate-linux -f monocraft -x 450 -c 1-1-1-0.2
 
 }
 # contents in .config/libinput-gestures.conf

@@ -8,7 +8,7 @@
  '(custom-safe-themes
    '("950b1e8c8cd4a32b30cadc9d8b0eb6045538f0093dad8bdc1c24aaeeb64ed43d" "0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" default))
  '(package-selected-packages
-   '(doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -41,7 +41,6 @@
            ;(load-theme 'everforest-hard-dark t)
            )
   (progn
-    (set-frame-parameter (selected-frame) 'alpha '(85 85))
     (load-theme 'tango-dark t)
     (custom-set-faces
      '(default ((t (:background "unspecified-bg" :foreground "#eeeeec")))))))
@@ -94,10 +93,16 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (ido-mode t)
 (electric-pair-mode t)
-(setq shr-use-fonts nil)  ; https://github.com/skeeto/elfeed/issues/318
 
-;; erc-sasl and tetris(fedora don't ship tetris)
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+(setq shr-use-fonts nil)
+(setq browse-url-handlers
+      '( ;; use alist in browse-url-browser-function is deprecated
+        ("^https?://youtu\\.be" . browse-url-firefox)
+        ("^https?://youtube\\..+" . browse-url-firefox)
+        ("^https?://.*bilibili\\.com" . browse-url-firefox)
+        ("^https?://.*reddit\\.com" . browse-url-firefox)
+        ("^https?://github\\.com" . browse-url-firefox)
+        ))
 
 
 
@@ -180,7 +185,7 @@
   (interactive)
   (if (eq browse-url-browser-function 'eww-browse-url)
       (progn
-        (setq browse-url-browser-function 'browse-url-default-browser)
+        (setq browse-url-browser-function 'browse-url-firefox)
         (message "browser switched to firefox"))
     (progn
       (setq browse-url-browser-function 'eww-browse-url)
@@ -267,7 +272,7 @@
   :defer t
   :config
   (elfeed-org)
-  (setq browse-url-browser-function 'browse-url-default-browser)
+  (setq browse-url-browser-function 'browse-url-firefox)
   (setq elfeed-use-curl t)
   (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
   (elfeed-search-set-filter "@2-weeks-ago")
@@ -386,6 +391,7 @@
   (indent-guide-global-mode))
 
 (use-package nyan-mode
+  :if window-system
   :defer 1
   :config
   (nyan-mode)
@@ -419,6 +425,8 @@
 (setq initial-scratch-message
       (concat
        (emacs-init-time ";; %2.4f secs\n")
-       (button-buttonize ";; (config)\n" (lambda (_) (find-file-existing "~/.emacs")))
-       (button-buttonize ";; (collections)\n" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
+       (button-buttonize ";; (config)" (lambda (_) (find-file-existing "~/.emacs")))
+       "\n"
+       (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
+       "\n"
        ))
