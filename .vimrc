@@ -27,7 +27,7 @@ autocmd FileType elixir setlocal shiftwidth=2 softtabstop=2 expandtab
 " Format }
 
 " Plug {
-call plug#begin('/home/digua/.vim/plugged')
+call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'

@@ -3,6 +3,8 @@ cp ~/.vimrc                            .
 cp ~/.emacs                            .
 cp ~/.tmux.conf                        .
 cp ~/.nethackrc                        .
+cp ~/.config/starship.toml             .
+cp ~/nixos/configuration.nix           .
 cp ~/.config/sway/*                    sway/
 cp -r ~/.config/waybar/*               waybar/
 cp ~/.config/swaylock/*                swaylock/
@@ -11,5 +13,4 @@ cp ~/.config/qutebrowser/config.py     qutebrowser/
 cp ~/.config/qutebrowser/home.html     qutebrowser/
 cp ~/.config/qutebrowser/home.html     ~/Documents/
 sed -i "s/duckduckgo/bing/g"           ~/Documents/home.html
-cp ~/.config/starship.toml             .
 # cp ~/.config/wayfire.ini .
