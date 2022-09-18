@@ -28,7 +28,7 @@
   systemd.services.update-channel = {
     enable = true;
     wantedBy = [ "default.target" ]; 
-    after = [ "network.target" "systemd-online.target" ];
+    after = [ "network.target" "network-online.target" ];
     description = "Update channel";
     serviceConfig = {
       Type = "forking";
@@ -64,13 +64,13 @@
   system.autoUpgrade.channel = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable/";
 
   environment.systemPackages = with pkgs; [
-    nyancat
-    neofetch
-    vim
-    git
-    gnupg
-    curl
-    rsync
+    # nyancat
+    # neofetch
+    # vim
+    # git
+    # gnupg
+    # curl
+    # rsync
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
@@ -79,17 +79,26 @@
     enable = false;
     # wrapperFeatures.gtk = true; # so that gtk works properly
     extraPackages = with pkgs; [
-      swaylock
       waybar
       mako
-      activate-linux
       rofi
+      # swaylock
+      # activate-linux
       # grim
       # slurp
       # wl-clipboard
       # foot
       # emacs
       # firefox
+
+      # netcat
+      # whois
+      # telnet
+      # hping
+      # nmap
+      # tcpdump
+      # nikto
+
     ];
   };
 

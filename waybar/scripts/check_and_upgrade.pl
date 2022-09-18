@@ -5,6 +5,7 @@ $arg1 = @ARGV[0];
 if ($arg1 eq "run") {
     DNFPackage(0);
     NixPackage(0);
+    FlatPak(0);
     RustUp(0);
     CargoPackage(0);
 }
@@ -12,6 +13,7 @@ else {
     $allnum =
         DNFPackage() +
         NixPackage() +
+        FlatPak() +
         RustUp() +
         CargoPackage();
     print $allnum;
@@ -44,6 +46,9 @@ sub NixPackage {
 
 sub FlatPak {
     if (scalar(@_) == 0) {
+        my $flatpaknum = () = `echo n | flatpak update` =~ /  U  /;
+        print "flatpak: $flatpaknum\n";
+        return $flatpaknum;
     }
     else {
         print `flatpak update -y`
