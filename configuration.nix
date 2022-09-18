@@ -6,6 +6,44 @@
     openssh.permitRootLogin = lib.mkDefault "yes";
   };
 
+  systemd.services.sync-home = {
+    enable = true;
+    wantedBy = [ "default.target" ];
+    description = "Copy home contents from iso";
+    serviceConfig = {
+      Type = "forking";
+      ExecStartPre = ''
+      ${pkgs.rsync}/bin/rsync -r /iso/home/nix/ /home/nix
+      '';
+      ExecStart = ''
+      ${pkgs.coreutils}/bin/chown -R nix /home/nix
+      '';
+      ExecStartPost = ''
+      /run/booted-system/sw/bin/sudo -u nix ${pkgs.coreutils}/bin/chmod -R 710 /home/nix
+      '';
+      ExecStop = "";
+    };
+  };
+
+  systemd.services.update-channel = {
+    enable = true;
+    wantedBy = [ "default.target" ]; 
+    after = [ "network.target" "systemd-online.target" ];
+    description = "Update channel";
+    serviceConfig = {
+      Type = "forking";
+      ExecStartPre = ''
+      ${pkgs.nix}/bin/nix-channel --remove nixos
+      '';
+      ExecStart = ''
+      ${pkgs.nix}/bin/nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixos
+      '';
+      ExecStop = ''
+      ${pkgs.nix}/bin/nix-channel --update
+      '';
+    };
+  };
+
   networking = {
     firewall.allowedTCPPorts = [ 22 80 ];
     hostName = "nixos";
@@ -38,7 +76,7 @@
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   programs.sway = {
-    enable = true;
+    enable = false;
     # wrapperFeatures.gtk = true; # so that gtk works properly
     extraPackages = with pkgs; [
       swaylock
@@ -54,6 +92,7 @@
       # firefox
     ];
   };
+
 
   isoImage.contents = [
     { source = ~/git/configs/.emacs;   target = "/home/nix/.emacs"; }
