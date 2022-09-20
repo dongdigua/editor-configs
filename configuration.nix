@@ -12,15 +12,9 @@
     description = "Copy home contents from iso";
     serviceConfig = {
       Type = "forking";
-      ExecStartPre = ''
-      ${pkgs.rsync}/bin/rsync -r /iso/home/nix/ /home/nix
-      '';
-      ExecStart = ''
-      ${pkgs.coreutils}/bin/chown -R nix /home/nix
-      '';
-      ExecStartPost = ''
-      /run/booted-system/sw/bin/sudo -u nix ${pkgs.coreutils}/bin/chmod -R 710 /home/nix
-      '';
+      ExecStartPre = "${pkgs.rsync}/bin/rsync -r /iso/home/nix/ /home/nix";
+      ExecStart = "${pkgs.coreutils}/bin/chown -R nix /home/nix";
+      ExecStartPost = "/run/booted-system/sw/bin/sudo -u nix ${pkgs.coreutils}/bin/chmod -R 710 /home/nix";
       ExecStop = "";
     };
   };
@@ -32,15 +26,9 @@
     description = "Update channel";
     serviceConfig = {
       Type = "forking";
-      ExecStartPre = ''
-      ${pkgs.nix}/bin/nix-channel --remove nixos
-      '';
-      ExecStart = ''
-      ${pkgs.nix}/bin/nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixos
-      '';
-      ExecStop = ''
-      ${pkgs.nix}/bin/nix-channel --update
-      '';
+      ExecStartPre = "${pkgs.nix}/bin/nix-channel --remove nixos";
+      ExecStart = "${pkgs.nix}/bin/nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixos";
+      ExecStop = "${pkgs.nix}/bin/nix-channel --update";
     };
   };
 
@@ -55,50 +43,48 @@
     password = "nixos";
     isNormalUser = true;
     home = "/home/nix";
-    extraGroups = [ "wheel" "networkmanager" "video" ];
+    extraGroups = [ "wheel" "video" ];
   };
 
 
   # https://mirrors.tuna.tsinghua.edu.cn/help/nix/
   nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
-  system.autoUpgrade.channel = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable/";
 
   environment.systemPackages = with pkgs; [
-    # nyancat
-    # neofetch
-    # vim
-    # git
-    # gnupg
-    # curl
-    # rsync
+    nyancat
+    neofetch
+    vim
+    git
+    gnupg
+    curl
+    rsync
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
-
+  
+  programs.xwayland.enable = pkgs.lib.mkForce false; # well, seems it can't do this, unlike gentoo
   programs.sway = {
-    enable = false;
-    # wrapperFeatures.gtk = true; # so that gtk works properly
+    enable = true;
+    wrapperFeatures.gtk = false;
     extraPackages = with pkgs; [
       waybar
       mako
-      rofi
-      # swaylock
-      # activate-linux
-      # grim
-      # slurp
-      # wl-clipboard
-      # foot
-      # emacs
-      # firefox
+      rofi-wayland
+      swaylock
+      activate-linux
+      grim
+      slurp
+      wl-clipboard
+      foot
+      emacs
+      firefox
 
-      # netcat
-      # whois
-      # telnet
-      # hping
-      # nmap
-      # tcpdump
-      # nikto
-
+      netcat
+      inetutils
+      hping
+      nmap
+      tcpdump
+      nikto
     ];
   };
 

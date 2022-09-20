@@ -5,10 +5,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("950b1e8c8cd4a32b30cadc9d8b0eb6045538f0093dad8bdc1c24aaeeb64ed43d" "0d2882cc7dbb37de573f14fdf53472bcfb4ec76e3d2f20c9a93a7b2fe1677bf5" default))
+ '(custom-safe-themes t)
  '(package-selected-packages
-   '(nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(ripgrep org-modern nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -37,7 +36,7 @@
 
 (if (display-graphic-p)
     (progn (load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
-           ;(add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
+           (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
            ;(load-theme 'everforest-hard-dark t)
            )
   (progn
@@ -97,11 +96,13 @@
 (setq shr-use-fonts nil)
 (setq browse-url-handlers
       '( ;; use alist in browse-url-browser-function is deprecated
-        ("^https?://youtu\\.be" . browse-url-firefox)
-        ("^https?://youtube\\..+" . browse-url-firefox)
-        ("^https?://.*bilibili\\.com" . browse-url-firefox)
-        ("^https?://.*reddit\\.com" . browse-url-firefox)
-        ("^https?://github\\.com" . browse-url-firefox)
+        ("^https?://youtu\\.be"            . browse-url-firefox)
+        ("^https?://youtube\\..+"          . browse-url-firefox)
+        ("^https?://.*bilibili\\.com"      . browse-url-firefox)
+        ("^https?://.*reddit\\.com"        . browse-url-firefox)
+        ("^https?://github\\.com"          . browse-url-firefox)
+        ("^https?://.*stackoverflow\\.com" . browse-url-firefox)
+        ("^https?://.*stackexchange\\.com" . browse-url-firefox)
         ))
 
 
@@ -115,11 +116,6 @@
   (switch-to-buffer (get-buffer-create "*butterfly*"))
   (erase-buffer)
   (animate-string text 10))
-
-(defun minecraft ()
-  (interactive)
-  (start-process-shell-command "" "*scratch*"
-                               "cd ~/minecraft; java -jar HMCL*.jar"))
 
 (defun lambda-copy ()
   ;; https://caiorss.github.io/Emacs-Elisp-Programming/Elisp_Snippets.html#sec-1-5
@@ -138,9 +134,9 @@
     '((((background dark))  :foreground "#39C5BB" :bold t))
     "highlight ctf mark"
     :group 'basic-faces)
-  (highlight-regexp "// TODO\\|// BUG\\|todo!" 'todo)
-  (highlight-regexp "<%=\\|%>"                 'todo)
-  (highlight-regexp "// CTF"                   'ctf))
+  (highlight-regexp " TODO\\| BUG\\|todo!" 'todo)
+  (highlight-regexp "<%=\\|%>"             'todo)
+  (highlight-regexp " CTF"                 'ctf))
 (add-hook 'post-command-hook 'highlight-custom)
 
 (defun bili ($from $to)
@@ -211,6 +207,39 @@
   (global-evil-mc-mode 1))
 
 (use-package org
+  ;; https://emacs-china.org/t/org-mode-tag/22291
+  ;; https://list.orgmode.org/87lfh745ch.fsf@localhost/T/
+  :hook
+  ((org-mode . (lambda () (font-lock-add-keywords 'org-mode '(yant/org-align-tags) t)))
+   (org-mode . (lambda () (add-to-list 'font-lock-extra-managed-props 'org-tag-aligned))))
+  :init
+  (defun yant/org-align-tags (limit &optional force)
+    "Align all the tags in org buffer."
+    (save-match-data
+      (when (eq major-mode 'org-mode)
+	    (while (re-search-forward "^\\*+ \\(.+?\\)\\([ \t]+\\)\\(:\\(?:[^ \n]+:\\)+\\)$" limit t)
+	      (when (and (match-string 2)
+		             (or force (not (get-text-property (match-beginning 2) 'org-tag-aligned))))
+	        (with-silent-modifications
+              (put-text-property (match-beginning 2) (match-end 2) 'org-tag-aligned t)
+	          (put-text-property (if (>= 2 (- (match-end 2) (match-beginning 2)))
+				                     (match-beginning 2)
+				                   (1+ (match-beginning 2)))
+				                 (match-end 2)
+				                 'display
+				                 `(space . (:align-to (- right (,(+ 3  (string-display-pixel-width (or (match-string 3) ""))))))))))))))
+  (defun string-display-pixel-width (string &optional mode)
+    (with-temp-buffer
+      (with-silent-modifications
+        (setf (buffer-string) string))
+      (when (fboundp mode)
+        (funcall mode)
+        (font-lock-fontify-buffer))
+      (if (get-buffer-window (current-buffer))
+	      (car (window-text-pixel-size nil (line-beginning-position) (point)))
+        (set-window-buffer nil (current-buffer))
+        (car (window-text-pixel-size nil (line-beginning-position) (point))))))
+
   :config
   (setq org-startup-indented t)
   (setq org-return-follows-link t)  ; in insert mode
@@ -275,7 +304,7 @@
   (setq browse-url-browser-function 'browse-url-firefox)
   (setq elfeed-use-curl t)
   (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
-  (elfeed-search-set-filter "@2-weeks-ago")
+  (elfeed-search-set-filter "@2-weeks-ago -cve")
   (custom-set-faces
    '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
    '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
@@ -293,18 +322,12 @@
              (feed (elfeed-entry-feed entry))
              (feed-title (when feed (or (elfeed-meta feed :title) (elfeed-feed-title feed))))
              (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
-             (tags-str (mapconcat
-                        (lambda (s) (propertize s 'face 'elfeed-search-tag-face))
-                        tags ","))
+             (tags-str (mapconcat (lambda (s) (propertize s 'face 'elfeed-search-tag-face)) tags ","))
              (title-width (- (window-width) 10 elfeed-search-trailing-width))
              (title-column (elfeed-format-column
-                            title (elfeed-clamp
-                                   elfeed-search-title-min-width
-                                   title-width
-                                   elfeed-search-title-max-width)
+                            title (elfeed-clamp elfeed-search-title-min-width title-width elfeed-search-title-max-width)
                             :left))
-             (align-to (* (+ date-width 2 (min title-width elfeed-search-title-max-width))
-                          (default-font-width))))
+             (align-to (* (+ date-width 2 (min title-width elfeed-search-title-max-width)) (default-font-width))))
         (insert (propertize date 'face 'elfeed-search-date-face) " ")
         (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
         (valign--put-overlay (1- (point)) (point) 'display (valign--space align-to))
@@ -430,3 +453,5 @@
        (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
        "\n"
        ))
+
+(setq gc-cons-threshold (* 8 1024 1024))
