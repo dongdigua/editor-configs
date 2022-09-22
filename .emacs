@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(ripgrep org-modern nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(ement shr-tag-pre-highlight rainbow-mode ripgrep org-modern nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -35,9 +35,9 @@
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 
 (if (display-graphic-p)
-    (progn (load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
+    (progn ;(load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
-           ;(load-theme 'everforest-hard-dark t)
+           (load-theme 'everforest-hard-dark t)
            )
   (progn
     (load-theme 'tango-dark t)
@@ -187,6 +187,13 @@
       (setq browse-url-browser-function 'eww-browse-url)
       (message "browser switched to eww"))))
 
+(defun toggle-proxy ()
+  (interactive)
+  (if (eq url-proxy-services nil)
+      (setq url-proxy-services '(("http"  . "127.0.0.1:20172")
+                                 ("https" . "127.0.0.1:20172")))
+    (setq url-proxy-services nil)))
+
 
 
 ;; =========== ;;
@@ -207,41 +214,14 @@
   (global-evil-mc-mode 1))
 
 (use-package org
-  ;; https://emacs-china.org/t/org-mode-tag/22291
-  ;; https://list.orgmode.org/87lfh745ch.fsf@localhost/T/
-  :hook
-  ((org-mode . (lambda () (font-lock-add-keywords 'org-mode '(yant/org-align-tags) t)))
-   (org-mode . (lambda () (add-to-list 'font-lock-extra-managed-props 'org-tag-aligned))))
-  :init
-  (defun yant/org-align-tags (limit &optional force)
-    "Align all the tags in org buffer."
-    (save-match-data
-      (when (eq major-mode 'org-mode)
-	    (while (re-search-forward "^\\*+ \\(.+?\\)\\([ \t]+\\)\\(:\\(?:[^ \n]+:\\)+\\)$" limit t)
-	      (when (and (match-string 2)
-		             (or force (not (get-text-property (match-beginning 2) 'org-tag-aligned))))
-	        (with-silent-modifications
-              (put-text-property (match-beginning 2) (match-end 2) 'org-tag-aligned t)
-	          (put-text-property (if (>= 2 (- (match-end 2) (match-beginning 2)))
-				                     (match-beginning 2)
-				                   (1+ (match-beginning 2)))
-				                 (match-end 2)
-				                 'display
-				                 `(space . (:align-to (- right (,(+ 3  (string-display-pixel-width (or (match-string 3) ""))))))))))))))
-  (defun string-display-pixel-width (string &optional mode)
-    (with-temp-buffer
-      (with-silent-modifications
-        (setf (buffer-string) string))
-      (when (fboundp mode)
-        (funcall mode)
-        (font-lock-fontify-buffer))
-      (if (get-buffer-window (current-buffer))
-	      (car (window-text-pixel-size nil (line-beginning-position) (point)))
-        (set-window-buffer nil (current-buffer))
-        (car (window-text-pixel-size nil (line-beginning-position) (point))))))
-
+  ;; to make tags aligned:
+  ;; * https://emacs-china.org/t/org-mode-tag/22291
+  ;; ** https://list.orgmode.org/87lfh745ch.fsf@localhost/T/
+  ;; but it looks not satisfying and add a bit of lag, so I don't use it
   :config
   (setq org-startup-indented t)
+  (setq org-startup-with-inline-images t)
+  ;; org-display-remote-inline-images only works for trump
   (setq org-return-follows-link t)  ; in insert mode
   (setq browse-url-browser-function 'eww-browse-url))
 
@@ -266,15 +246,18 @@
   :if (and window-system (not (getenv "NO_DASHBOARD")))
   :config
   (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-startup-banner 'logo
+        ;; https://github.com/snackon/Witchmacs/blob/master/marivector.png
+        dashboard-banner-logo-png "~/.emacs.d/marisa.png"
+        dashboard-image-banner-max-width 256
+        dashboard-image-banner-max-hight 256)
   (setq dashboard-items '((recents . 7)
                           (bookmarks . 5)
                           (agenda . 3)))
   (setq org-agenda-files '("~/org/TODO.org"))
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "董地瓜@bilibili")
-  (setq dashboard-set-navigator t))
+  (setq dashboard-set-heading-icons t
+        dashboard-set-file-icons t)
+  (setq dashboard-banner-logo-title "董地瓜@bilibili"))
 
 (use-package smart-hungry-delete
   :defer 1
@@ -296,50 +279,6 @@
 (use-package valign
   :commands (valign--space valign--put-overlay)  ; autoload
   :hook (org-mode . valign-mode))
-
-(use-package elfeed
-  :defer t
-  :config
-  (elfeed-org)
-  (setq browse-url-browser-function 'browse-url-firefox)
-  (setq elfeed-use-curl t)
-  (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
-  (elfeed-search-set-filter "@2-weeks-ago -cve")
-  (custom-set-faces
-   '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
-   '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
-   '(elfeed-search-tag-face  ((t (:foreground "#66ccff")))))
-
-  ;; https://github.com/skeeto/elfeed/issues/404
-  ;; https://github.com/chuxubank/cat-emacs/blob/main/cats/+elfeed.el
-  (when (functionp #'valign--put-overlay)
-    (defun elfeed-search-print-valigned-entry (entry)
-      "Print valign-ed ENTRY to the buffer."
-      (let* ((date (elfeed-search-format-date (elfeed-entry-date entry)))
-             (date-width (car (cdr elfeed-search-date-format)))
-             (title (or (elfeed-meta entry :title) (elfeed-entry-title entry) ""))
-             (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
-             (feed (elfeed-entry-feed entry))
-             (feed-title (when feed (or (elfeed-meta feed :title) (elfeed-feed-title feed))))
-             (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
-             (tags-str (mapconcat (lambda (s) (propertize s 'face 'elfeed-search-tag-face)) tags ","))
-             (title-width (- (window-width) 10 elfeed-search-trailing-width))
-             (title-column (elfeed-format-column
-                            title (elfeed-clamp elfeed-search-title-min-width title-width elfeed-search-title-max-width)
-                            :left))
-             (align-to (* (+ date-width 2 (min title-width elfeed-search-title-max-width)) (default-font-width))))
-        (insert (propertize date 'face 'elfeed-search-date-face) " ")
-        (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
-        (valign--put-overlay (1- (point)) (point) 'display (valign--space align-to))
-        (when feed-title (insert (propertize feed-title 'face 'elfeed-search-feed-face) " "))
-        (when tags (insert "(" tags-str ")"))))
-    (setq elfeed-search-print-entry-function #'elfeed-search-print-valigned-entry)))
-
-(use-package elfeed-org
-  :defer t
-  :after elfeed
-  :config
-  (setq rmh-elfeed-org-files '("~/org/elfeed.org")))
 
 (use-package gud
   :defer t
@@ -373,24 +312,6 @@
   (("C-x c v" . clippy-describe-variable)
    ("C-x c f" . clippy-describe-function)))
 
-(use-package circe
-  ;; well I don't want to learn keybindings for other irc clients like weechat
-  ;; both erc and rcirc can't use sasl properly
-  ;; https://lists.gnu.org/archive/html/emacs-devel/2021-06/msg00876.html
-  :defer t
-  :config
-  (defun irc-password (server)
-    (read-passwd "password for irc: "))
-  (setq circe-network-options
-        '(("libera"
-           :host "irc.libera.chat"
-           :port 6697
-           :tls t
-           :sasl-username "dongdigua"
-           :sasl-password irc-password
-           :reduce-lurker-spam t)))
-  (company-mode nil))
-
 (use-package go-translate
   :bind
   ("C-x M-t" . gts-do-translate)
@@ -420,12 +341,17 @@
   (nyan-mode)
   (nyan-start-animation))
 
+(use-package rainbow-mode
+  :config
+  (setq rainbow-x-colors nil
+        rainbow-r-colors nil
+        rainbow-html-colors nil))
+
 ;; ===================== ;;
 ;; use-package/languages ;;
 ;; ===================== ;;
 (use-package web-mode
   ;; https://web-mode.org/
-  ;; for embeded elixir
   :config
   (setq web-mode-markup-indent-offset 2)
   (add-to-list 'auto-mode-alist '("\\.eex\\'"  . web-mode))
@@ -439,6 +365,83 @@
 (use-package nim-mode
   :config
   (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on" "--debuginfo:on")))
+
+;; ==================== ;;
+;; use-package/internet ;;
+;; ==================== ;;
+(use-package elfeed
+  :defer t
+  :config
+  (elfeed-org)
+  (setq browse-url-browser-function 'browse-url-firefox)
+  (setq elfeed-use-curl t)
+  (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
+  (elfeed-search-set-filter "@2-weeks-ago -cve")
+  ;; (custom-set-faces
+  ;;  '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
+  ;;  '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
+  ;;  '(elfeed-search-tag-face  ((t (:foreground "#66ccff")))))
+
+  ;; https://github.com/skeeto/elfeed/issues/404
+  ;; https://github.com/chuxubank/cat-emacs/blob/main/cats/+elfeed.el
+  (when (functionp #'valign--put-overlay)
+    (defun elfeed-search-print-valigned-entry (entry)
+      "Print valign-ed ENTRY to the buffer."
+      (let* ((date (elfeed-search-format-date (elfeed-entry-date entry)))
+             (date-width (car (cdr elfeed-search-date-format)))
+             (title (or (elfeed-meta entry :title) (elfeed-entry-title entry) ""))
+             (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+             (feed (elfeed-entry-feed entry))
+             (feed-title (when feed (or (elfeed-meta feed :title) (elfeed-feed-title feed))))
+             (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
+             (tags-str (mapconcat (lambda (s) (propertize s 'face 'elfeed-search-tag-face)) tags ","))
+             (title-width (- (window-width) 10 elfeed-search-trailing-width))
+             (title-column (elfeed-format-column
+                            title (elfeed-clamp elfeed-search-title-min-width title-width elfeed-search-title-max-width)
+                            :left))
+             (align-to (* (+ date-width 2 (min title-width elfeed-search-title-max-width)) (default-font-width))))
+        (insert (propertize date 'face 'elfeed-search-date-face) " ")
+        (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
+        (valign--put-overlay (1- (point)) (point) 'display (valign--space align-to))
+        (when feed-title (insert (propertize feed-title 'face 'elfeed-search-feed-face) " "))
+        (when tags (insert "(" tags-str ")"))))
+    (setq elfeed-search-print-entry-function #'elfeed-search-print-valigned-entry)))
+
+(use-package elfeed-org
+  :defer t
+  :after elfeed
+  :config
+  (setq rmh-elfeed-org-files '("~/org/elfeed.org")))
+
+(use-package circe
+  ;; well I don't want to learn keybindings for other irc clients like weechat
+  ;; both erc and rcirc can't use sasl properly
+  ;; https://lists.gnu.org/archive/html/emacs-devel/2021-06/msg00876.html
+  :defer t
+  :config
+  (defun irc-password (server)
+    (read-passwd "password for irc: "))
+  (setq circe-network-options
+        '(("libera"
+           :host "irc.libera.chat"
+           :port 6697
+           :tls t
+           :sasl-username "dongdigua"
+           :sasl-password irc-password
+           :reduce-lurker-spam t)))
+  (company-mode nil))
+
+(use-package shr-tag-pre-highlight
+  ;; render code block in eww
+  :after shr
+  :config
+  (add-to-list 'shr-external-rendering-functions
+               '(pre . shr-tag-pre-highlight)))
+
+(use-package ement
+  :config
+  (setq plz-curl-default-args
+        '("--proxy" "http://127.0.0.1:20172" "--silent" "--compressed" "--location" "--dump-header" "-")))
 
 
 
