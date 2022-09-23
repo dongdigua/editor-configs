@@ -231,8 +231,10 @@ exec {
 
 }
 # contents in .config/libinput-gestures.conf
-# gesture: swipe right 3 swaymsg workspace prev
-# gesture: swipe left 3  swaymsg workspace next
+# gesture: swipe right 3 .config/sway/scripts/workspace.sh prev
+# gesture: swipe left 3  .config/sway/scripts/workspace.sh next
+
+
 
 
 # DONOT TOUCH

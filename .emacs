@@ -192,7 +192,9 @@
   (if (eq url-proxy-services nil)
       (setq url-proxy-services '(("http"  . "127.0.0.1:20172")
                                  ("https" . "127.0.0.1:20172")))
-    (setq url-proxy-services nil)))
+    (progn
+      (setq url-proxy-services nil)
+      (message "no proxy"))))
 
 
 
