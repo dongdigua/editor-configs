@@ -225,7 +225,17 @@
   (setq org-startup-with-inline-images t)
   ;; org-display-remote-inline-images only works for trump
   (setq org-return-follows-link t)  ; in insert mode
-  (setq browse-url-browser-function 'eww-browse-url))
+  (setq browse-url-browser-function 'eww-browse-url)
+  ;; https://d12frosted.io/posts/2017-07-30-block-templates-in-org-mode.html
+  (setq org-structure-template-alist
+   '(("c" . "CENTER")
+     ("C" . "COMMENT")
+     ("e" . "EXAMPLE")
+     ("E" . "EXPORT")
+     ("q" . "QUOTE")
+     ("s" . "SRC")
+     ("v" . "VERSE")))
+  )
 
 (use-package expand-region
   ;; something like wildfire.vim
