@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(ement shr-tag-pre-highlight rainbow-mode ripgrep org-modern nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(gemini-mode ement shr-tag-pre-highlight rainbow-mode ripgrep org-modern nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -95,7 +95,7 @@
 
 (setq shr-use-fonts nil)
 (setq browse-url-handlers
-      '( ;; use alist in browse-url-browser-function is deprecated
+      '( ; use alist in browse-url-browser-function is deprecated
         ("^https?://youtu\\.be"            . browse-url-firefox)
         ("^https?://youtube\\..+"          . browse-url-firefox)
         ("^https?://.*bilibili\\.com"      . browse-url-firefox)
@@ -103,6 +103,7 @@
         ("^https?://github\\.com"          . browse-url-firefox)
         ("^https?://.*stackoverflow\\.com" . browse-url-firefox)
         ("^https?://.*stackexchange\\.com" . browse-url-firefox)
+        ("^https?://t\\.co"                . browse-url-firefox)
         ))
 
 
@@ -235,7 +236,17 @@
      ("q" . "QUOTE")
      ("s" . "SRC")
      ("v" . "VERSE")))
-  )
+
+  (defun my/orgurl (proto)
+    (defvar proto proto) ; vital
+    (org-link-set-parameters proto
+                             :follow #'elpher-go
+                             :export
+                             (lambda (link description format _)
+                               (let ((url (format "%s:%s" proto link)))
+                                 (format "<a href=\"%s\">%s</a>" url (or description url))))))
+  (my/orgurl "gopher")
+  (my/orgurl "gemini"))
 
 (use-package expand-region
   ;; something like wildfire.vim
@@ -378,6 +389,25 @@
   :config
   (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on" "--debuginfo:on")))
 
+(use-package gemini-mode
+  :config
+  (defun my/gemini-open-link-at-point ()
+    "modified version of the original function"
+    (interactive) ; vital for :map
+    (let ((link (gemini-link-at-point)))
+      (when link
+        (cond ((string-prefix-p "gemini://" link t)
+               (elpher-go link))
+              ((string-prefix-p "gopher://" link t)
+               (elpher-go link))
+              ((file-exists-p link)
+               (find-file link))
+              ((string-match "https?://" link)
+               (browse-url link))
+              (t (error "gemini-mode: invalid link %s" link))))))
+  :bind
+  (:map gemini-mode-map ("C-c C-o" . #'my/gemini-open-link-at-point)))
+
 ;; ==================== ;;
 ;; use-package/internet ;;
 ;; ==================== ;;
@@ -443,6 +473,11 @@
            :reduce-lurker-spam t)))
   (company-mode nil))
 
+(use-package eww
+  :config
+  (evil-define-key 'normal eww-mode-map (kbd "^") 'eww-back-url) ; like elpher
+  (evil-define-key 'normal eww-mode-map (kbd "&") 'eww-browse-with-external-browser))
+
 (use-package shr-tag-pre-highlight
   ;; render code block in eww
   :after shr
@@ -466,6 +501,8 @@
        (button-buttonize ";; (config)" (lambda (_) (find-file-existing "~/.emacs")))
        "\n"
        (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
+       "\n"
+       (button-buttonize ";; (gopher/gemini)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/gopher_collections.gmi")))
        "\n"
        ))
 
