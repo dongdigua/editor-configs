@@ -94,17 +94,6 @@
 (electric-pair-mode t)
 
 (setq shr-use-fonts nil)
-(setq browse-url-handlers
-      '( ; use alist in browse-url-browser-function is deprecated
-        ("^https?://youtu\\.be"            . browse-url-firefox)
-        ("^https?://youtube\\..+"          . browse-url-firefox)
-        ("^https?://.*bilibili\\.com"      . browse-url-firefox)
-        ("^https?://.*reddit\\.com"        . browse-url-firefox)
-        ("^https?://github\\.com"          . browse-url-firefox)
-        ("^https?://.*stackoverflow\\.com" . browse-url-firefox)
-        ("^https?://.*stackexchange\\.com" . browse-url-firefox)
-        ("^https?://t\\.co"                . browse-url-firefox)
-        ))
 
 
 
@@ -197,6 +186,15 @@
       (setq url-proxy-services nil)
       (message "no proxy"))))
 
+(defun toggle-shr-hl ()
+  (interactive)
+  (if shr-external-rendering-functions
+      (setq shr-external-rendering-functions nil)
+    (progn
+      (add-to-list 'shr-external-rendering-functions
+                   '(pre . shr-tag-pre-highlight))
+      (message "on"))))
+
 
 
 ;; =========== ;;
@@ -240,7 +238,7 @@
   (defun my/orgurl (proto)
     (defvar proto proto) ; vital
     (org-link-set-parameters proto
-                             :follow #'elpher-go
+                             :follow #'elpher-browse-url-elpher
                              :export
                              (lambda (link description format _)
                                (let ((url (format "%s:%s" proto link)))
@@ -474,8 +472,28 @@
   (company-mode nil))
 
 (use-package eww
+  :init
+  (message "eww init")
+  (setq browse-url-handlers
+        '( ; use alist in browse-url-browser-function is deprecated
+          ("^https?://youtu\\.be"            . browse-url-firefox)
+          ("^https?://.*youtube\\..+"        . browse-url-firefox)
+          ("^https?://.*bilibili\\.com"      . browse-url-firefox)
+          ("^https?://.*reddit\\.com"        . browse-url-firefox)
+          ("^https?://github\\.com"          . browse-url-firefox)
+          ("^https?://.*stackoverflow\\.com" . browse-url-firefox)
+          ("^https?://.*stackexchange\\.com" . browse-url-firefox)
+          ("^https?://t\\.co"                . browse-url-firefox)
+          ("^http://phrack\\.org"            . eww-browse-no-pre-hl)
+          ("gopher://.*"                     . elpher-browse-url-elpher)
+          ("gemini://.*"                     . elpher-browse-url-elpher)
+          ))
   :config
+  (defun eww-browse-no-pre-hl (url &optional new-window)
+    (eww-browse-url url new-window)
+    (setq-local shr-external-rendering-functions nil))
   (evil-define-key 'normal eww-mode-map (kbd "^") 'eww-back-url) ; like elpher
+  (evil-define-key 'normal eww-mode-map (kbd "C") 'eww-copy-page-url) ; like elpher
   (evil-define-key 'normal eww-mode-map (kbd "&") 'eww-browse-with-external-browser))
 
 (use-package shr-tag-pre-highlight

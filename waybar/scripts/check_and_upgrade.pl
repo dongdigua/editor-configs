@@ -22,13 +22,13 @@ else {
 
 sub DNFPackage {
     if (scalar(@_) == 0) {
-        system "doas dnf update";
+        system "echo n | doas dnf update";
         my $linenum = (`doas dnf check-update` =~ tr/\n//) - 1; # MAGIC from StackOverflow
         print "dnf: $linenum\n";
         return $linenum;
     }
     else {
-        print `doas dnf upgrade`
+        print `doas dnf upgrade -y`
     }
 }
 
