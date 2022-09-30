@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(gemini-mode ement shr-tag-pre-highlight rainbow-mode ripgrep org-modern nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -316,7 +316,7 @@
   (setq pyim-cloudim 'google)  ; I hate baidu
   (setq pyim-dicts
         '((:name "tsinghua" :file "~/git/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
-  (setq pyim-punctuation-translate-p '(no yes))
+  (setq-default pyim-punctuation-translate-p '(no yes))
   :bind
   ("C-|" . pyim-punctuation-toggle))
 
@@ -368,6 +368,10 @@
         rainbow-r-colors nil
         rainbow-html-colors nil))
 
+(use-package doom-modeline
+  :config
+  (doom-modeline-mode))
+
 ;; ===================== ;;
 ;; use-package/languages ;;
 ;; ===================== ;;
@@ -405,6 +409,10 @@
               (t (error "gemini-mode: invalid link %s" link))))))
   :bind
   (:map gemini-mode-map ("C-c C-o" . #'my/gemini-open-link-at-point)))
+
+(use-package sly
+  :config
+  (setq inferior-lisp-program "sbcl"))
 
 ;; ==================== ;;
 ;; use-package/internet ;;
@@ -473,7 +481,6 @@
 
 (use-package eww
   :init
-  (message "eww init")
   (setq browse-url-handlers
         '( ; use alist in browse-url-browser-function is deprecated
           ("^https?://youtu\\.be"            . browse-url-firefox)
@@ -520,7 +527,7 @@
        "\n"
        (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
        "\n"
-       (button-buttonize ";; (gopher/gemini)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/gopher_collections.gmi")))
+       (button-buttonize ";; (gopher/gemini)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/gmi/gopher_collections.gmi")))
        "\n"
        ))
 
