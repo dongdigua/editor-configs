@@ -23,11 +23,12 @@ too many plugins, just look at my config file<br>
 [miku](https://wallpapers.com/wallpapers/cute-blue-aesthetic-hatsune-miku-hd-8n3mld5aokfzhjn3.html)
     [i think this is better, but it's for mobile](https://wallpapers.com/wallpapers/cute-blue-aesthetic-hatsune-miku-hd-8n3mld5aokfzhjn3.html)<br>
 [crystal-water](https://www.reddit.com/r/wallpaper/comments/wid6qs/crystal_water_theme_1920x1080/)<br>
-[centos](https://wallpaperaccess.com/download/centos-2768386)<br>
+[centos7-bg](https://vault.centos.org/7.9.2009/os/Source/SPackages/centos-logos-70.0.6-3.el7.centos.src.rpm)<br>
 [plain-flower](https://www.reddit.com/r/unixporn/comments/wp3wpm/my_humble_desktop_bspwm)<br>
 [beautiful-ocean](https://www.reddit.com/r/wallpaper/comments/scz5i6/beautiful_ocean_19201080/)<br>
 [mikee](https://steamcommunity.com/sharedfiles/filedetails/?id=2018514041)<br>
 [golden-field](https://steamcommunity.com/sharedfiles/filedetails/?id=2581587068)<br>
+[centos9-motif](https://people.centos.org/areguera/backgrounds/c9/default/standard/hue-0.png)<br>
 
 # foot
 it's default config is easy to use, than other terminal<br>

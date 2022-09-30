@@ -200,7 +200,6 @@
 ;; =========== ;;
 ;; use-package ;;
 ;; =========== ;;
-;; https://phenix3443.github.io/notebook/emacs/modes/use-package-manual.html
 (use-package evil
   :init
   (evil-mode 1)
@@ -413,6 +412,10 @@
 (use-package sly
   :config
   (setq inferior-lisp-program "sbcl"))
+
+(use-package flycheck
+  :config
+  (setq flycheck-global-modes '(rust-mode)))
 
 ;; ==================== ;;
 ;; use-package/internet ;;
