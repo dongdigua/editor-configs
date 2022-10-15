@@ -1,0 +1,51 @@
+#+TITLE: Linux Kernel Config
+#+TODO: ADD(a) MODIFY(m) | TODO(t) REMOVE(r)
+
+* gentoo-vbox
+a Gentoo Virtualbox VM for practicing
+I'm trying to make this fast, small and radical
+as less driver as possible
+* fedora-laptop-intel
+a 11th gen intel laptop with intergrated graphics as daily OS
+I'm trying to make this fast and stable
+with almost every driver in the default config
+
+based on default config of Fedora Workstation
+
+** General setup
+*** ADD Build ID Salt
+*** Timers subsystem
+**** MODIFY Timer tick handling: tickless idle
+*** ADD Kernel .config support
+**** ADD /proc/config.gz
+*** TODO O3 if possible
+** Processor type and features
+*** REMOVE AMD stuff
+*** REMOVE Linux guest support
+because this is physical machine
+*** MODIFY Processor family: Intel Tiger Lake
+name for 11th gen
+*** REMOVE Reroute for broken boot IRQs
+legacy stuff
+*** REMOVE Enable 5-level page tables support
+that's for HUGE amount of memory
+*** MTRR cleanup support
+**** TODO MTRR cleanup enable value: ?
+*** REMOVE kexec stuff
+*** REMOVE kernel crash dumps
+** TODO Mitigations for speculative execution vulnerabilities
+** Virtualization
+*** REMOVE AMD stuff
+** Memory Management Options
+*** TODO Device memory hotplug support
+*** TODO Data Access Monitoring
+** Device Drivers
+*** REMOVE Parallel port support
+*** REMOVE Mecintosh device drivers
+*** TODO Graphics support
+**** REMOVE AMD NVIDIA
+**** REMOVE AST server chips
+**** REMOVE Matrox G200
+
+ 
+
