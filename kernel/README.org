@@ -14,6 +14,7 @@ based on default config of Fedora Workstation
 
 ** General setup
 *** ADD Build ID Salt
+*** MODIFY Kernel compression mode: LZ4
 *** Timers subsystem
 **** MODIFY Timer tick handling: tickless idle
 *** ADD Kernel .config support
@@ -36,6 +37,8 @@ that's for HUGE amount of memory
 ** TODO Mitigations for speculative execution vulnerabilities
 ** Virtualization
 *** REMOVE AMD stuff
+** Enable loadable module support
+*** REMOVE Automatically sign all modules
 ** Memory Management Options
 *** TODO Device memory hotplug support
 *** TODO Data Access Monitoring
@@ -44,8 +47,15 @@ that's for HUGE amount of memory
 *** REMOVE Mecintosh device drivers
 *** TODO Graphics support
 **** REMOVE AMD NVIDIA
+**** AGP support
+***** REMOVE AMD
 **** REMOVE AST server chips
 **** REMOVE Matrox G200
+**** REMOVE QXL virtual GPU
+*** Network device support
+**** Ethernet driver support
+only keep Realtek and Microsoft
+
 
  
 
