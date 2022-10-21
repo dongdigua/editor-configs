@@ -2,10 +2,12 @@
 #+TODO: ADD(a) MODIFY(m) | TODO(t) REMOVE(r)
 
 * gentoo-vbox
+*clear*
 a Gentoo Virtualbox VM for practicing
 I'm trying to make this fast, small and radical
 as less driver as possible
 * fedora-laptop-intel
+*xanmod*
 a 11th gen intel laptop with intergrated graphics as daily OS
 I'm trying to make this fast and stable
 with almost every driver in the default config
