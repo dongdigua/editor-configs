@@ -7,7 +7,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil)))
+   '(org-tree-slide ef-themes org2blog rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+ '(warning-suppress-types '((comp))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -224,6 +225,7 @@
   ;; org-display-remote-inline-images only works for trump
   (setq org-return-follows-link t)  ; in insert mode
   (setq browse-url-browser-function 'eww-browse-url)
+  (add-to-list 'org-export-backends 'md)
   ;; https://d12frosted.io/posts/2017-07-30-block-templates-in-org-mode.html
   (setq org-structure-template-alist
    '(("c" . "CENTER")
@@ -233,6 +235,8 @@
      ("q" . "QUOTE")
      ("s" . "SRC")
      ("v" . "VERSE")))
+
+  (evil-define-key 'normal org-mode-map [tab] 'org-cycle)
 
   (defun my/orgurl (proto)
     (defvar proto proto) ; vital
@@ -249,6 +253,7 @@
   ;; something like wildfire.vim
   :after evil-mc
   :config
+  ;; can't use :bind
   (global-set-key (kbd "C-<return>") 'er/expand-region))
 
 (use-package neotree
@@ -258,9 +263,9 @@
   ;; without this evil mode will conflict with neotree
   ;; ref: https://www.emacswiki.org/emacs/NeoTree
   (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
   (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-  (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle))
+  (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
+  (evil-define-key 'normal neotree-mode-map (kbd "<return>") 'neotree-enter))
 
 (use-package dashboard
   :if (and window-system (not (getenv "NO_DASHBOARD")))
@@ -281,9 +286,8 @@
 
 (use-package smart-hungry-delete
   :defer 1
-  :config
-  (global-set-key (kbd "C-<backspace>")
-                  'smart-hungry-delete-backward-char))
+  :bind
+  ("C-<backspace>" . 'smart-hungry-delete-backward-char))
 
 (use-package undo-tree
   :defer 1
@@ -427,7 +431,7 @@
   (setq browse-url-browser-function 'browse-url-firefox)
   (setq elfeed-use-curl t)
   (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
-  (elfeed-search-set-filter "@2-weeks-ago -cve")
+  (elfeed-search-set-filter "@2-weeks-ago -cve -weixin")
   ;; (custom-set-faces
   ;;  '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
   ;;  '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
@@ -530,7 +534,7 @@
        "\n"
        (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
        "\n"
-       (button-buttonize ";; (gopher/gemini)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/gmi/gopher_collections.gmi")))
+       (button-buttonize ";; (quote)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/js/random-quote.js")))
        "\n"
        ))
 
