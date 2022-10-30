@@ -1,5 +1,5 @@
 #+TITLE: Linux Kernel Config
-#+TODO: ADD(a) MODIFY(m) | TODO(t) REMOVE(r)
+#+TODO: ADD(a) MODIFY(m) | TODO(t) RM(r)
 
 * gentoo-vbox
 *clear*
@@ -21,42 +21,55 @@ based on default config of Fedora Workstation
 **** MODIFY Timer tick handling: tickless idle
 *** ADD Kernel .config support
 **** ADD /proc/config.gz
-*** TODO O3 if possible
+*** RM Profiling support
 ** Processor type and features
-*** REMOVE AMD stuff
-*** REMOVE Linux guest support
+*** RM AMD stuff
+*** RM Enable MPS table
+*** RM Linux guest support
 because this is physical machine
 *** MODIFY Processor family: Intel Tiger Lake
 name for 11th gen
-*** REMOVE Reroute for broken boot IRQs
+*** RM Cluster scheduler support
+*** RM Multi-core scheduler support
+*** RM Reroute for broken boot IRQs
 legacy stuff
-*** REMOVE Enable 5-level page tables support
+*** RM Machinie check injector support
+*** RM Enable 5-level page tables support
 that's for HUGE amount of memory
 *** MTRR cleanup support
-**** TODO MTRR cleanup enable value: ?
-*** REMOVE kexec stuff
-*** REMOVE kernel crash dumps
+**** MODIFY MTRR cleanup enable value: 1
+*** RM kexec stuff
+*** RM kernel crash dumps
 ** TODO Mitigations for speculative execution vulnerabilities
 ** Virtualization
-*** REMOVE AMD stuff
+*** RM AMD stuff
 ** Enable loadable module support
-*** REMOVE Automatically sign all modules
+*** RM Automatically sign all modules
 ** Memory Management Options
-*** TODO Device memory hotplug support
-*** TODO Data Access Monitoring
+*** RM Memory hotplug
+*** RM Data Access Monitoring
 ** Device Drivers
-*** REMOVE Parallel port support
-*** REMOVE Mecintosh device drivers
+*** RM Parallel port support
+*** RM Mecintosh device drivers
 *** TODO Graphics support
-**** REMOVE AMD NVIDIA
+**** RM AMD NVIDIA
 **** AGP support
-***** REMOVE AMD
-**** REMOVE AST server chips
-**** REMOVE Matrox G200
-**** REMOVE QXL virtual GPU
+***** RM AMD
+**** RM AST server chips
+**** RM Matrox G200
+**** RM QXL virtual GPU
 *** Network device support
 **** Ethernet driver support
-only keep Realtek and Microsoft
+only keep Realtek
+**** Wireless LAN
+only keep Intel iwlwifi
+*** RM Sonics Silicon Backplane support
+*** RM Boradcom specific AMBA
+*** RM Remote Controller support
+*** RM Sony MemoryStick card support
+*** RM InfiniBand support
+*** TODO X86 Platform Specific Device Drivers
+*** RM Mailbox Hardware Support
 
 
  
