@@ -58,6 +58,7 @@
     gnupg
     curl
     rsync
+    fzf
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
@@ -78,6 +79,7 @@
       foot
       emacs
       firefox
+      ffmpeg
 
       netcat
       inetutils
@@ -99,6 +101,7 @@
     { source = ~/git/configs/waybar;   target = "/home/nix/.config/waybar"; }
     { source = ~/git/configs/rofi;     target = "/home/nix/.config/rofi"; }
     { source = ~/Pictures/wallpaper/golden-field.png;                  target = "/home/nix/Pictures/wallpaper/golden-field.png"; }
+    { source = ~/git/dongdigua.github.io/index.html;                   target = "/home/nix/Documents/index.html"; }
     { source = ~/git/dongdigua.github.io/org/internet_collections.org; target = "/home/nix/Documents/internet_collections.org"; }
   ];
 }
