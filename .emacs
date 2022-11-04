@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(org-tree-slide ef-themes org2blog rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(org-tree-slide org2blog rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -392,7 +392,7 @@
 
 (use-package nim-mode
   :config
-  (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on" "--debuginfo:on")))
+  (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on" "--debuginfo:on" "--cc:clang")))
 
 (use-package gemini-mode
   :config
@@ -521,6 +521,11 @@
   :config
   (setq plz-curl-default-args
         '("--proxy" "http://127.0.0.1:20172" "--silent" "--compressed" "--location" "--dump-header" "-")))
+
+(use-package gnus
+  :defer t
+  :config
+  (setq gnus-select-method '(nntp "news.tilde.club")))
 
 
 
