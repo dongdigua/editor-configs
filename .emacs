@@ -296,6 +296,7 @@
   (setq undo-tree-auto-save-history nil))
 
 (use-package company
+  :if window-system
   :defer 2
   :config
   (global-company-mode))
@@ -540,6 +541,8 @@
        (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
        "\n"
        (button-buttonize ";; (quote)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/js/random-quote.js")))
+       "\n"
+       (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW")))
        "\n"
        ))
 

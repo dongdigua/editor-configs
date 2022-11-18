@@ -1,5 +1,5 @@
 # catppuccin cyan color is great
-format = "$elixir$rust$c$julia$nim$package[\\[$directory\b\\]─$nix_shell─ $git_status$character](cyan)"
+format = "$elixir$rust$c$julia$nim$package[\\[$directory\b\\]─$nix_shell─ $git_status$git_branch$character](cyan)"
 
 add_newline = false
 
@@ -16,6 +16,11 @@ style = "bold"
 
 [git_status]
 format = "(\b[\\[$all_status$ahead_behind\\]]($style))"
+
+[git_branch]
+symbol = ""
+format = "[$symbol$branch(:$remote_branch)]($style)"
+ignore_branches = ["master", "main"]
 
 [character]
 success_symbol = "[─](cyan)"
