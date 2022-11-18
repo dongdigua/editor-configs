@@ -59,6 +59,8 @@
     curl
     rsync
     fzf
+    ranger
+    testdisk
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
@@ -80,6 +82,7 @@
       emacs
       firefox
       ffmpeg
+      gparted
 
       netcat
       inetutils

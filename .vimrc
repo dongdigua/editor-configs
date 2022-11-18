@@ -1,6 +1,7 @@
                         " comments start at column 25 :)
 " General {
 set nu
+set nohls
 syntax on
 set encoding=utf-8
 set noswapfile
