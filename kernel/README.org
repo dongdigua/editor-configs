@@ -38,6 +38,7 @@ legacy stuff
 that's for HUGE amount of memory
 *** MTRR cleanup support
 **** MODIFY MTRR cleanup enable value: 1
+*** MODIFY TSX enable mode (on)
 *** RM kexec stuff
 *** RM kernel crash dumps
 ** TODO Mitigations for speculative execution vulnerabilities
@@ -48,8 +49,13 @@ that's for HUGE amount of memory
 ** Memory Management Options
 *** RM Memory hotplug
 *** RM Data Access Monitoring
+*** ADD Multi-Gen LRU
+**** ADD Enable by default
 ** Device Drivers
 *** RM Parallel port support
+*** NVME Support
+**** MODIFY NVM Express block device
+compile into kernel
 *** RM Mecintosh device drivers
 *** TODO Graphics support
 **** RM AMD NVIDIA
@@ -70,6 +76,10 @@ only keep Intel iwlwifi
 *** RM InfiniBand support
 *** TODO X86 Platform Specific Device Drivers
 *** RM Mailbox Hardware Support
+** File systems
+*** DOS/FAT/EXFAT/NT Filesystems
+**** MODIFY VFAT fs support
+compile into kernel
 
 
  
