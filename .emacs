@@ -72,12 +72,12 @@
 ;; ====== ;;
 ;; custom ;;
 ;; ====== ;;
-(setq make-backup-files nil)
-(setq auto-save-file-name-transforms
+(setq make-backup-files nil
+      auto-save-file-name-transforms
       '((".*" "~/.emacs.d/autosave/" t)))
 
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode nil)    ; must be setq-default
+(setq-default tab-width 4
+              indent-tabs-mode nil)    ; must be setq-default
 (setq backward-delete-char-untabify-method 'hungry)
 
 (setq display-line-numbers-type 'relative)    ; relative number, make d d easier
@@ -87,8 +87,8 @@
 (global-set-key [(f3)] 'neotree-toggle)
 (add-hook 'after-init-hook 'loop-alpha)
 
-(setq epa-file-cache-passphrase-for-symmetric-encryption t)
-(setq epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
+(setq epa-file-cache-passphrase-for-symmetric-encryption t
+      epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (ido-mode t)
@@ -220,11 +220,14 @@
   ;; ** https://list.orgmode.org/87lfh745ch.fsf@localhost/T/
   ;; but it looks not satisfying and add a bit of lag, so I don't use it
   :config
-  (setq org-startup-indented t)
-  (setq org-startup-with-inline-images t)
-  ;; org-display-remote-inline-images only works for trump
-  (setq org-return-follows-link t)  ; in insert mode
-  (setq browse-url-browser-function 'eww-browse-url)
+  (setq org-startup-indented t
+        org-startup-with-inline-images t
+        ;; org-display-remote-inline-images only works for trump
+        org-return-follows-link t  ; in insert mode
+        browse-url-browser-function 'eww-browse-url)
+
+  (setq org-catch-invisible-edits 'show)
+  
   (add-to-list 'org-export-backends 'md)
   ;; https://d12frosted.io/posts/2017-07-30-block-templates-in-org-mode.html
   (setq org-structure-template-alist
@@ -238,13 +241,12 @@
 
   (evil-define-key 'normal org-mode-map [tab] 'org-cycle)
 
-  (defun my/orgurl (proto)
-    (defvar proto proto) ; vital
-    (org-link-set-parameters proto
+  (defmacro my/orgurl (proto)
+    `(org-link-set-parameters ,proto
                              :follow #'elpher-browse-url-elpher
                              :export
                              (lambda (link description format _)
-                               (let ((url (format "%s:%s" proto link)))
+                               (let ((url (format "%s:%s" ,proto link)))
                                  (format "<a href=\"%s\">%s</a>" url (or description url))))))
   (my/orgurl "gopher")
   (my/orgurl "gemini"))
