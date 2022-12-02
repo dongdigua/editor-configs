@@ -11,8 +11,10 @@ as less driver as possible
 a 11th gen intel laptop with intergrated graphics as daily OS
 I'm trying to make this fast and stable
 with almost every driver in the default config
+I tryed to disable initrd, but it can't boot, so just keep it anyway
 
 based on default config of Fedora Workstation
+
 
 ** General setup
 *** ADD Build ID Salt
@@ -34,6 +36,7 @@ name for 11th gen
 *** RM Reroute for broken boot IRQs
 legacy stuff
 *** RM Machinie check injector support
+*** ADD Late microcode loading (DANGEROUS)
 *** RM Enable 5-level page tables support
 that's for HUGE amount of memory
 *** MTRR cleanup support
