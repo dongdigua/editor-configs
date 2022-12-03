@@ -1,0 +1,25 @@
+name: "buildiso"
+on:
+  push:
+    tags:
+      - 'iso*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install Nix
+      uses: cachix/install-nix-action@v18
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+
+    - name: Build
+      run: |
+        nix run github:nix-community/nixos-generators -f iso -c configuration.nix -o output
+
+    - name: Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "output/iso/nixos.iso"
