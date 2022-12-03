@@ -2,7 +2,7 @@ name: "buildiso"
 on:
   push:
     tags:
-      - 'iso*'
+      - 'iso-v*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +19,10 @@ jobs:
       run: |
         nix run github:nix-community/nixos-generators -- -f iso -c configuration.nix -o output
 
+    - name: Compress
+      run: sudo gzip -9 output/iso/nixos.iso
+
     - name: Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "output/iso/nixos.iso"
+        artifacts: "output/iso/nixos.iso.gz"
