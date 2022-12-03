@@ -17,7 +17,7 @@ jobs:
 
     - name: Build
       run: |
-        nix run github:nix-community/nixos-generators -f iso -c configuration.nix -o output
+        nix run github:nix-community/nixos-generators -- -f iso -c configuration.nix -o output
 
     - name: Release
       uses: ncipollo/release-action@v1
