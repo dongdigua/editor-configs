@@ -57,6 +57,7 @@
     git
     gnupg
     curl
+    aria2
     rsync
     fzf
     ranger

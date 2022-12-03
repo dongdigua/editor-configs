@@ -1,9 +1,3 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
-
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -228,7 +222,6 @@ exec_always {
 exec {
     wlsunset -s 18:00
     LANG=C activate-linux -f monocraft -x 450 -c 1-1-1-0.2
-
 }
 # contents in .config/libinput-gestures.conf
 # gesture: swipe right 3 .config/sway/scripts/workspace.sh prev
