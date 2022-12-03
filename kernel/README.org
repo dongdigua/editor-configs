@@ -45,6 +45,12 @@ that's for HUGE amount of memory
 *** RM kexec stuff
 *** RM kernel crash dumps
 ** TODO Mitigations for speculative execution vulnerabilities
+** Power Management and ACPI options
+*** CPU Frequency scaling
+**** RM 'powersave' governor
+**** RM 'userspace' governor for userspace frequency scaling
+**** RM 'ondemand' governor
+conservative is optimized for battery-powered env
 ** Virtualization
 *** RM AMD stuff
 ** Enable loadable module support
@@ -84,6 +90,4 @@ only keep Intel iwlwifi
 **** MODIFY VFAT fs support
 compile into kernel
 
-
- 
 

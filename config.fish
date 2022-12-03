@@ -1,0 +1,24 @@
+function fish_greeting
+    echo '( .-.)'
+    # cat ~/TODO.md
+end
+
+alias gdbtool="emacs --eval (gdb \"gdb -i=mi $argv\")&"
+alias lla="exa -alh --git --icons"
+alias trexa="exa --tree --git-ignore"
+alias t="trans -x 127.0.0.1:20171"  # I tried bing, but not asgoodas google
+alias neofetch='neofetch | sed "s/4.2/42./g"'
+alias gs="git status -sb"
+alias c=clear
+alias vifzf='vim $(fzf)'
+alias r=ranger
+alias bat='bat -p'
+alias e="emacs -nw"
+
+echo "all" | history delete --prefix "git commit" > /dev/null
+
+export EDITOR=vim
+export FZF_DEFAULT_COMMAND='rg --hidden --files'
+
+starship init fish | source
+zoxide   init fish | source
