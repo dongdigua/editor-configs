@@ -1,0 +1,63 @@
+diff --git a/waybar/config b/waybar/config
+index 89fc501..6a20f21 100644
+--- a/waybar/config
++++ b/waybar/config
+@@ -4,15 +4,8 @@
+     "modules-center": ["clock"],
+-    "modules-right": ["custom/wallpaper","backlight","pulseaudio","cpu","memory","tray","custom/power"],
++    "modules-right": ["backlight","pulseaudio","cpu","memory","tray","custom/power"],
+
+     "sway/workspaces": {
+         "disable-scroll": true,
+         "all-outputs": true,
+         "format": "{icon}",
+-        "format-icons": {
+-            "1": "",
+-            "2": "",
+-            "3": "E",
+-            "4": "",
+-            "5": ""
+-        }
+     },
+@@ -25,3 +18,3 @@
+         "format-icons": {
+-            "default": ["", "", ""]
++            "default": [":", ":", ":::"]
+         }
+@@ -34,4 +27,4 @@
+     "backlight": {
+         "tooltip": false,
+-        "format": " {}%",
++        "format": "* {}%",
+         "interval":1,
+@@ -45,13 +38,13 @@
+     "clock": {
+-        "format": "{: %I:%M %p   %d/%m/%Y}"
++        "format": "{%I:%M %p %d/%m/%Y}"
+     },
+     "cpu": {
+         "interval": 15,
+-        "format": " {}",
++        "format": "U {}",
+         "max-length": 10
+     },
+     "memory": {
+         "interval": 30,
+-        "format": " {}%",
++        "format": "M {}%",
+         "max-length": 10
+     },
+@@ -63,12 +56,6 @@
+     "custom/power":{
+         "tooltip": false,
+-        "format": " ⏻ ",
++        "format": " Q ",
+         "on-click": "rofi -show powermenu",
+     },
+-    "custom/wallpaper":{
+-        "tooltip": false,
+-        "format": "  ",
+-        // if use on-click, it will have a bug that all the bar is clickable
+-        "on-double-click": "~/.config/waybar/scripts/wallpaper.pl -random",
+-    },
+ }

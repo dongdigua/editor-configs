@@ -15,7 +15,18 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-unstable
 
-    - name: Build
+    - name: Get Files
+      run: |
+        curl -O https://github.com/dongdigua/dongdigua.github.io/raw/main/org/internet_collections.org
+        curl https://people.centos.org/areguera/backgrounds/c9/default/standard/hue-0.png -o centos9-motif.png
+
+    - name: Fallback Patch
+      run: |
+        ./fallbacks/rofi.sh
+        ./fallbacks/vim.sh
+        patch -p0 -F 10 < fallbacks/waybar.patch waybar/config
+
+    - name: Build ISO
       run: |
         nix run github:nix-community/nixos-generators -- -f iso -c configuration.nix -o output
 

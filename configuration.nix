@@ -111,13 +111,13 @@
 
 
   isoImage.contents = [
-    { source = ./.vimrc;   target = "/files/.vimrc"; }
-    { source = ./sway;     target = "/files/.config/sway"; }
-    { source = ./swaylock; target = "/files/.config/swaylock"; }
-    { source = ./waybar;   target = "/files/.config/waybar"; }
-    { source = ./rofi;     target = "/files/.config/rofi"; }
-    # { source = ./Pictures/wallpaper/centos9-motif.png;                 target = "/files/Pictures/wallpaper/centos9-motif.png"; }
-    # { source = ./git/dongdigua.github.io/index.html;                   target = "/files/Documents/index.html"; }
-    # { source = ./git/dongdigua.github.io/org/internet_collections.org; target = "/files/Documents/internet_collections.org"; }
+    { source = ./.emacs;                   target = "/files/.emacs"; }
+    { source = ./.vimrc;                   target = "/files/.vimrc"; }
+    { source = ./sway;                     target = "/files/.config/sway"; }
+    { source = ./swaylock;                 target = "/files/.config/swaylock"; }
+    { source = ./waybar;                   target = "/files/.config/waybar"; }
+    { source = ./rofi;                     target = "/files/.config/rofi"; }
+    { source = ./centos9-motif.png;        target = "/files/Pictures/wallpaper/centos9-motif.png"; }
+    { source = ./internet_collections.org; target = "/files/Documents/internet_collections.org"; }
   ];
 }
