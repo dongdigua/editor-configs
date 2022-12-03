@@ -12,7 +12,7 @@
     description = "Copy home contents from iso";
     serviceConfig = {
       Type = "forking";
-      ExecStartPre = "${pkgs.rsync}/bin/rsync -r /iso/home/nix/ /home/nix";
+      ExecStartPre = "${pkgs.rsync}/bin/rsync -r /iso/files/ /home/nix";
       ExecStart = "${pkgs.coreutils}/bin/chown -R nix /home/nix";
       ExecStartPost = "/run/booted-system/sw/bin/sudo -u nix ${pkgs.coreutils}/bin/chmod -R 710 /home/nix";
       ExecStop = "";
@@ -21,7 +21,7 @@
 
   systemd.services.update-channel = {
     enable = true;
-    wantedBy = [ "default.target" ]; 
+    wantedBy = [ "default.target" ];
     after = [ "network.target" "network-online.target" ];
     description = "Update channel";
     serviceConfig = {
@@ -49,6 +49,11 @@
 
   # https://mirrors.tuna.tsinghua.edu.cn/help/nix/
   nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+  # nixpkgs.overlays = [
+  #   (import (builtins.fetchTarball {
+  #     url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+  #   }))
+  # ];
 
   environment.systemPackages = with pkgs; [
     nyancat
@@ -62,10 +67,20 @@
     fzf
     ranger
     testdisk
+
+    emacs
+    # (emacsWithPackagesFromUsePackage {
+    #   config = ./.emacs;
+
+    #   defaultInitFile = true;
+    #   alwaysEnsure = true;
+    # })
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
-  
+  # https://nixos.wiki/wiki/Linux_kernel
+  # boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
   programs.xwayland.enable = pkgs.lib.mkForce false; # well, seems it can't do this, unlike gentoo
   programs.sway = {
     enable = true;
@@ -80,8 +95,8 @@
       slurp
       wl-clipboard
       foot
-      emacs
       firefox
+      vlc
       ffmpeg
       gparted
 
@@ -96,16 +111,13 @@
 
 
   isoImage.contents = [
-    { source = ~/git/configs/.emacs;   target = "/home/nix/.emacs"; }
-    { source = ~/.emacs.d/elpa;        target = "/home/nix/.emacs.d/elpa"; }
-    { source = ~/git/configs/.vimrc;   target = "/home/nix/.vimrc"; }
-    { source = ~/.vim;                 target = "/home/nix/.vim"; }
-    { source = ~/git/configs/sway;     target = "/home/nix/.config/sway"; }
-    { source = ~/git/configs/swaylock; target = "/home/nix/.config/swaylock"; }
-    { source = ~/git/configs/waybar;   target = "/home/nix/.config/waybar"; }
-    { source = ~/git/configs/rofi;     target = "/home/nix/.config/rofi"; }
-    { source = ~/Pictures/wallpaper/golden-field.png;                  target = "/home/nix/Pictures/wallpaper/golden-field.png"; }
-    { source = ~/git/dongdigua.github.io/index.html;                   target = "/home/nix/Documents/index.html"; }
-    { source = ~/git/dongdigua.github.io/org/internet_collections.org; target = "/home/nix/Documents/internet_collections.org"; }
+    { source = ./.vimrc;   target = "/files/.vimrc"; }
+    { source = ./sway;     target = "/files/.config/sway"; }
+    { source = ./swaylock; target = "/files/.config/swaylock"; }
+    { source = ./waybar;   target = "/files/.config/waybar"; }
+    { source = ./rofi;     target = "/files/.config/rofi"; }
+    # { source = ./Pictures/wallpaper/centos9-motif.png;                 target = "/files/Pictures/wallpaper/centos9-motif.png"; }
+    # { source = ./git/dongdigua.github.io/index.html;                   target = "/files/Documents/index.html"; }
+    # { source = ./git/dongdigua.github.io/org/internet_collections.org; target = "/files/Documents/internet_collections.org"; }
   ];
 }
