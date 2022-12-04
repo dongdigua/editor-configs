@@ -31,9 +31,11 @@ jobs:
         nix run github:nix-community/nixos-generators -- -f iso -c configuration.nix -o output
 
     - name: Compress
-      run: sudo gzip -9 output/iso/nixos.iso
+      run: |
+        sudo apt install p7zip-full
+        sudo 7z a -sdel -mx=9 iso.7z output/iso/nixos.iso
 
     - name: Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "output/iso/nixos.iso.gz"
+        artifacts: "iso.7z"

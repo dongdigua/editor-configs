@@ -43,9 +43,11 @@
     password = "nixos";
     isNormalUser = true;
     home = "/home/nix";
-    extraGroups = [ "wheel" "video" ];
+    extraGroups = [ "wheel" "disk" "audio" "video" "input" "systemd-journal" "networkmanager" "network" ];
   };
 
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
 
   # https://mirrors.tuna.tsinghua.edu.cn/help/nix/
   nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
@@ -67,6 +69,8 @@
     fzf
     ranger
     testdisk
+    p7zip
+    doas
 
     emacs
     # (emacsWithPackagesFromUsePackage {
@@ -85,7 +89,9 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = false;
+    extraSessionCommands = "export WLR_NO_HARDWARE_CURSORS=1";
     extraPackages = with pkgs; [
+      # sway addition
       waybar
       mako
       rofi-wayland
@@ -95,17 +101,32 @@
       slurp
       wl-clipboard
       foot
+
+      # tools
       firefox
       vlc
       ffmpeg
       gparted
 
+      # development
+      clang
+      llvm
+      gdb
+      gnumake
+      elixir
+
+      # net
       netcat
       inetutils
       hping
       nmap
       tcpdump
+
+      # hack
       nikto
+      metasploit
+      radare2
+      wifite2
     ];
   };
 
