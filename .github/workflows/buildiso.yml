@@ -24,18 +24,15 @@ jobs:
       run: |
         ./fallbacks/rofi.sh
         ./fallbacks/vim.sh
+        ./fallbacks/emacs.sh
+        ./fallbacks/sway.sh
         patch -p0 -F 10 < fallbacks/waybar.patch waybar/config
 
     - name: Build ISO
       run: |
         nix run github:nix-community/nixos-generators -- -f iso -c configuration.nix -o output
 
-    - name: Compress
-      run: |
-        sudo apt install p7zip-full
-        sudo 7z a -sdel -mx=9 iso.7z output/iso/nixos.iso
-
     - name: Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "iso.7z"
+        artifacts: "output/iso/nixos.iso"

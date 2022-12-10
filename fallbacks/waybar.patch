@@ -33,7 +33,7 @@ index 89fc501..6a20f21 100644
 @@ -45,13 +38,13 @@
      "clock": {
 -        "format": "{: %I:%M %p   %d/%m/%Y}"
-+        "format": "{%I:%M %p %d/%m/%Y}"
++        "format": "{:%I:%M %p %d/%m/%Y}"
      },
      "cpu": {
          "interval": 15,

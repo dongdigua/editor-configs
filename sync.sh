@@ -5,7 +5,6 @@ cp ~/.tmux.conf                        .
 cp ~/.nethackrc                        .
 cp ~/.config/starship.toml             .
 cp ~/.config/fish/config.fish          .
-cp ~/nixos/configuration.nix           .
 cp -r ~/.config/sway/*                 sway/
 cp -r ~/.config/waybar/*               waybar/
 cp ~/.config/swaylock/*                swaylock/

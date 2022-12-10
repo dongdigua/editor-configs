@@ -33,7 +33,7 @@
   };
 
   networking = {
-    firewall.allowedTCPPorts = [ 22 80 ];
+    firewall.allowedTCPPorts = [ 22 80 1965 2333 ];
     hostName = "nixos";
   };
   time.timeZone = "Asia/Shanghai";
@@ -48,6 +48,10 @@
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  security.doas = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
 
   # https://mirrors.tuna.tsinghua.edu.cn/help/nix/
   nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
@@ -58,19 +62,29 @@
   # ];
 
   environment.systemPackages = with pkgs; [
-    nyancat
-    neofetch
+    # basic
     vim
     git
-    gnupg
     curl
+    doas
+    killall
+
+    # util
+    neofetch
+    gnupg
     aria2
     rsync
     fzf
     ranger
     testdisk
     p7zip
-    doas
+    htop
+    lftp
+    ripgrep
+
+    # fun
+    nyancat
+    nethack
 
     emacs
     # (emacsWithPackagesFromUsePackage {
@@ -95,7 +109,6 @@
       waybar
       mako
       rofi-wayland
-      swaylock
       activate-linux
       grim
       slurp
@@ -103,10 +116,13 @@
       foot
 
       # tools
-      firefox
+      tor # replace firefox
       vlc
       ffmpeg
       gparted
+      pandoc
+      feh
+      frp
 
       # development
       clang
@@ -114,6 +130,10 @@
       gdb
       gnumake
       elixir
+      rustup
+      racket
+      binutils
+      minicom
 
       # net
       netcat
@@ -121,12 +141,15 @@
       hping
       nmap
       tcpdump
+      gnunet
 
       # hack
       nikto
       metasploit
       radare2
       wifite2
+      freerdp
+      python310Packages.scapy
     ];
   };
 
