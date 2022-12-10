@@ -13,8 +13,6 @@ set list                " 显示换行符
 " General }
 
 " Keys {
-nmap <f3> :NERDTreeToggle<CR>
-nmap '' :PlugInstall<CR>
 " Keys }
 
 " Format {
@@ -26,6 +24,10 @@ set expandtab
 filetype plugin indent on
 autocmd FileType elixir setlocal shiftwidth=2 softtabstop=2 expandtab
 " Format }
+
+" Color {
+hi Normal ctermfg=252 ctermbg=none
+" Color }
 
 " Plug {
 call plug#begin('~/.vim/plugged')
@@ -41,14 +43,14 @@ Plug 'mg979/vim-visual-multi'
 Plug 'sainnhe/everforest'
 Plug 'rhysd/vim-color-spring-night'
 call plug#end()
-" Plug }
 
-" Color {
+nmap <f3> :NERDTreeToggle<CR>
+nmap '' :PlugInstall<CR>
+
 colorscheme everforest
 set background=dark
 let g:everforest_transparent_background=1
-hi Normal ctermfg=252 ctermbg=none
-" Color }
+" Plug }
 
 " GUI {
 " set lines=30 columns=140

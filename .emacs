@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(org-tree-slide org2blog rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(yaml-mode org-tree-slide org2blog rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -35,15 +35,17 @@
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 
+;; theme-start
 (if (display-graphic-p)
     (progn ;(load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
            (load-theme 'everforest-hard-dark t)
            )
   (progn
-    (load-theme 'tango-dark t)
+    (load-theme 'zenburn t)
     (custom-set-faces
      '(default ((t (:background "unspecified-bg" :foreground "#eeeeec")))))))
+;; theme-end
 
 ;; set transparent effect
 ;; 其中前一个指定当 Emacs 在使用中时的透明度, 而后一个则指定其它应用在使用中时 Emacs 的透明度
@@ -203,6 +205,8 @@
 ;; =========== ;;
 (use-package evil
   :init
+  ;; https://emacstalk.github.io/post/025/
+  (setq evil-want-C-i-jump nil)
   (evil-mode 1)
   :bind
   ("C-r" . isearch-backward))
@@ -227,7 +231,7 @@
         browse-url-browser-function 'eww-browse-url)
 
   (setq org-catch-invisible-edits 'show)
-  
+
   (add-to-list 'org-export-backends 'md)
   ;; https://d12frosted.io/posts/2017-07-30-block-templates-in-org-mode.html
   (setq org-structure-template-alist
@@ -238,8 +242,6 @@
      ("q" . "QUOTE")
      ("s" . "SRC")
      ("v" . "VERSE")))
-
-  (evil-define-key 'normal org-mode-map [tab] 'org-cycle)
 
   (defmacro my/orgurl (proto)
     `(org-link-set-parameters ,proto
@@ -497,7 +499,7 @@
           ("^https?://.*youtube\\..+"        . browse-url-firefox)
           ("^https?://.*bilibili\\.com"      . browse-url-firefox)
           ("^https?://.*reddit\\.com"        . browse-url-firefox)
-          ("^https?://github\\.com"          . browse-url-firefox)
+          ("^https?://.*github\\.com"        . browse-url-firefox)
           ("^https?://.*stackoverflow\\.com" . browse-url-firefox)
           ("^https?://.*stackexchange\\.com" . browse-url-firefox)
           ("^https?://t\\.co"                . browse-url-firefox)
