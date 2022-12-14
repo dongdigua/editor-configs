@@ -72,6 +72,7 @@
     # util
     neofetch
     gnupg
+    signify
     aria2
     rsync
     fzf
@@ -97,7 +98,8 @@
 
   # https://nixos.wiki/wiki/Linux_kernel
   # boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  # boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_hardened;
 
   programs.xwayland.enable = pkgs.lib.mkForce false; # well, seems it can't do this, unlike gentoo
   programs.sway = {
@@ -129,9 +131,9 @@
       llvm
       gdb
       gnumake
-      elixir
-      rustup
-      racket
+      elixir # 600MiB, but I must have this
+      rustup # rust itself is 2GiB
+      #racket-minimal # 400MiB, need this for slideshow, full is 900MiB
       binutils
       minicom
 
