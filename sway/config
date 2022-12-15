@@ -43,8 +43,8 @@ input "type:keyboard" {
 #
     # Start a terminal
     bindsym $mod+Return exec $term
-    # seems working
     bindsym $mod+x      exec NO_DASHBOARD=true emacs
+    bindsym $mod+Alt+x  exec emacs
     # Start a terminal, floating
     bindsym $mod+Shift+Return exec $term -T=dropdown-terminal
     for_window [title="dropdown-terminal"] floating enable
@@ -221,7 +221,7 @@ exec_always {
 }
 exec {
     wlsunset -s 18:00
-    LANG=C activate-linux -f monocraft -x 450 -c 1-1-1-0.2
+    activate-linux -c 1-1-1-0.3
 }
 # contents in .config/libinput-gestures.conf
 # gesture: swipe right 3 .config/sway/scripts/workspace.sh prev

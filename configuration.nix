@@ -86,6 +86,7 @@
     # fun
     nyancat
     nethack
+    av-98
 
     emacs
     # (emacsWithPackagesFromUsePackage {
@@ -105,7 +106,7 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = false;
-    extraSessionCommands = "export WLR_NO_HARDWARE_CURSORS=1";
+    extraSessionCommands = "export WLR_NO_HARDWARE_CURSORS=1 TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1";
     extraPackages = with pkgs; [
       # sway addition
       waybar
@@ -118,7 +119,10 @@
       foot
 
       # tools
-      tor # replace firefox
+      tor # as a replacement of firefox:
+          # TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1 (I set this by default bcause of GFW)
+          # network.proxy.type -> 0
+          # network.dns.disabled -> false
       vlc
       ffmpeg
       gparted
