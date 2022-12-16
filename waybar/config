@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["custom/launcher","sway/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["custom/wallpaper","backlight","pulseaudio","cpu","memory","tray","custom/power"],
+    "modules-right": ["battery","backlight","pulseaudio","cpu","memory","tray","custom/power"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -65,10 +65,13 @@
         "format": " ⏻ ",
         "on-click": "rofi -show powermenu",
     },
-    "custom/wallpaper":{
-        "tooltip": false,
-        "format": "  ",
-        // if use on-click, it will have a bug that all the bar is clickable
-        "on-double-click": "~/.config/waybar/scripts/wallpaper.pl -random",
+    "battery": {
+        "interval": 120,
+        "states": {
+            "warning": 30,
+            "critical": 15,
+        },
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""],
     },
 }

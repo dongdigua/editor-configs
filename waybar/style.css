@@ -30,7 +30,6 @@
 @define-color workspacesfocused #4d5c78;
 @define-color network #5D7096;
 @define-color layout #5e81ac;
-@define-color battery #88c0d0;
 @define-color nord_bg #434C5E;
 @define-color nord_bg_blue #546484;
 
@@ -190,7 +189,7 @@
     background: @nord_bg_blue;
 }
 #battery {
-    background: @battery;
+    background: @nord_bg_blue;
 }
 #backlight {
     background: @mode;
@@ -221,7 +220,7 @@
     background: @nord_bg;
 }
 #custom-power {
-    background: @battery;
+    background: #88c0d0;
     color: @critical;
 }
 #custom-launcher {

@@ -80,7 +80,6 @@
     testdisk
     p7zip
     htop
-    lftp
     ripgrep
 
     # fun

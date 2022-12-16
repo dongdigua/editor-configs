@@ -225,6 +225,7 @@
   ;; but it looks not satisfying and add a bit of lag, so I don't use it
   :config
   (setq org-startup-indented t
+        org-src-preserve-indentation t
         org-startup-with-inline-images t
         ;; org-display-remote-inline-images only works for trump
         org-return-follows-link t  ; in insert mode
