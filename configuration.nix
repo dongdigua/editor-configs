@@ -54,7 +54,7 @@
   };
 
   # https://mirrors.tuna.tsinghua.edu.cn/help/nix/
-  nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+  # nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
   # nixpkgs.overlays = [
   #   (import (builtins.fetchTarball {
   #     url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
@@ -86,6 +86,7 @@
     nyancat
     nethack
     av-98
+    libsixel
 
     emacs
     # (emacsWithPackagesFromUsePackage {
@@ -118,10 +119,11 @@
       foot
 
       # tools
-      tor # as a replacement of firefox:
-          # TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1 (I set this by default bcause of GFW)
-          # network.proxy.type -> 0
-          # network.dns.disabled -> false
+      tor-browser-bundle-bin # as a replacement of firefox, add 200MiB of tor
+      # TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1 (I set this by default bcause of GFW)
+      # network.proxy.type -> 0
+      # network.dns.disabled -> false
+      w3m
       vlc
       ffmpeg
       gparted
@@ -130,8 +132,7 @@
       frp
 
       # development
-      clang
-      llvm
+      tinycc # clang is too large
       gdb
       gnumake
       elixir # 600MiB, but I must have this
@@ -152,7 +153,9 @@
       nikto
       metasploit
       radare2
-      wifite2
+      #wifite2 # need pyrit, so just use aircrack to capture
+      aircrack-ng
+      macchanger
       freerdp
       python310Packages.scapy
     ];
@@ -162,11 +165,16 @@
   isoImage.contents = [
     { source = ./.emacs;                   target = "/files/.emacs"; }
     { source = ./.vimrc;                   target = "/files/.vimrc"; }
+    { source = ./.nethackrc;               target = "/files/.nethackrc"; }
     { source = ./sway;                     target = "/files/.config/sway"; }
     { source = ./swaylock;                 target = "/files/.config/swaylock"; }
     { source = ./waybar;                   target = "/files/.config/waybar"; }
     { source = ./rofi;                     target = "/files/.config/rofi"; }
+    # by downloading
     { source = ./centos9-motif.png;        target = "/files/Pictures/wallpaper/centos9-motif.png"; }
     { source = ./internet_collections.org; target = "/files/Documents/internet_collections.org"; }
+    # fallbacks
+    { source = ./fallbacks/min-pkg.el;     target = "/files/min-pkg.el"; }
+    { source = ./fallbacks/foot.ini;       target = "/files/.config/foot/foot.ini"; }
   ];
 }
