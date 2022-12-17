@@ -69,6 +69,15 @@
                         ("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 (package-initialize)
 
+(defmacro setup-what-pkg (what)
+  ;; https://liujiacai.net/blog/2021/05/05/emacs-package
+  `(progn
+     (when (not package-archive-contents)
+       (package-refresh-contents))
+     (when (not (package-installed-p ,what))
+       (package-install ,what))))
+
+(defun setup-full-pkg () (interactive) (setup-what-pkg package-selected-packages))
 
 
 ;; ====== ;;
@@ -547,7 +556,7 @@
        "\n"
        (button-buttonize ";; (quote)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/js/random-quote.js")))
        "\n"
-       (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW")))
+       (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW/source")))
        "\n"
        ))
 

@@ -49,6 +49,7 @@ input "type:keyboard" {
     bindsym $mod+Shift+Return exec $term -T=dropdown-terminal
     for_window [title="dropdown-terminal"] floating enable
     for_window [title="dropdown-terminal"] border csd
+    bindsym $mod+Ctrl+Return exec $term fish
 
     # Kill focused window
     bindsym $mod+Shift+q kill

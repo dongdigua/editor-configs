@@ -42,6 +42,7 @@ Plug 'gcmt/wildfire.vim'
 Plug 'mg979/vim-visual-multi'
 Plug 'sainnhe/everforest'
 Plug 'rhysd/vim-color-spring-night'
+Plug 'hachy/eva01.vim' " Evangelion!
 call plug#end()
 
 nmap <f3> :NERDTreeToggle<CR>
