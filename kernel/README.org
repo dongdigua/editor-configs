@@ -1,6 +1,8 @@
 #+TITLE: Linux Kernel Config
 #+TODO: ADD(a) MODIFY(m) | TODO(t) RM(r)
+#+OPTIONS: toc:1 num:nil
 
+source: [[https://github.com/dongdigua/configs/tree/main/kernel]]
 for a better rendered version, see [[https://dongdigua.github.io/kernel]]
 
 * gentoo-vbox
@@ -17,130 +19,131 @@ with almost every driver in the default config
 I tryed to disable initrd, but it can't boot, so just keep it anyway
 
 based on default config of Fedora Workstation
+changes are below:
 
 
-** General setup
-*** RM Compile test UAPI headers
-*** ADD Build ID Salt
-*** Kernel compression mode (ZSTD)
-*** RM KUnit test for kernel/time functions
-*** Timers subsystem
-**** MODIFY Timer tick handling: tickless idle
-*** Preemption Model
-**** MODIFY Low-Latency Desktop
-*** ADD Kernel .config support
-**** ADD /proc/config.gz
-*** RM Profiling support
+* General setup
+** RM Compile test UAPI headers
+** ADD Build ID Salt
+** Kernel compression mode (ZSTD)
+** RM KUnit test for kernel/time functions
+** Timers subsystem
+*** MODIFY Timer tick handling: tickless idle
+** Preemption Model
+*** MODIFY Low-Latency Desktop
+** ADD Kernel .config support
+*** ADD /proc/config.gz
+** RM Profiling support
 
-** Processor type and features
-*** RM AMD stuff
-*** RM Enable MPS table
-*** RM Support for extended (non-PC) x86 platforms
-*** RM Linux guest support
+* Processor type and features
+** RM AMD stuff
+** RM Enable MPS table
+** RM Support for extended (non-PC) x86 platforms
+** RM Linux guest support
 because this is physical machine
-*** MODIFY Processor family: Intel Tiger Lake
+** MODIFY Processor family: Intel Tiger Lake
 name for 11th gen
-*** RM Cluster scheduler
-*** RM Multi-core scheduler
-*** RM Reroute for broken boot IRQs
+** RM Cluster scheduler
+** RM Multi-core scheduler
+** RM Reroute for broken boot IRQs
 legacy stuff
-*** RM Support for deprecated /dev/mcelog character device
-*** RM Machinie check injector
-*** TODO Late microcode loading (DANGEROUS)
+** RM Support for deprecated /dev/mcelog character device
+** RM Machinie check injector
+** TODO Late microcode loading (DANGEROUS)
 I see Intel's ClearLinux doing this
-*** RM Enable 5-level page tables
+** RM Enable 5-level page tables
 that's for HUGE amount of memory
-*** MTRR cleanup support
-**** MODIFY MTRR cleanup enable value: 1
-*** MODIFY TSX enable mode (on)
-*** RM kexec stuff
-*** RM kernel crash dumps
+** MTRR cleanup support
+*** MODIFY MTRR cleanup enable value: 1
+** MODIFY TSX enable mode (on)
+** RM kexec stuff
+** RM kernel crash dumps
 
-** TODO Mitigations for speculative execution vulnerabilities
-** Power Management and ACPI options
-*** RM Power Management Debug Support
-*** CPU Frequency scaling
-**** MODIFY Default CPUFreq governor (performance)
+* TODO Mitigations for speculative execution vulnerabilities
+* Power Management and ACPI options
+** RM Power Management Debug Support
+** CPU Frequency scaling
+*** MODIFY Default CPUFreq governor (performance)
 I think I need performance at boot
-**** RM 'powersave' governor
-**** RM 'userspace' governor for userspace frequency scaling
-**** RM 'ondemand' governor
+*** RM 'powersave' governor
+*** RM 'userspace' governor for userspace frequency scaling
+*** RM 'ondemand' governor
 conservative is optimized for battery-powered env
 
-** Virtualization
-*** RM AMD stuff
+* Virtualization
+** RM AMD stuff
 
-** Enable loadable module support
-*** RM Automatically sign all modules
-*** MODIFY Module compression mode (ZSTD)
+* Enable loadable module support
+** RM Automatically sign all modules
+** MODIFY Module compression mode (ZSTD)
 
-** Enable the block layer
-*** RM Leagacy autoloading support
+* Enable the block layer
+** RM Leagacy autoloading support
 
-** Executable file formats
-*** RM Kernel support for MISC binaries
+* Executable file formats
+** RM Kernel support for MISC binaries
 
-** Memory Management Options
-*** RM Memory hotplug
-*** RM Data Access Monitoring
-*** ADD Multi-Gen LRU
-**** ADD Enable by default
+* Memory Management Options
+** RM Memory hotplug
+** RM Data Access Monitoring
+** ADD Multi-Gen LRU
+*** ADD Enable by default
 
-** Networking support
-*** RM Bluetooth subsystem
-*** RM NFC subsystem
+* Networking support
+** RM Bluetooth subsystem
+** RM NFC subsystem
 
-** Device Drivers
-*** RM GNSS receiver
-*** RM Memory Technology Device (MTD)
-*** RM Parallel port
-*** NVME Support
-**** MODIFY NVM Express block device
+* Device Drivers
+** RM GNSS receiver
+** RM Memory Technology Device (MTD)
+** RM Parallel port
+** NVME Support
+*** MODIFY NVM Express block device
 compile into kernel
-*** RM IEEE 1394 (FireWire)
-*** RM Mecintosh device drivers
-*** Network device support
-**** Ethernet driver support
+** RM IEEE 1394 (FireWire)
+** RM Mecintosh device drivers
+** Network device support
+*** Ethernet driver support
 only keep Realtek
-**** Wireless LAN
+*** Wireless LAN
 only keep Intel iwlwifi
-*** RM Sonics Silicon Backplane
-*** RM Boradcom specific AMBA
-*** RM Remote Controller
-*** Character devices
-**** RM Xilly
-*** RM Dalla's 1-wire
-*** TODO Graphics support
-**** RM AMD NVIDIA
-**** RM Lapto Hybrid Graphics - GPU switching
-**** AGP support
+** RM Sonics Silicon Backplane
+** RM Boradcom specific AMBA
+** RM Remote Controller
+** Character devices
+*** RM Xilly
+** RM Dalla's 1-wire
+** TODO Graphics support
+*** RM AMD NVIDIA
+*** RM Lapto Hybrid Graphics - GPU switching
+*** AGP support
 only intel
-**** RM DRM driver for VMware Virtual GPU
+*** RM DRM driver for VMware Virtual GPU
 =vmgfx.ko=
-**** RM DisplayLink
-**** RM AST
-**** RM Matrox
-**** RM QXL
-**** RM Virtio GPU driver
-**** RM (qemu stdvga)
-**** RM MIPI DBI compatible panel
-**** RM Cirrus driver for QEMU emulated device
-**** RM GM12U320
-**** RM Virtual Box Graphics Card
-**** RM GUD USB Display
-**** RM Solomon SSD130x OLED
-*** Sound card support
-**** TODO ALSA
-*** RM Sony MemoryStick card
-*** RM Accessibility
-*** RM InfiniBand
-*** TODO X86 Platform Specific Device Drivers
-*** RM Microsoft Surface 
-*** RM Mailbox Hardware
-*** RM Industrial I/O
+*** RM DisplayLink
+*** RM AST
+*** RM Matrox
+*** RM QXL
+*** RM Virtio GPU driver
+*** RM (qemu stdvga)
+*** RM MIPI DBI compatible panel
+*** RM Cirrus driver for QEMU emulated device
+*** RM GM12U320
+*** RM Virtual Box Graphics Card
+*** RM GUD USB Display
+*** RM Solomon SSD130x OLED
+** Sound card support
+*** TODO ALSA
+** RM Sony MemoryStick card
+** RM Accessibility
+** RM InfiniBand
+** TODO X86 Platform Specific Device Drivers
+** RM Microsoft Surface
+** RM Mailbox Hardware
+** RM Industrial I/O
 
-** File systems
-*** Reiserfs (deprecated)
-*** DOS/FAT/EXFAT/NT Filesystems
-**** MODIFY VFAT fs support
+* File systems
+** Reiserfs (deprecated)
+** DOS/FAT/EXFAT/NT Filesystems
+*** MODIFY VFAT fs support
 compile into kernel

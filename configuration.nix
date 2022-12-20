@@ -43,7 +43,7 @@
     password = "nixos";
     isNormalUser = true;
     home = "/home/nix";
-    extraGroups = [ "wheel" "disk" "audio" "video" "input" "systemd-journal" "networkmanager" "network" ];
+    extraGroups = [ "wheel" "disk" "audio" "video" "input" "systemd-journal" "networkmanager" "network" "gnunet" ];
   };
 
   sound.enable = true;
@@ -81,12 +81,14 @@
     p7zip
     htop
     ripgrep
+    w3m
 
     # fun
     nyancat
     nethack
     av-98
     libsixel
+    weechat
 
     emacs
     # (emacsWithPackagesFromUsePackage {
