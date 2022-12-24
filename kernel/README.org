@@ -94,53 +94,8 @@ conservative is optimized for battery-powered env
 ** RM NFC subsystem
 
 * Device Drivers
-** RM GNSS receiver
-** RM Memory Technology Device (MTD)
-** RM Parallel port
-** NVME Support
-*** MODIFY NVM Express block device
-compile into kernel
-** RM IEEE 1394 (FireWire)
-** RM Mecintosh device drivers
-** Network device support
-*** Ethernet driver support
-only keep Realtek
-*** Wireless LAN
-only keep Intel iwlwifi
-** RM Sonics Silicon Backplane
-** RM Boradcom specific AMBA
-** RM Remote Controller
-** Character devices
-*** RM Xilly
-** RM Dalla's 1-wire
-** TODO Graphics support
-*** RM AMD NVIDIA
-*** RM Lapto Hybrid Graphics - GPU switching
-*** AGP support
-only intel
-*** RM DRM driver for VMware Virtual GPU
-=vmgfx.ko=
-*** RM DisplayLink
-*** RM AST
-*** RM Matrox
-*** RM QXL
-*** RM Virtio GPU driver
-*** RM (qemu stdvga)
-*** RM MIPI DBI compatible panel
-*** RM Cirrus driver for QEMU emulated device
-*** RM GM12U320
-*** RM Virtual Box Graphics Card
-*** RM GUD USB Display
-*** RM Solomon SSD130x OLED
-** Sound card support
-*** TODO ALSA
-** RM Sony MemoryStick card
-** RM Accessibility
-** RM InfiniBand
-** TODO X86 Platform Specific Device Drivers
-** RM Microsoft Surface
-** RM Mailbox Hardware
-** RM Industrial I/O
+=make localyesconfig=
+ALSA : <M>
 
 * File systems
 ** Reiserfs (deprecated)
