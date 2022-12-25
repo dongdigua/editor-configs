@@ -7,7 +7,6 @@ cp ~/.config/starship.toml             .
 cp ~/.config/fish/config.fish          .
 cp -r ~/.config/sway/*                 sway/
 cp -r ~/.config/waybar/*               waybar/
-cp ~/.config/swaylock/*                swaylock/
 cp ~/.config/rofi/*                    rofi/
 cp ~/.config/qutebrowser/config.py     qutebrowser/
 cp ~/.config/qutebrowser/home.html     qutebrowser/

@@ -125,7 +125,7 @@
       # TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1 (I set this by default bcause of GFW)
       # network.proxy.type -> 0
       # network.dns.disabled -> false
-      w3m
+      pcmanfm
       vlc
       ffmpeg
       gparted
@@ -169,7 +169,6 @@
     { source = ./.vimrc;                   target = "/files/.vimrc"; }
     { source = ./.nethackrc;               target = "/files/.nethackrc"; }
     { source = ./sway;                     target = "/files/.config/sway"; }
-    { source = ./swaylock;                 target = "/files/.config/swaylock"; }
     { source = ./waybar;                   target = "/files/.config/waybar"; }
     { source = ./rofi;                     target = "/files/.config/rofi"; }
     # by downloading

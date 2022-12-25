@@ -1,9 +1,18 @@
 #+TITLE: Linux Kernel Config
-#+TODO: ADD(a) MODIFY(m) | TODO(t) RM(r)
+#+TODO: ADD(a) MODIFY(m) MOD(d) | TODO(t) RM(r) PATCH(p)
 #+OPTIONS: toc:1 num:nil
 
 source: [[https://github.com/dongdigua/configs/tree/main/kernel]]
 for a better rendered version, see [[https://dongdigua.github.io/kernel]]
+
+* Ref
+** [[https://github.com/Frogging-Family/linux-tkg]]
+** [[http://www.kroah.com/lkn/][Linux Kernel in a Nutshell]]
+** [[https://www.zhihu.com/column/c_1271625347856310272][医学生折腾 Gentoo Linux 记 (5/13)]]
+** [[https://www.bilibili.com/video/BV1G24y1d7D8][EndlessPeak (2)]]
+** [[https://www.bilibili.com/video/BV1oA411j7KV][猴哥: 乐享 Linux 生活第十期，把玩 Linux 内核，各种补丁]]
+** [[https://hackmd.io/@foxhoundsk/bore-sched][foxhoundsk: BORE]]
+
 
 * gentoo-vbox
 *clear/Zen*
@@ -15,10 +24,9 @@ as less driver as possible
 *xanmod*
 a 11th gen intel laptop with intergrated graphics as daily OS
 I'm trying to make this fast and stable
-with almost every driver in the default config
 I tryed to disable initrd, but it can't boot, so just keep it anyway
 
-based on default config of Fedora Workstation
+based on default config of Fedora Workstation and =localyesconfig=
 changes are below:
 
 
@@ -33,6 +41,9 @@ changes are below:
 *** MODIFY Low-Latency Desktop
 ** ADD Kernel .config support
 *** ADD /proc/config.gz
+** Scheduler features
+*** PATCH [[https://github.com/firelzrd/bore-scheduler][BORE]]
+*** TODO [[https://gitlab.com/alfredchen/projectc/][Project C]]
 ** RM Profiling support
 
 * Processor type and features
@@ -44,22 +55,25 @@ because this is physical machine
 ** MODIFY Processor family: Intel Tiger Lake
 name for 11th gen
 ** RM Cluster scheduler
-** RM Multi-core scheduler
 ** RM Reroute for broken boot IRQs
 legacy stuff
 ** RM Support for deprecated /dev/mcelog character device
 ** RM Machinie check injector
-** TODO Late microcode loading (DANGEROUS)
+** RM Late microcode loading (DANGEROUS)
 I see Intel's ClearLinux doing this
+but seems newer CPU don't need this and is "dangerous"
+*** [[https://lore.kernel.org/lkml/165442137983.152751.6786767046026742462.tglx@xen13/]]
 ** RM Enable 5-level page tables
 that's for HUGE amount of memory
 ** MTRR cleanup support
 *** MODIFY MTRR cleanup enable value: 1
 ** MODIFY TSX enable mode (on)
+** MODIFY Timer frequency (500 HZ)
 ** RM kexec stuff
 ** RM kernel crash dumps
 
 * TODO Mitigations for speculative execution vulnerabilities
+
 * Power Management and ACPI options
 ** RM Power Management Debug Support
 ** CPU Frequency scaling
@@ -92,13 +106,18 @@ conservative is optimized for battery-powered env
 * Networking support
 ** RM Bluetooth subsystem
 ** RM NFC subsystem
+** Networking Options
+*** ADD IP: tunneling
+*** MODIFY TCP: Advanced congestion control
+BBR(2?)
 
 * Device Drivers
 =make localyesconfig=
-ALSA : <M>
+** MOD ALSA
+** Network device support
+*** Wireless LAN
+**** MOD iwlwifi
+if compile into kernel, you need to put firmware in-kernel
 
-* File systems
-** Reiserfs (deprecated)
-** DOS/FAT/EXFAT/NT Filesystems
-*** MODIFY VFAT fs support
-compile into kernel
+* TODO File systems
+** ADD DOS/FAT/EXFAT/NT Filesystems
