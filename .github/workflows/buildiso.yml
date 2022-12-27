@@ -25,8 +25,8 @@ jobs:
         ./fallbacks/rofi.sh
         ./fallbacks/vim.sh
         ./fallbacks/emacs.sh
-        ./fallbacks/sway.sh
-        patch -p0 -F 10 < fallbacks/waybar.patch waybar/config
+        patch -p0 < fallbacks/sway.patch   sway/config
+        patch -p0 < fallbacks/waybar.patch waybar/config
 
     - name: Build ISO
       run: |

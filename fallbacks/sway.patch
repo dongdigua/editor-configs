@@ -1,0 +1,12 @@
+diff --git a/sway/config b/sway/config
+index ea36934..b83f066 100644
+--- a/sway/config
++++ b/sway/config
+@@ -219,7 +219,4 @@ seat seat0 xcursor_theme Oxygen_White
+ exec_always {
+     mako
+-    /usr/libexec/polkit-gnome-authentication-agent-1
+-    libinput-gestures
+-    rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
+ }
+ exec {

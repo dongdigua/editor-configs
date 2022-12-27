@@ -108,7 +108,7 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = false;
-    extraSessionCommands = "export WLR_NO_HARDWARE_CURSORS=1 TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1";
+    extraSessionCommands = "export WLR_NO_HARDWARE_CURSORS=1 MOZ_ENABLE_WAYLAND=1 TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1";
     extraPackages = with pkgs; [
       # sway addition
       waybar
@@ -121,10 +121,13 @@
       foot
 
       # tools
-      tor-browser-bundle-bin # as a replacement of firefox, add 200MiB of tor
-      # TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1 (I set this by default bcause of GFW)
-      # network.proxy.type -> 0
-      # network.dns.disabled -> false
+      (tor-browser-bundle-bin.override {
+        useHardenedMalloc = false; # https://github.com/NixOS/nixpkgs/issues/146401
+        # as a replacement of firefox, add 200MiB of tor
+        # TOR_SKIP_LAUNCH=1 TOR_TRANSPROXY=1 (I set this by default bcause of GFW)
+        # network.proxy.type -> 0
+        # network.dns.disabled -> false
+      })
       pcmanfm
       vlc
       ffmpeg
@@ -137,6 +140,7 @@
       tinycc # clang is too large
       gdb
       gnumake
+      lua
       elixir # 600MiB, but I must have this
       rustup # rust itself is 2GiB
       #racket-minimal # 400MiB, need this for slideshow, full is 900MiB
