@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(yaml-mode org-tree-slide org2blog rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(nasm-mode yaml-mode org-tree-slide org2blog rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -74,8 +74,9 @@
   `(progn
      (when (not package-archive-contents)
        (package-refresh-contents))
-     (when (not (package-installed-p ,what))
-       (package-install ,what))))
+     (dolist (p ,what)
+       (when (not (package-installed-p p))
+         (package-install p)))))
 
 (defun setup-full-pkg () (interactive) (setup-what-pkg package-selected-packages))
 
@@ -189,7 +190,7 @@
       (setq browse-url-browser-function 'eww-browse-url)
       (message "browser switched to eww"))))
 
-(defun toggle-proxy ()
+(defun proxy ()
   (interactive)
   (if (eq url-proxy-services nil)
       (setq url-proxy-services '(("http"  . "127.0.0.1:20172")
@@ -436,6 +437,11 @@
   :config
   (setq flycheck-global-modes '(rust-mode)))
 
+(use-package nasm-mode
+  ;; https://vishnudevtj.github.io/notes/assembly-in-emacs
+  :config
+  (add-hook 'asm-mode-hook 'nasm-mode))
+
 ;; ==================== ;;
 ;; use-package/internet ;;
 ;; ==================== ;;
@@ -508,6 +514,7 @@
           ("^https?://youtu\\.be"            . browse-url-firefox)
           ("^https?://.*youtube\\..+"        . browse-url-firefox)
           ("^https?://.*bilibili\\.com"      . browse-url-firefox)
+          ("^https?://.*zhihu\\.com"         . browse-url-firefox)
           ("^https?://.*reddit\\.com"        . browse-url-firefox)
           ("^https?://.*github\\.com"        . browse-url-firefox)
           ("^https?://.*stackoverflow\\.com" . browse-url-firefox)

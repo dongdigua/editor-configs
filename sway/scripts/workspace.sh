@@ -6,6 +6,11 @@ if [ $1 == "prev" ]; then
     TO_WORKSPACE=$(expr $CUR_WORKSPACE - 1)
 elif [ $1 == "next" ]; then
     TO_WORKSPACE=$(expr $CUR_WORKSPACE + 1)
+elif [ $1 == "sov" ]; then
+    echo 1 > /tmp/sovpipe
+    sleep 2
+    echo 0 > /tmp/sovpipe
+    exit # vital
 fi
 
 if [ $TO_WORKSPACE -eq 11 ]; then

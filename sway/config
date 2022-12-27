@@ -220,16 +220,12 @@ exec_always {
     mako
     /usr/libexec/polkit-gnome-authentication-agent-1
     libinput-gestures
+    rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
 }
 exec {
     wlsunset -s 18:00
     # activate-linux -c 1-1-1-0.3
 }
-# contents in .config/libinput-gestures.conf
-# gesture: swipe right 3 .config/sway/scripts/workspace.sh prev
-# gesture: swipe left 3  .config/sway/scripts/workspace.sh next
-
-
 
 
 # DONOT TOUCH
