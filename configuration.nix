@@ -55,11 +55,11 @@
 
   # https://mirrors.tuna.tsinghua.edu.cn/help/nix/
   # nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
-  # nixpkgs.overlays = [
-  #   (import (builtins.fetchTarball {
-  #     url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-  #   }))
-  # ];
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
 
   environment.systemPackages = with pkgs; [
     # basic
@@ -90,13 +90,7 @@
     libsixel
     weechat
 
-    emacs
-    # (emacsWithPackagesFromUsePackage {
-    #   config = ./.emacs;
-
-    #   defaultInitFile = true;
-    #   alwaysEnsure = true;
-    # })
+    emacsPgtk
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
@@ -119,6 +113,7 @@
       slurp
       wl-clipboard
       foot
+      light
 
       # tools
       (tor-browser-bundle-bin.override {

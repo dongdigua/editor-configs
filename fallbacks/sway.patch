@@ -7,6 +7,6 @@ index ea36934..b83f066 100644
      mako
 -    /usr/libexec/polkit-gnome-authentication-agent-1
 -    libinput-gestures
--    rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
  }
  exec {
+-    rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov

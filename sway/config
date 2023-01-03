@@ -220,9 +220,9 @@ exec_always {
     mako
     /usr/libexec/polkit-gnome-authentication-agent-1
     libinput-gestures
-    rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
 }
 exec {
+    rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
     wlsunset -s 18:00
     # activate-linux -c 1-1-1-0.3
 }

@@ -31,11 +31,11 @@
 ;(add-to-list 'default-frame-alist '(width . 80))  ; 设定启动图形界面时的Frame宽度
 ;(add-to-list 'default-frame-alist '(height . 40)) ; 设定启动图形界面时的Frame高度
 
+;; theme-start
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 
-;; theme-start
 (if (display-graphic-p)
     (progn ;(load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
@@ -497,7 +497,7 @@
   :config
   (setq erc-modules
         ;; customize and copy to here
-        '(autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track))
+        '(button completion fill irccontrols log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track truncate))
   (erc-update-modules)
   (setq erc-log-channels-directory "~/.emacs.d/erc-log")
   (defun erc-connect ()
@@ -505,8 +505,7 @@
       (erc-tls :server "irc.libera.chat" :port 6697
                :nick "dongdigua"
                :user "dongdigua"
-               ))
-  )
+               )))
 
 (use-package eww
   :init

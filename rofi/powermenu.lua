@@ -1,4 +1,4 @@
-#!/usr/bin/env luajit
+#!/usr/bin/env lua
 
 -- Use a list because table keys are randomly sorted
 -- It's also easier to add options or edit them this way
