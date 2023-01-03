@@ -69,6 +69,7 @@ that's for HUGE amount of memory
 *** MODIFY MTRR cleanup enable value: 1
 ** MODIFY TSX enable mode (on)
 ** MODIFY Timer frequency (500 HZ)
+xanmod default
 ** RM kexec stuff
 ** RM kernel crash dumps
 

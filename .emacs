@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(nasm-mode yaml-mode org-tree-slide org2blog rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region circe selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(rfc-mode nasm-mode yaml-mode org-tree-slide rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -47,18 +47,13 @@
      '(default ((t (:background "unspecified-bg" :foreground "#eeeeec")))))))
 ;; theme-end
 
-;; set transparent effect
-;; 其中前一个指定当 Emacs 在使用中时的透明度, 而后一个则指定其它应用在使用中时 Emacs 的透明度
-(setq alpha-list '((90 80) (100 100) (70 40)))
-(defun loop-alpha ()
-  (interactive)
-  (let ((h (car alpha-list)))
-    ((lambda (a ab)
-       (set-frame-parameter (selected-frame) 'alpha (list a ab))
-       (add-to-list 'default-frame-alist (cons 'alpha (list a ab))))
-     (car h) (car (cdr h)))
-    (setq alpha-list (cdr (append alpha-list (list h))))))
+;; set transparent effect (29)
+(add-to-list 'default-frame-alist '(alpha-background . 90))
 
+;; native smooth scrolling (29)
+(pixel-scroll-precision-mode)
+;; normally it is for touchpad, enable for mouse:
+(setq pixel-scroll-precision-large-scroll-height 40.0)
 
 
 ;; =============== ;;
@@ -94,10 +89,6 @@
 
 (setq display-line-numbers-type 'relative)    ; relative number, make d d easier
 (global-display-line-numbers-mode)
-
-(global-set-key [(f8)] 'loop-alpha)
-(global-set-key [(f3)] 'neotree-toggle)
-(add-hook 'after-init-hook 'loop-alpha)
 
 (setq epa-file-cache-passphrase-for-symmetric-encryption t
       epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
@@ -272,6 +263,8 @@
   (global-set-key (kbd "C-<return>") 'er/expand-region))
 
 (use-package neotree
+  :init
+  (global-set-key [(f3)] 'neotree-toggle)
   :defer t
   :config
   (setq neo-theme (if (display-graphic-p) 'icons))
@@ -325,6 +318,7 @@
   :config
   (setq gdb-many-windows t)
   (defalias 'dasm 'gdb-display-disassembly-buffer)
+  (company-mode 0) ; gdb will crash
   (tool-bar-mode t))
 
 (use-package pyim
@@ -391,6 +385,10 @@
   :config
   (doom-modeline-mode))
 
+(use-package rfc-mode
+  :config
+  (setq rfc-mode-directory (expand-file-name "~/.emacs.d/rfc/")))
+
 ;; ===================== ;;
 ;; use-package/languages ;;
 ;; ===================== ;;
@@ -403,6 +401,10 @@
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
 
 (use-package rust-mode
+  :config
+  (defun rust-t (fun)
+    (interactive "sfun: ")
+    (rust--compile "%s test -- --nocapture %s" rust-cargo-bin fun))
   :bind
   ("C-c C-c c" . rust-compile))
 
@@ -489,23 +491,22 @@
   :config
   (setq rmh-elfeed-org-files '("~/org/elfeed.org")))
 
-(use-package circe
-  ;; well I don't want to learn keybindings for other irc clients like weechat
-  ;; both erc and rcirc can't use sasl properly
-  ;; https://lists.gnu.org/archive/html/emacs-devel/2021-06/msg00876.html
+(use-package erc
+  ;; sasl support! (29)
   :defer t
   :config
-  (defun irc-password (server)
-    (read-passwd "password for irc: "))
-  (setq circe-network-options
-        '(("libera"
-           :host "irc.libera.chat"
-           :port 6697
-           :tls t
-           :sasl-username "dongdigua"
-           :sasl-password irc-password
-           :reduce-lurker-spam t)))
-  (company-mode nil))
+  (setq erc-modules
+        ;; customize and copy to here
+        '(autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track))
+  (erc-update-modules)
+  (setq erc-log-channels-directory "~/.emacs.d/erc-log")
+  (defun erc-connect ()
+      (interactive)
+      (erc-tls :server "irc.libera.chat" :port 6697
+               :nick "dongdigua"
+               :user "dongdigua"
+               ))
+  )
 
 (use-package eww
   :init
@@ -563,7 +564,7 @@
        "\n"
        (button-buttonize ";; (quote)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/js/random-quote.js")))
        "\n"
-       (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW/source")))
+       (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW")))
        "\n"
        ))
 
