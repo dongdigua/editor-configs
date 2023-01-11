@@ -79,6 +79,7 @@
     ranger
     testdisk
     p7zip
+    pigz
     htop
     ripgrep
     w3m

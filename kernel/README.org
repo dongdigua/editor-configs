@@ -78,12 +78,10 @@ xanmod default
 * Power Management and ACPI options
 ** RM Power Management Debug Support
 ** CPU Frequency scaling
+=intel_pstate= have internal governor
 *** MODIFY Default CPUFreq governor (performance)
 I think I need performance at boot
-*** RM 'powersave' governor
 *** RM 'userspace' governor for userspace frequency scaling
-*** RM 'ondemand' governor
-conservative is optimized for battery-powered env
 
 * Virtualization
 ** RM AMD stuff

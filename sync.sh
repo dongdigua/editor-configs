@@ -4,6 +4,7 @@ cp ~/.emacs                            .
 cp ~/.tmux.conf                        .
 cp ~/.nethackrc                        .
 cp ~/.config/starship.toml             .
+cp ~/.config/libinput-gestures.conf    .
 cp ~/.config/fish/config.fish          .
 cp -r ~/.config/sway/*                 sway/
 cp -r ~/.config/waybar/*               waybar/
