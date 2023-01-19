@@ -1,5 +1,5 @@
 # 我的一些配置
-Emacs 和 Vim 双料特工
+Emacs 和 Nvim 双料特工
 
 # emacs
 too many plugins, just look at my config file<br>

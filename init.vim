@@ -1,4 +1,3 @@
-                        " comments start at column 25 :)
 " General {
 set nu
 set nohls
@@ -48,9 +47,14 @@ call plug#end()
 nmap <f3> :NERDTreeToggle<CR>
 nmap '' :PlugInstall<CR>
 
+if has('termguicolors')
+    " important!
+    set termguicolors
+endif
+
+let g:everforest_transparent_background=2
 colorscheme everforest
 set background=dark
-let g:everforest_transparent_background=1
 " Plug }
 
 " GUI {
@@ -61,5 +65,12 @@ set guioptions-=L
 set guioptions-=r
 set guioptions-=b
 set guioptions-=e
-set guifont=JetBrainsMono\ Nerd\ Font\ 16   " in linux
+set guifont=JetBrainsMono\ Nerd\ Font:h15  " in linux
+
+if exists("g:neovide")
+    let g:everforest_transparent_background=0
+    colorscheme everforest
+    let g:neovide_cursor_vfx_mode = "railgun"
+    let g:neovide_transparency = 0.9
+endif
 " GUI }

@@ -63,7 +63,7 @@
 
   environment.systemPackages = with pkgs; [
     # basic
-    vim
+    neovim
     git
     curl
     doas
@@ -95,7 +95,7 @@
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
-  # boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_xanmod_tt;
   # boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelPackages = pkgs.linuxPackages_hardened;
 
@@ -124,6 +124,7 @@
         # network.proxy.type -> 0
         # network.dns.disabled -> false
       })
+      neovide
       pcmanfm
       vlc
       ffmpeg
@@ -166,7 +167,7 @@
 
   isoImage.contents = [
     { source = ./.emacs;                   target = "/files/.emacs"; }
-    { source = ./.vimrc;                   target = "/files/.vimrc"; }
+    { source = ./init.vim;                 target = "/files/.config/nvim/init.vim"; }
     { source = ./.nethackrc;               target = "/files/.nethackrc"; }
     { source = ./sway;                     target = "/files/.config/sway"; }
     { source = ./waybar;                   target = "/files/.config/waybar"; }

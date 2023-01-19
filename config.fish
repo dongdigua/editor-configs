@@ -14,6 +14,7 @@ alias vifzf='vim $(fzf)'
 alias r=ranger
 alias bat='bat -p'
 alias e="emacs -nw"
+alias vim=nvim
 
 echo "all" | history delete --prefix "git commit" > /dev/null
 
