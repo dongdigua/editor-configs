@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(rfc-mode nasm-mode yaml-mode org-tree-slide rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company elixir-mode racket-mode evil))
+   '(rfc-mode nasm-mode yaml-mode org-tree-slide rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -21,21 +21,22 @@
 ;; =================== ;;
 ;; Graphical Interface ;;
 ;; =================== ;;
-(tool-bar-mode               -1) ; 关闭 Tool bar
-(menu-bar-mode               -1) ; should use -1 instead of nil
-(toggle-scroll-bar          nil) ; 关闭滚动条
-(column-number-mode           t) ; 在 Mode line 上显示列号
-(global-auto-revert-mode      t) ; 让 Emacs 及时刷新 Buffer
-(setq inhibit-startup-message t) ; 关闭启动 Emacs 时的欢迎界面
+(tool-bar-mode               -1)
+(menu-bar-mode               -1)
+(toggle-scroll-bar          nil)
+(column-number-mode           t)
+(global-auto-revert-mode      t)
+(setq inhibit-startup-message t)
 
-;(add-to-list 'default-frame-alist '(width . 80))  ; 设定启动图形界面时的Frame宽度
-;(add-to-list 'default-frame-alist '(height . 40)) ; 设定启动图形界面时的Frame高度
+;(add-to-list 'default-frame-alist '(width . 80))
+;(add-to-list 'default-frame-alist '(height . 40))
 
 ;; theme-start
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 
+(setq catppuccin-flavor 'latte)
 (if (display-graphic-p)
     (progn ;(load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
@@ -62,7 +63,7 @@
 (require 'package)
 (setq package-archives'(("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                         ("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
-(package-initialize)
+;(package-initialize) ;; (29) seems don't need, and dump will crash
 
 (defmacro setup-what-pkg (what)
   ;; https://liujiacai.net/blog/2021/05/05/emacs-package

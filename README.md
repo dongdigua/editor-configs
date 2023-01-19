@@ -34,7 +34,8 @@ too many plugins, just look at my config file<br>
 
 # foot
 it's default config is easy to use, than other terminal<br>
-color: catppuccin-macchiato, recommended by [this guy](https://space.bilibili.com/1169981390)<br>
+color: default + catppuccin-macchiato's fg&bg<br>
+a fan of catppuccin-mocha: (EdenQwQ)[https://github.com/EdenQwQ/dots]<br>
 
 # starship
 I found (this prompt)[https://github.com/zimfw/magicmace] from KiteAB and EndlessPeak
