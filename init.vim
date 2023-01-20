@@ -6,19 +6,22 @@ set encoding=utf-8
 set noswapfile
 set clipboard+=unnamed  " 共享系统剪切板
 set mouse=a
-filetype plugin on      " 识别插件的文件类型
-set cursorline          " 高亮当前行
+filetype plugin on
+set cursorline
 set list                " 显示换行符
 " General }
 
 " Keys {
+" move selected line up and down
+vmap K :m '<-2<CR>gv=gv
+vmap J :m '>+1<CR>gv=gv
 " Keys }
 
 " Format {
 set tabstop=4
+set shiftwidth=4
 set smarttab            " bs时更快
 set autoindent
-set shiftwidth=4        " nnd, 需要手动跟tabstop同步
 set expandtab
 filetype plugin indent on
 autocmd FileType elixir setlocal shiftwidth=2 softtabstop=2 expandtab
@@ -55,6 +58,8 @@ endif
 let g:everforest_transparent_background=2
 colorscheme everforest
 set background=dark
+
+let g:airline#extensions#tabline#enabled = 1
 " Plug }
 
 " GUI {
