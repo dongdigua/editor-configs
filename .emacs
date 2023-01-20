@@ -1,4 +1,4 @@
-(setq gc-cons-threshold (* 64 1024 1024))
+(setq gc-cons-threshold most-positive-fixnum)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(rfc-mode nasm-mode yaml-mode org-tree-slide rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy beacon catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(rfc-mode nasm-mode yaml-mode org-tree-slide rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -21,11 +21,11 @@
 ;; =================== ;;
 ;; Graphical Interface ;;
 ;; =================== ;;
+;;;ifdef dump
 (tool-bar-mode               -1)
 (menu-bar-mode               -1)
 (toggle-scroll-bar          nil)
 (column-number-mode           t)
-(global-auto-revert-mode      t)
 (setq inhibit-startup-message t)
 
 ;(add-to-list 'default-frame-alist '(width . 80))
@@ -35,6 +35,7 @@
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
+;;;endif
 
 (setq catppuccin-flavor 'latte)
 (if (display-graphic-p)
@@ -60,10 +61,10 @@
 ;; =============== ;;
 ;; package manager ;;
 ;; =============== ;;
-(require 'package)
 (setq package-archives'(("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                         ("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 ;(package-initialize) ;; (29) seems don't need, and dump will crash
+(setq use-package-verbose t)
 
 (defmacro setup-what-pkg (what)
   ;; https://liujiacai.net/blog/2021/05/05/emacs-package
@@ -85,16 +86,20 @@
       '((".*" "~/.emacs.d/autosave/" t)))
 
 (setq-default tab-width 4
+              c-basic-offset 4
               indent-tabs-mode nil)    ; must be setq-default
 (setq backward-delete-char-untabify-method 'hungry)
 
+;;;ifdef dump
 (setq display-line-numbers-type 'relative)    ; relative number, make d d easier
+;;;endif
 (global-display-line-numbers-mode)
 
 (setq epa-file-cache-passphrase-for-symmetric-encryption t
       epg-pinentry-mode 'loopback)    ; use minibuffer instead of popup
 
 (defalias 'yes-or-no-p 'y-or-n-p)
+(global-auto-revert-mode t)
 (ido-mode t)
 (electric-pair-mode t)
 
@@ -221,6 +226,7 @@
   (global-evil-mc-mode 1))
 
 (use-package org
+  :defer t
   ;; to make tags aligned:
   ;; * https://emacs-china.org/t/org-mode-tag/22291
   ;; ** https://list.orgmode.org/87lfh745ch.fsf@localhost/T/
@@ -294,6 +300,7 @@
   (setq dashboard-banner-logo-title "董地瓜@bilibili"))
 
 (use-package smart-hungry-delete
+  :if window-system ; in terminal the key just don't work
   :defer 1
   :bind
   ("C-<backspace>" . 'smart-hungry-delete-backward-char))
@@ -319,7 +326,7 @@
   :config
   (setq gdb-many-windows t)
   (defalias 'dasm 'gdb-display-disassembly-buffer)
-  (company-mode 0) ; gdb will crash
+  (global-company-mode 0) ; gdb will crash
   (tool-bar-mode t))
 
 (use-package pyim
@@ -333,12 +340,6 @@
   (setq-default pyim-punctuation-translate-p '(no yes))
   :bind
   ("C-|" . pyim-punctuation-toggle))
-
-(use-package beacon
-  ;; from DistroTube
-  :if window-system
-  :config
-  (beacon-mode 1))
 
 (use-package clippy
   ;; also from DistroTube
@@ -361,6 +362,7 @@
 (use-package fzf
   ;; hacker news: How FZF and ripgrep improved my workflow
   ;; https://news.ycombinator.com/item?id=20360204
+  :defer t
   :config
   (setenv "FZF_DEFAULT_COMMAND" "rg --files --hidden"))
 
@@ -377,6 +379,7 @@
   (nyan-start-animation))
 
 (use-package rainbow-mode
+  :defer 2
   :config
   (setq rainbow-x-colors nil
         rainbow-r-colors nil
@@ -387,6 +390,7 @@
   (doom-modeline-mode))
 
 (use-package rfc-mode
+  :defer t
   :config
   (setq rfc-mode-directory (expand-file-name "~/.emacs.d/rfc/")))
 
@@ -395,11 +399,10 @@
 ;; ===================== ;;
 (use-package web-mode
   ;; https://web-mode.org/
+  :mode "\\.eex\\'"
+  :mode "\\.html\\'"
   :config
-  (setq web-mode-markup-indent-offset 2)
-  (add-to-list 'auto-mode-alist '("\\.eex\\'"  . web-mode))
-  ;; the default html mode sucks
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
+  (setq web-mode-markup-indent-offset 2))
 
 (use-package rust-mode
   :config
@@ -410,10 +413,12 @@
   ("C-c C-c c" . rust-compile))
 
 (use-package nim-mode
+  :defer t
   :config
   (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on" "--debuginfo:on" "--cc:clang")))
 
 (use-package gemini-mode
+  :defer t
   :config
   (defun my/gemini-open-link-at-point ()
     "modified version of the original function"
@@ -433,17 +438,18 @@
   (:map gemini-mode-map ("C-c C-o" . #'my/gemini-open-link-at-point)))
 
 (use-package sly
+  :defer t
   :config
   (setq inferior-lisp-program "sbcl"))
 
 (use-package flycheck
-  :config
+  :defer t
+  :init
   (setq flycheck-global-modes '(rust-mode)))
 
 (use-package nasm-mode
   ;; https://vishnudevtj.github.io/notes/assembly-in-emacs
-  :config
-  (add-hook 'asm-mode-hook 'nasm-mode))
+  :hook (asm-mode-hook nasm-mode))
 
 ;; ==================== ;;
 ;; use-package/internet ;;
@@ -495,21 +501,25 @@
 (use-package erc
   ;; sasl support! (29)
   :defer t
-  :config
-  (setq erc-modules
-        ;; customize and copy to here
-        '(button completion fill irccontrols log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track truncate))
-  (erc-update-modules)
-  (setq erc-log-channels-directory "~/.emacs.d/erc-log")
+  :init
   (defun erc-connect ()
       (interactive)
       (erc-tls :server "irc.libera.chat" :port 6697
                :nick "dongdigua"
-               :user "dongdigua"
-               )))
+               :user "dongdigua"))
+  
+  :config
+;;ifdef dump
+  (setq erc-modules
+        ;; customize and copy to here
+        '(button completion fill irccontrols log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track truncate))
+;;endif
+  (erc-update-modules)
+  (setq erc-log-channels-directory "~/.emacs.d/erc-log"))
 
 (use-package eww
   :init
+;;;ifdef dump
   (setq browse-url-handlers
         '( ; use alist in browse-url-browser-function is deprecated
           ("^https?://youtu\\.be"            . browse-url-firefox)
@@ -525,6 +535,8 @@
           ("gopher://.*"                     . elpher-browse-url-elpher)
           ("gemini://.*"                     . elpher-browse-url-elpher)
           ))
+;;;endif
+  :defer 1
   :config
   (defun eww-browse-no-pre-hl (url &optional new-window)
     (eww-browse-url url new-window)
@@ -535,12 +547,14 @@
 
 (use-package shr-tag-pre-highlight
   ;; render code block in eww
+  :defer t
   :after shr
   :config
   (add-to-list 'shr-external-rendering-functions
                '(pre . shr-tag-pre-highlight)))
 
 (use-package ement
+  :defer t
   :config
   (setq plz-curl-default-args
         '("--proxy" "http://127.0.0.1:20172" "--silent" "--compressed" "--location" "--dump-header" "-")))
@@ -557,7 +571,8 @@
 ;; =========== ;;
 (setq initial-scratch-message
       (concat
-       (emacs-init-time ";; %2.4f secs\n")
+       (emacs-init-time ";; %2.4f secs, ")
+       (format "%d gcs\n" gcs-done)
        (button-buttonize ";; (config)" (lambda (_) (find-file-existing "~/.emacs")))
        "\n"
        (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
