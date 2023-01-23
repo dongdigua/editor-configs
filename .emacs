@@ -34,14 +34,18 @@
 ;; theme-start
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
+;;;ifdef excl
 (set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
-;;;endif
+;;;endif excl
+;;;endif dump
 
 (setq catppuccin-flavor 'latte)
 (if (display-graphic-p)
     (progn ;(load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
+;;;ifdef excl
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
            (load-theme 'everforest-hard-dark t)
+;;;endif excl
            )
   (progn
     (load-theme 'zenburn t)
@@ -92,7 +96,7 @@
 
 ;;;ifdef dump
 (setq display-line-numbers-type 'relative)    ; relative number, make d d easier
-;;;endif
+;;;endif dump
 (global-display-line-numbers-mode)
 
 (setq epa-file-cache-passphrase-for-symmetric-encryption t
@@ -282,6 +286,7 @@
   (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
   (evil-define-key 'normal neotree-mode-map (kbd "<return>") 'neotree-enter))
 
+;;;ifdef excl
 (use-package dashboard
   :if (and window-system (not (getenv "NO_DASHBOARD")))
   :config
@@ -298,6 +303,7 @@
   (setq dashboard-set-heading-icons t
         dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "董地瓜@bilibili"))
+;;;endif excl
 
 (use-package smart-hungry-delete
   :if window-system ; in terminal the key just don't work
@@ -336,7 +342,7 @@
   (setq pyim-page-tooltip 'minibuffer)
   (setq pyim-cloudim 'google)  ; I hate baidu
   (setq pyim-dicts
-        '((:name "tsinghua" :file "~/git/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
+        '((:name "tsinghua" :file "~/.emacs.d/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
   (setq-default pyim-punctuation-translate-p '(no yes))
   :bind
   ("C-|" . pyim-punctuation-toggle))
@@ -385,9 +391,11 @@
         rainbow-r-colors nil
         rainbow-html-colors nil))
 
+;;;ifdef excl
 (use-package doom-modeline
   :config
   (doom-modeline-mode))
+;;;endif excl
 
 (use-package rfc-mode
   :defer t
@@ -513,7 +521,7 @@
   (setq erc-modules
         ;; customize and copy to here
         '(button completion fill irccontrols log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track truncate))
-;;endif
+;;endif dump
   (erc-update-modules)
   (setq erc-log-channels-directory "~/.emacs.d/erc-log"))
 
@@ -535,7 +543,7 @@
           ("gopher://.*"                     . elpher-browse-url-elpher)
           ("gemini://.*"                     . elpher-browse-url-elpher)
           ))
-;;;endif
+;;;endif dump
   :defer 1
   :config
   (defun eww-browse-no-pre-hl (url &optional new-window)
