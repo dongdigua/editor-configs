@@ -1,0 +1,13 @@
+diff --git a/dwm.c b/dwm.c
+index 91e0f2a..72fda18 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -4842,7 +4842,7 @@ updatestatus(void)
+ 		copyvalidchars(stext, rawstext);
+ 	#else
+ 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
+-		strcpy(stext, "dwm-"VERSION);
++		strcpy(stext, "dwm");
+ 	#endif // BAR_EXTRASTATUS_PATCH | BAR_STATUSCMD_PATCH
+ 	for (m = mons; m; m = m->next)
+ 		drawbar(m);

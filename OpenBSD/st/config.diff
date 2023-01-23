@@ -1,0 +1,8 @@
+8c8
+< static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+---
+> static char *font = "Liberation Mono:pixelsize=18:antialias=true:autohint=true";
+154c154
+< float alpha = 0.8;
+---
+> float alpha = 0.7;

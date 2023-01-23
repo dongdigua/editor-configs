@@ -1,0 +1,82 @@
+21c21
+< static const unsigned int gappih         = 20;  /* horiz inner gap between windows */
+---
+> static const unsigned int gappih         = 10;  /* horiz inner gap between windows */
+24,25c24,25
+< static const unsigned int gappov         = 30;  /* vert outer gap between windows and screen edge */
+< static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+---
+> static const unsigned int gappov         = 10;  /* vert outer gap between windows and screen edge */
+> static const int smartgaps_fact          = 0;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+43c43
+< static const int topbar                  = 1;   /* 0 means bottom bar */
+---
+> static const int topbar                  = 0;   /* 0 means bottom bar */
+620c620
+< static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+---
+> static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
+772c772
+< #define MODKEY Mod1Mask
+---
+> #define MODKEY Mod4Mask
+903,904c903,904
+< 	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
+< 	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
+---
+> 	{ MODKEY,                       XK_Tab,        spawn,                  {.v = dmenucmd } },
+> 	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
+996c996
+< 	{ MODKEY,                       XK_Return,     zoom,                   {0} },
+---
+> 	{ MODKEY|ShiftMask,             XK_Return,     zoom,                   {0} },
+998,1013c998,1013
+< 	{ MODKEY|Mod4Mask,              XK_u,          incrgaps,               {.i = +1 } },
+< 	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
+< 	{ MODKEY|Mod4Mask,              XK_i,          incrigaps,              {.i = +1 } },
+< 	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,          incrigaps,              {.i = -1 } },
+< 	{ MODKEY|Mod4Mask,              XK_o,          incrogaps,              {.i = +1 } },
+< 	{ MODKEY|Mod4Mask|ShiftMask,    XK_o,          incrogaps,              {.i = -1 } },
+< 	{ MODKEY|Mod4Mask,              XK_6,          incrihgaps,             {.i = +1 } },
+< 	{ MODKEY|Mod4Mask|ShiftMask,    XK_6,          incrihgaps,             {.i = -1 } },
+< 	{ MODKEY|Mod4Mask,              XK_7,          incrivgaps,             {.i = +1 } },
+< 	{ MODKEY|Mod4Mask|ShiftMask,    XK_7,          incrivgaps,             {.i = -1 } },
+< 	{ MODKEY|Mod4Mask,              XK_8,          incrohgaps,             {.i = +1 } },
+< 	{ MODKEY|Mod4Mask|ShiftMask,    XK_8,          incrohgaps,             {.i = -1 } },
+< 	{ MODKEY|Mod4Mask,              XK_9,          incrovgaps,             {.i = +1 } },
+< 	{ MODKEY|Mod4Mask|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
+< 	{ MODKEY|Mod4Mask,              XK_0,          togglegaps,             {0} },
+< 	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,          defaultgaps,            {0} },
+---
+> //  { MODKEY|Mod4Mask,              XK_u,          incrgaps,               {.i = +1 } },
+> //  { MODKEY|Mod4Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
+> //  { MODKEY|Mod4Mask,              XK_i,          incrigaps,              {.i = +1 } },
+> //  { MODKEY|Mod4Mask|ShiftMask,    XK_i,          incrigaps,              {.i = -1 } },
+> //  { MODKEY|Mod4Mask,              XK_o,          incrogaps,              {.i = +1 } },
+> //  { MODKEY|Mod4Mask|ShiftMask,    XK_o,          incrogaps,              {.i = -1 } },
+> //  { MODKEY|Mod4Mask,              XK_6,          incrihgaps,             {.i = +1 } },
+> //  { MODKEY|Mod4Mask|ShiftMask,    XK_6,          incrihgaps,             {.i = -1 } },
+> //  { MODKEY|Mod4Mask,              XK_7,          incrivgaps,             {.i = +1 } },
+> //  { MODKEY|Mod4Mask|ShiftMask,    XK_7,          incrivgaps,             {.i = -1 } },
+> //  { MODKEY|Mod4Mask,              XK_8,          incrohgaps,             {.i = +1 } },
+> //  { MODKEY|Mod4Mask|ShiftMask,    XK_8,          incrohgaps,             {.i = -1 } },
+> //  { MODKEY|Mod4Mask,              XK_9,          incrovgaps,             {.i = +1 } },
+> //  { MODKEY|Mod4Mask|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
+> //  { MODKEY|Mod4Mask,              XK_0,          togglegaps,             {0} },
+> //  { MODKEY|Mod4Mask|ShiftMask,    XK_0,          defaultgaps,            {0} },
+1018c1018
+< 	{ MODKEY,                       XK_Tab,        view,                   {0} },
+---
+> 	//{ MODKEY,                       XK_Tab,        view,                   {0} },
+1047c1047
+< 	{ MODKEY|ShiftMask,             XK_c,          killclient,             {0} },
+---
+> 	{ MODKEY|ShiftMask,             XK_q,          killclient,             {0} },
+1054c1054
+< 	{ MODKEY|ShiftMask,             XK_q,          quit,                   {0} },
+---
+> 	{ MODKEY|ShiftMask,             XK_e,          quit,                   {0} },
+1056c1056
+< 	{ MODKEY|ControlMask|ShiftMask, XK_q,          quit,                   {1} },
+---
+> 	{ MODKEY|ControlMask|ShiftMask, XK_e,          quit,                   {1} },

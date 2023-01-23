@@ -1,0 +1,4 @@
+17c17
+< #define ALPHA_PATCH 0
+---
+> #define ALPHA_PATCH 1
