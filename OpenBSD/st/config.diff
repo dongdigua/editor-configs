@@ -5,4 +5,4 @@
 154c154
 < float alpha = 0.8;
 ---
-> float alpha = 0.7;
+> float alpha = 0.6;

@@ -15,4 +15,6 @@ Each st
 # restore current dir
 cd $CURDIR
 
+cp ~/.local/share/dwm/* dwm/
 cp ~/.profile .
+cp ~/.xsession .

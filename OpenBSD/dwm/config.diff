@@ -20,17 +20,20 @@
 < #define MODKEY Mod1Mask
 ---
 > #define MODKEY Mod4Mask
-903,904c903,904
+872a873
+> static const char *emacscmd[] = { "emacs", NULL };
+903,904c904,906
 < 	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
 < 	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
 ---
 > 	{ MODKEY,                       XK_Tab,        spawn,                  {.v = dmenucmd } },
 > 	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
-996c996
+> 	{ MODKEY,                       XK_x,          spawn,                  {.v = emacscmd } },
+996c998
 < 	{ MODKEY,                       XK_Return,     zoom,                   {0} },
 ---
 > 	{ MODKEY|ShiftMask,             XK_Return,     zoom,                   {0} },
-998,1013c998,1013
+998,1013c1000,1015
 < 	{ MODKEY|Mod4Mask,              XK_u,          incrgaps,               {.i = +1 } },
 < 	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
 < 	{ MODKEY|Mod4Mask,              XK_i,          incrigaps,              {.i = +1 } },
@@ -64,19 +67,19 @@
 > //  { MODKEY|Mod4Mask|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
 > //  { MODKEY|Mod4Mask,              XK_0,          togglegaps,             {0} },
 > //  { MODKEY|Mod4Mask|ShiftMask,    XK_0,          defaultgaps,            {0} },
-1018c1018
+1018c1020
 < 	{ MODKEY,                       XK_Tab,        view,                   {0} },
 ---
 > 	//{ MODKEY,                       XK_Tab,        view,                   {0} },
-1047c1047
+1047c1049
 < 	{ MODKEY|ShiftMask,             XK_c,          killclient,             {0} },
 ---
 > 	{ MODKEY|ShiftMask,             XK_q,          killclient,             {0} },
-1054c1054
+1054c1056
 < 	{ MODKEY|ShiftMask,             XK_q,          quit,                   {0} },
 ---
 > 	{ MODKEY|ShiftMask,             XK_e,          quit,                   {0} },
-1056c1056
+1056c1058
 < 	{ MODKEY|ControlMask|ShiftMask, XK_q,          quit,                   {1} },
 ---
 > 	{ MODKEY|ControlMask|ShiftMask, XK_e,          quit,                   {1} },
