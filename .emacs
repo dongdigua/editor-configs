@@ -141,7 +141,10 @@
   (highlight-regexp " TODO\\| BUG\\|todo!" 'todo)
   (highlight-regexp "<%=\\|%>"             'todo)
   (highlight-regexp " CTF"                 'ctf))
-(add-hook 'post-command-hook 'highlight-custom)
+
+(defun highlight-custim-enable ()
+  (interactive)
+  (add-hook 'post-command-hook 'highlight-custom))
 
 (defun bili ($from $to)
   ;; well, I always report those fucking video thieves on bilibili,
@@ -218,6 +221,7 @@
   :init
   ;; https://emacstalk.github.io/post/025/
   (setq evil-want-C-i-jump nil)
+  (setq evil-undo-system 'undo-tree)
   (evil-mode 1)
   :bind
   ("C-r" . isearch-backward))
@@ -470,6 +474,7 @@
   (setq elfeed-use-curl t)
   (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
   (elfeed-search-set-filter "@2-weeks-ago -cve -weixin")
+  (unbind-key "v" shr-map) ; for copying url
   ;; (custom-set-faces
   ;;  '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
   ;;  '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
