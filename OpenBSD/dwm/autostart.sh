@@ -6,4 +6,5 @@ doas wsconsctl mouse.tp.tapping=1,0,0 mouse.tp.scaling=1 &
 feh --bg-scale ~/default.jpg &
 xbacklight -set 10 &
 picom --vsync &
-~/.local/share/dwm/bar.sh
+~/.local/share/dwm/bar.sh &
+~/bin/v2ray run -c ~/v2ray/config.json
