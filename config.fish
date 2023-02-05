@@ -19,6 +19,7 @@ alias vim=nvim
 echo "all" | history delete --prefix "git commit" > /dev/null
 
 export EDITOR=vim
+export LANG=en_US.UTF-8 # translated documents are not good
 export FZF_DEFAULT_COMMAND='rg --hidden --files'
 
 starship init fish | source

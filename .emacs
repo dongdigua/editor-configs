@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(rfc-mode nasm-mode yaml-mode org-tree-slide rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -240,14 +240,15 @@
   ;; ** https://list.orgmode.org/87lfh745ch.fsf@localhost/T/
   ;; but it looks not satisfying and add a bit of lag, so I don't use it
   :config
+;;;ifdef dump
   (setq org-startup-indented t
         org-src-preserve-indentation t
         org-startup-with-inline-images t
         ;; org-display-remote-inline-images only works for trump
         org-return-follows-link t  ; in insert mode
-        browse-url-browser-function 'eww-browse-url)
-
-  (setq org-catch-invisible-edits 'show)
+        org-catch-invisible-edits 'show)
+;;;endif dump
+  (setq browse-url-browser-function 'eww-browse-url)
 
   (add-to-list 'org-export-backends 'md)
   ;; https://d12frosted.io/posts/2017-07-30-block-templates-in-org-mode.html
@@ -335,7 +336,7 @@
   :defer t
   :config
   (setq gdb-many-windows t)
-  (defalias 'dasm 'gdb-display-disassembly-buffer)
+  (defalias 'disas 'gdb-display-disassembly-buffer)
   (global-company-mode 0) ; gdb will crash
   (tool-bar-mode t))
 
