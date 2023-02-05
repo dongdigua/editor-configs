@@ -54,7 +54,7 @@
   };
 
   # https://mirrors.tuna.tsinghua.edu.cn/help/nix/
-  # nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+  nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
@@ -65,9 +65,10 @@
     # basic
     neovim
     git
+    netcat
     curl
     doas
-    killall
+    psmisc
 
     # util
     neofetch
@@ -126,10 +127,10 @@
       })
       neovide
       pcmanfm
-      vlc
-      ffmpeg
+      vlc # TODO: probably remove
+      ffmpeg # without ffplay
       gparted
-      pandoc
+      #pandoc ghc is too large
       feh
       frp
 
@@ -140,12 +141,11 @@
       lua
       elixir # 600MiB, but I must have this
       rustup # rust itself is 2GiB
-      #racket-minimal # 400MiB, need this for slideshow, full is 900MiB
+      racket-minimal # 400MiB, enough for slideshow? full is 900MiB
       binutils
-      minicom
+      picocom # better than minicom
 
       # net
-      netcat
       inetutils
       hping
       nmap
