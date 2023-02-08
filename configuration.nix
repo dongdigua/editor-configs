@@ -127,8 +127,7 @@
       })
       neovide
       pcmanfm
-      vlc # TODO: probably remove
-      ffmpeg # without ffplay
+      ffmpeg-full
       gparted
       #pandoc ghc is too large
       feh
