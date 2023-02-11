@@ -7,14 +7,14 @@ set use_from = yes
 
 # smtp
 set smtp_authenticators = "login"
-set smtp_url = smtps://$my_user@smtp.mail.ru:465
+set smtp_url = smtp://$my_user@mail.openmbox.net:587
 set smtp_pass = $my_pass
 
 # imap
-set imap_authenticators = "login"
-set folder = imaps://imap.mail.ru:993/
-set imap_user = $my_user
-set imap_pass = $my_pass
+#set imap_authenticators = "login"
+#set folder = imaps://mail.openmbox.net:993/
+#set imap_user = $my_user
+#set imap_pass = $my_pass
 
 # refresh
 set ssl_starttls = yes
@@ -22,14 +22,25 @@ set mail_check = 120
 unset imap_passive
 
 # mailbox
-set spoolfile = +INBOX
-set record = +Sent
-set trash = +Trash
-set postponed = +Drafts
+#set spoolfile = +INBOX
+#set record = +Sent
+#set trash = +Trash
+#set postponed = +Drafts
 mailboxes =INBOX =Sent =Trash =Drafts
+
+set mbox_type = Maildir
+set folder = ~/Mail/mutt
+set spoolfile = $folder/INBOX
+set trash = $folder/Trash
+set postponed = $folder/Drafts
 
 # custom
 color normal default default # just for transparency
 set sort=threads
 set sort_aux=reverse-last-date-received
 set editor=vi
+
+# pager
+set pager_index_lines = 6
+#set pager_context = 3
+set pager_stop
