@@ -25,7 +25,8 @@ set smarttab            " bs时更快
 set autoindent
 set expandtab
 filetype plugin indent on
-autocmd FileType elixir setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType elixir setlocal shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile *.mbox setfiletype mail
 " Format }
 
 " Color {

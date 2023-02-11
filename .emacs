@@ -326,6 +326,8 @@
   :if window-system
   :defer 2
   :config
+  (setq company-dabbrev-ignore-case nil)
+  (setq company-global-modes '(not erc-mode gud-mode))
   (global-company-mode))
 
 (use-package valign
@@ -337,7 +339,6 @@
   :config
   (setq gdb-many-windows t)
   (defalias 'disas 'gdb-display-disassembly-buffer)
-  (global-company-mode 0) ; gdb will crash
   (tool-bar-mode t))
 
 (use-package pyim
