@@ -3,7 +3,7 @@
   services = {
     sshd.enable = true;
     getty.autologinUser = lib.mkDefault "nix";
-    openssh.permitRootLogin = lib.mkDefault "yes";
+    openssh.settings.PermitRootLogin = lib.mkDefault "yes";
   };
 
   systemd.services.sync-home = {
@@ -60,6 +60,11 @@
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
     }))
   ];
+  nixpkgs.config.packageOverrides = pkgs: {
+    myRepo = import (builtins.fetchTarball "https://github.com/dongdigua/nur-pkg/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     # basic
@@ -92,7 +97,9 @@
     libsixel
     weechat
 
+    # not quite official
     emacsPgtk
+    myRepo.bsdtetris
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
@@ -151,15 +158,14 @@
       tcpdump
       gnunet
 
-      # hack
-      nikto
-      metasploit
-      radare2
-      #wifite2 # need pyrit, so just use aircrack to capture
-      aircrack-ng
-      macchanger
-      freerdp
-      python310Packages.scapy
+      # # hack
+      # nikto
+      # metasploit
+      # radare2
+      # aircrack-ng
+      # macchanger
+      # freerdp
+      # python310Packages.scapy
     ];
   };
 

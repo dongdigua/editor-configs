@@ -39,3 +39,7 @@ a fan of catppuccin-mocha: [EdenQwQ](https://github.com/EdenQwQ/dots)<br>
 
 # starship
 I found [this prompt](https://github.com/zimfw/magicmace) from KiteAB and EndlessPeak
+
+# NixOS
+a highly customized iso for personal use
+[my nur](https://github.com/dongdigua/nur-pkg)
