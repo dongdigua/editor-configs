@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide rg sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -324,7 +324,7 @@
 
 (use-package company
   :if window-system
-  :defer 2
+  :defer 1
   :config
   (setq company-dabbrev-ignore-case nil)
   (setq company-global-modes '(not erc-mode gud-mode))
@@ -379,7 +379,7 @@
   (setenv "FZF_DEFAULT_COMMAND" "rg --files --hidden"))
 
 (use-package indent-guide
-  :defer 2
+  :defer 1
   :config
   (indent-guide-global-mode))
 
@@ -391,7 +391,7 @@
   (nyan-start-animation))
 
 (use-package rainbow-mode
-  :defer 2
+  :defer 1
   :config
   (setq rainbow-x-colors nil
         rainbow-r-colors nil
@@ -411,6 +411,21 @@
 ;; ===================== ;;
 ;; use-package/languages ;;
 ;; ===================== ;;
+(use-package cc-mode
+  :defer t
+  :init
+  (defun bsd-c-style ()
+    (interactive)
+    (setq c-mode-hook
+          (lambda ()
+            (setq-local tab-width 8)
+            (indent-tabs-mode t)))) ; per-buffer setting, won't mess up other buffer
+  :config
+  (setq c-default-style '((c-mode    . "bsd")
+                          (java-mode . "java")
+                          (awk-mode  . "awk")
+                          (other     . "gnu"))))
+
 (use-package web-mode
   ;; https://web-mode.org/
   :mode "\\.eex\\'"
