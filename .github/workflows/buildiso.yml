@@ -33,6 +33,11 @@ jobs:
         sudo apt install gpp
         ./gpp.sh configuration.nix > iso.nix
 
+    - name: Cachix
+      run: |
+        nix-env -iA cachix -f https://cachix.org/api/v1/install
+        cachix use nix-community
+
     - name: Build ISO
       run: |
         nix run github:nix-community/nixos-generators -- -f iso -c iso.nix -o output
