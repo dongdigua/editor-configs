@@ -35,6 +35,10 @@
   networking = {
     firewall.allowedTCPPorts = [ 22 80 1965 2333 ];
     hostName = "nixos";
+    extraHosts =
+      ''
+        140.82.114.4 github.com
+      ''; # fuck DNS pollution
   };
   time.timeZone = "Asia/Shanghai";
 
@@ -104,11 +108,8 @@
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
-  # boot.kernelPackages = pkgs.linuxPackages_zen;
-#ifdef hack
-  boot.kernelPackages = pkgs.linuxPackages_hardened;
-#else
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_tt;
+#ifndef hack
+  boot.kernelPackages = pkgs.linuxPackages_lqx;
 #endif
 
   programs.xwayland.enable = pkgs.lib.mkForce false; # well, seems it can't do this, unlike gentoo

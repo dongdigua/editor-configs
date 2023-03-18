@@ -28,9 +28,14 @@ jobs:
         patch -p0 < fallbacks/sway.patch   sway/config
         patch -p0 < fallbacks/waybar.patch waybar/config
 
+    - name: Pre Process
+      run: |
+        sudo apt install gpp
+        ./gpp.sh configuration.nix > iso.nix
+
     - name: Build ISO
       run: |
-        nix run github:nix-community/nixos-generators -- -f iso -c configuration.nix -o output
+        nix run github:nix-community/nixos-generators -- -f iso -c iso.nix -o output
         df -h
 
     - name: Release
