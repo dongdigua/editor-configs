@@ -248,7 +248,7 @@
         org-return-follows-link t  ; in insert mode
         org-catch-invisible-edits 'show)
 ;;;endif dump
-  (setq browse-url-browser-function 'eww-browse-url)
+  (setq-local browse-url-browser-function 'eww-browse-url)
 
   (add-to-list 'org-export-backends 'md)
   ;; https://d12frosted.io/posts/2017-07-30-block-templates-in-org-mode.html
@@ -487,7 +487,7 @@
   :defer t
   :config
   (elfeed-org)
-  (setq browse-url-browser-function 'browse-url-firefox)
+  (setq-local browse-url-browser-function 'browse-url-firefox)
   (setq elfeed-use-curl t)
   (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
   (elfeed-search-set-filter "@2-weeks-ago -cve -weixin")
@@ -606,8 +606,6 @@
        (button-buttonize ";; (config)" (lambda (_) (find-file-existing "~/.emacs")))
        "\n"
        (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
-       "\n"
-       (button-buttonize ";; (quote)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/js/random-quote.js")))
        "\n"
        (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW")))
        "\n"

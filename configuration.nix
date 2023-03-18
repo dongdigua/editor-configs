@@ -69,6 +69,7 @@
   environment.systemPackages = with pkgs; [
     # basic
     neovim
+    elvis # fantastic
     git
     netcat
     curl
@@ -103,9 +104,12 @@
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
-  # boot.kernelPackages = pkgs.linuxPackages_xanmod_tt;
   # boot.kernelPackages = pkgs.linuxPackages_zen;
+#ifdef hack
   boot.kernelPackages = pkgs.linuxPackages_hardened;
+#else
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_tt;
+#endif
 
   programs.xwayland.enable = pkgs.lib.mkForce false; # well, seems it can't do this, unlike gentoo
   programs.sway = {
@@ -158,14 +162,15 @@
       tcpdump
       gnunet
 
-      # # hack
-      # nikto
-      # metasploit
-      # radare2
-      # aircrack-ng
-      # macchanger
-      # freerdp
-      # python310Packages.scapy
+#ifdef hack
+      nikto
+      metasploit
+      radare2
+      aircrack-ng
+      macchanger
+      freerdp
+      python310Packages.scapy
+#endif
     ];
   };
 
