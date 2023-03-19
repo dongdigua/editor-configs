@@ -36,8 +36,6 @@ hi Normal ctermfg=252 ctermbg=none
 " Plug {
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'mhartington/oceanic-next'
 Plug 'joshdick/onedark.vim'
 Plug 'JuliaEditorSupport/julia-vim'
@@ -47,6 +45,7 @@ Plug 'mg979/vim-visual-multi'
 Plug 'sainnhe/everforest'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'hachy/eva01.vim' " Evangelion!
+Plug 'nvim-lualine/lualine.nvim'
 call plug#end()
 
 nmap <f3> :NERDTreeToggle<CR>
@@ -61,7 +60,7 @@ let g:everforest_transparent_background=2
 colorscheme everforest
 set background=dark
 
-let g:airline#extensions#tabline#enabled = 1
+lua require('evil_lualine')
 " Plug }
 
 " GUI {

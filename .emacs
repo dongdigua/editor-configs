@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(paren-face gcmh haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -218,6 +218,7 @@
 ;; use-package ;;
 ;; =========== ;;
 (use-package evil
+  :ensure t
   :init
   ;; https://emacstalk.github.io/post/025/
   (setq evil-want-C-i-jump nil)
@@ -407,6 +408,15 @@
   :defer t
   :config
   (setq rfc-mode-directory (expand-file-name "~/.emacs.d/rfc/")))
+
+(use-package gcmh
+  ;; https://akrl.sdf.org
+  :config
+  (gcmh-mode 1))
+
+(use-package paren-face
+  :config
+  (global-paren-face-mode 1))
 
 ;; ===================== ;;
 ;; use-package/languages ;;
@@ -610,5 +620,3 @@
        (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW")))
        "\n"
        ))
-
-(setq gc-cons-threshold (* 8 1024 1024))
