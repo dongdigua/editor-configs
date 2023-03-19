@@ -15,6 +15,12 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-unstable
 
+    - name: Install Cachix
+      run: |
+        nix-env -iA cachix -f https://cachix.org/api/v1/install
+        cachix use nix-community
+
+
     - name: Get Files
       run: |
         curl -O https://github.com/dongdigua/dongdigua.github.io/raw/main/org/internet_collections.org
@@ -25,18 +31,14 @@ jobs:
         ./fallbacks/rofi.sh
         ./fallbacks/vim.sh
         ./fallbacks/emacs.sh
-        patch -p0 < fallbacks/sway.patch   sway/config
         patch -p0 < fallbacks/waybar.patch waybar/config
 
     - name: Pre Process
       run: |
         sudo apt install gpp
         ./gpp.sh configuration.nix > iso.nix
-
-    - name: Cachix
-      run: |
-        nix-env -iA cachix -f https://cachix.org/api/v1/install
-        cachix use nix-community
+        cp sway/config sway/config.orig
+        ./gpp.sh sway/config.orig  > sway/config
 
     - name: Build ISO
       run: |
