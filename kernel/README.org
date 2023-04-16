@@ -42,7 +42,7 @@ changes are below:
 ** ADD Kernel .config support
 *** ADD /proc/config.gz
 ** Scheduler features
-*** PATCH [[https://github.com/firelzrd/bore-scheduler][BORE]]
+*** TODO [[https://github.com/firelzrd/bore-scheduler][BORE]]
 *** TODO [[https://gitlab.com/alfredchen/projectc/][Project C]]
 ** RM Profiling support
 

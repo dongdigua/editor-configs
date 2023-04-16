@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(paren-face gcmh haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -60,6 +60,19 @@
 (pixel-scroll-precision-mode)
 ;; normally it is for touchpad, enable for mouse:
 (setq pixel-scroll-precision-large-scroll-height 40.0)
+
+;; manually do the gcmh https://akrl.sdf.org
+(defmacro k-time (&rest body)
+  "Measure and return the time it takes evaluating BODY."
+  `(let ((time (current-time)))
+     ,@body
+     (float-time (time-since time))))
+
+(run-with-idle-timer 30 t
+                     (lambda ()
+                       (message "GCMH: %.06fsec"
+                                (k-time (garbage-collect)))))
+
 
 
 ;; =============== ;;
@@ -409,11 +422,6 @@
   :config
   (setq rfc-mode-directory (expand-file-name "~/.emacs.d/rfc/")))
 
-(use-package gcmh
-  ;; https://akrl.sdf.org
-  :config
-  (gcmh-mode 1))
-
 (use-package paren-face
   :config
   (global-paren-face-mode 1))
@@ -620,3 +628,5 @@
        (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW")))
        "\n"
        ))
+
+(setq gc-cons-threshold 800000)

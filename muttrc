@@ -1,5 +1,6 @@
 source "gpg -dq $HOME/.config/mutt/.pwd-mutt.gpg |"
 
+
 # user identity
 set from = $my_user
 set realname = "Digua Dong"
@@ -33,6 +34,9 @@ set folder = ~/Mail/mutt
 set spoolfile = $folder/INBOX
 set trash = $folder/Trash
 set postponed = $folder/Drafts
+
+# list
+lists misc@openbsd.org
 
 # custom
 color normal default default # just for transparency
