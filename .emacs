@@ -70,7 +70,7 @@
 
 (run-with-idle-timer 30 t
                      (lambda ()
-                       (message "GCMH: %.06fsec"
+                       (message "gcmh: %.04fsec"
                                 (k-time (garbage-collect)))))
 
 

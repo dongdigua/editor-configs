@@ -31,6 +31,7 @@ too many plugins, just look at my config file<br>
 [golden-field](https://steamcommunity.com/sharedfiles/filedetails/?id=2581587068)<br>
 [centos9-motif](https://people.centos.org/areguera/backgrounds/c9/default/standard/hue-0.png) 帅! 跟 waybar 的 nord-theme 简直绝配!<br>
 [Cardinali-bing](https://cn.bing.com/th?id=OHR.WinterberryBush_ZH-CN1414026440_1920x1200.jpg) 北美冬青灌木丛中的北美红雀<br>
+[debian9-softwaves](https://wiki.debian.org/DebianArt/Themes/softWaves?action=AttachFile&do=view&target=attachment_wallpaper.png)<br>
 
 # foot
 it's default config is easy to use, than other terminal<br>
