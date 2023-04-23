@@ -83,6 +83,7 @@
     # util
     neofetch
     gnupg
+    age
     signify
     aria2
     rsync
@@ -146,7 +147,8 @@
       frp
 
       # development
-      tinycc # clang is too large
+      myRepo.cproc # just try sonething new, probably change back
+      qbe
       gdb
       gnumake
       lua

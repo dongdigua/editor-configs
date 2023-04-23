@@ -1,4 +1,4 @@
-source "gpg -dq $HOME/.config/mutt/.pwd-mutt.gpg |"
+source "age -d -i ~/.gnupg/key.age ~/.config/mutt/.pwd-mutt.age |"
 
 
 # user identity
