@@ -47,8 +47,22 @@
     password = "nixos";
     isNormalUser = true;
     home = "/home/nix";
+    shell = pkgs.oksh;
     extraGroups = [ "wheel" "disk" "audio" "video" "input" "systemd-journal" "networkmanager" "network" "gnunet" ];
   };
+
+  environment.shellInit = ''
+export PATH=$PATH:$HOME/bin
+export HISTFILE=$HOME/.ksh_hist
+export HISTCONTROL=ignoredup
+export VISUAL=vi
+export CLICOLOR=1
+export PS1='\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w λ\[\033[00m\] '
+
+alias vim=nvim
+alias e='emacs -nw'
+alias cls=clear
+  '';
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
