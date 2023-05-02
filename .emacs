@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -358,12 +358,12 @@
 (use-package pyim
   :init
   (setq default-input-method "pyim")
+  (setq pyim-punctuation-translate-p '(no yes auto)) ; must be 3-long
   :config
   (setq pyim-page-tooltip 'minibuffer)
   (setq pyim-cloudim 'google)  ; I hate baidu
   (setq pyim-dicts
         '((:name "tsinghua" :file "~/.emacs.d/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
-  (setq-default pyim-punctuation-translate-p '(no yes))
   :bind
   ("C-|" . pyim-punctuation-toggle))
 
@@ -481,6 +481,10 @@
               ((string-match "https?://" link)
                (browse-url link))
               (t (error "gemini-mode: invalid link %s" link))))))
+  (setq whitespace-style '(face lines-char))
+  :hook
+  ;; normally add whitespace-mode doesn't work, this is a per-buffer setting
+  (gemini-mode . whitespace-mode)
   :bind
   (:map gemini-mode-map ("C-c C-o" . #'my/gemini-open-link-at-point)))
 
@@ -584,7 +588,7 @@
           ("gemini://.*"                     . elpher-browse-url-elpher)
           ))
 ;;;endif dump
-  :defer 1
+  :defer t
   :config
   (defun eww-browse-no-pre-hl (url &optional new-window)
     (eww-browse-url url new-window)
@@ -592,6 +596,12 @@
   (evil-define-key 'normal eww-mode-map (kbd "^") 'eww-back-url) ; like elpher
   (evil-define-key 'normal eww-mode-map (kbd "C") 'eww-copy-page-url) ; like elpher
   (evil-define-key 'normal eww-mode-map (kbd "&") 'eww-browse-with-external-browser))
+
+(use-package elpher
+  :defer t
+  :config
+  ;; I usually fire up a local agate server to test my content
+  (setq elpher-default-url-type "gemini"))
 
 (use-package shr-tag-pre-highlight
   ;; render code block in eww
@@ -629,4 +639,4 @@
        "\n"
        ))
 
-(setq gc-cons-threshold 800000)
+(setq gc-cons-threshold 6400000)

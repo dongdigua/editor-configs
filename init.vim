@@ -10,6 +10,7 @@ filetype plugin on
 set cursorline
 set list                " 显示换行符
 set colorcolumn=80
+set viminfofile=
 " General }
 
 " Keys {
