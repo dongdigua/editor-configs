@@ -4,6 +4,7 @@
     sshd.enable = true;
     getty.autologinUser = lib.mkDefault "nix";
     openssh.settings.PermitRootLogin = lib.mkDefault "yes";
+    xserver.xkbOptions = "caps:escape"; # I don't know if this will corrupt sway's xkb_options
   };
 
   systemd.services.sync-home = {
@@ -63,9 +64,11 @@ alias vim=nvim
 alias e='emacs -nw'
 alias cls=clear
   '';
+  console.useXkbConfig = true;
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.gpgSmartcards.enable = true;
   security.doas = {
     enable = true;
     wheelNeedsPassword = false;
