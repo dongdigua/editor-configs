@@ -203,7 +203,7 @@ alias cls=clear
     { source = ./waybar;                   target = "/files/.config/waybar"; }
     { source = ./rofi;                     target = "/files/.config/rofi"; }
     # by downloading
-    { source = ./centos9-motif.png;        target = "/files/Pictures/wallpaper/centos9-motif.png"; }
+    { source = ./centos9-motif.png;        target = "/files/Pictures/wallpaper/sway-bg"; }
     { source = ./internet_collections.org; target = "/files/Documents/internet_collections.org"; }
     # fallbacks
     { source = ./fallbacks/min-pkg.el;     target = "/files/min-pkg.el"; }
