@@ -23,17 +23,14 @@ set mail_check = 120
 unset imap_passive
 
 # mailbox
-#set spoolfile = +INBOX
-#set record = +Sent
-#set trash = +Trash
-#set postponed = +Drafts
 mailboxes =INBOX =Sent =Trash =Drafts
 
 set mbox_type = Maildir
 set folder = ~/Mail/mutt
-set spoolfile = $folder/INBOX
-set trash = $folder/Trash
-set postponed = $folder/Drafts
+set spoolfile = +INBOX
+set record = +Sent
+set trash = +Trash
+set postponed = +Drafts
 
 # list
 lists misc@openbsd.org

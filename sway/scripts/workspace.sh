@@ -8,7 +8,7 @@ elif [ $1 == "next" ]; then
     TO_WORKSPACE=$(expr $CUR_WORKSPACE + 1)
 elif [ $1 == "sov" ]; then
     echo 1 > /tmp/sovpipe
-    sleep 2
+    sleep 1
     echo 0 > /tmp/sovpipe
     exit # vital
 fi
