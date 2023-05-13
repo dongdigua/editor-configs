@@ -15,6 +15,7 @@ $base_dir = "~/Pictures/wallpaper/";
     "centos9-motif.png",
     "Cardinali.jpg",
     "debian9-softwaves.png",
+    "f38-day.jpg",
 );
 
 $ps = `ps l | grep swaybg`;

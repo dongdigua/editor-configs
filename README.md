@@ -18,7 +18,7 @@ too many plugins, just look at my config file<br>
 - vim-color-spring-nignt
 
 # tmux
-`.tmux.conf` available on https://dongdigua.github.io/.tmux.conf
+`.tmux.conf` available on https://dongdigua.github.io/tmux.conf
 
 # sway
 [some notes](https://dongdigua.github.io/wayland)

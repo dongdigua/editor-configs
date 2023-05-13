@@ -38,7 +38,7 @@
     hostName = "nixos";
     extraHosts =
       ''
-        140.82.114.4 github.com
+140.82.112.3 github.com
       ''; # fuck DNS pollution
   };
   time.timeZone = "Asia/Shanghai";

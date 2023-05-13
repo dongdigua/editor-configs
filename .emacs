@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons dashboard rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -62,12 +62,12 @@
 (setq pixel-scroll-precision-large-scroll-height 40.0)
 
 ;; manually do the gcmh https://akrl.sdf.org
+(setq normal-gc-threshold 6400000)
 (defmacro k-time (&rest body)
   "Measure and return the time it takes evaluating BODY."
   `(let ((time (current-time)))
      ,@body
      (float-time (time-since time))))
-
 (run-with-idle-timer 30 t
                      (lambda ()
                        (message "gcmh: %.04fsec"
@@ -134,13 +134,6 @@
   (erase-buffer)
   (animate-string text 10))
 
-(defun lambda-copy ()
-  ;; https://caiorss.github.io/Emacs-Elisp-Programming/Elisp_Snippets.html#sec-1-5
-  (interactive)
-  (with-temp-buffer
-    (insert "λ")
-    (clipboard-kill-region (point-min) (point-max))))
-
 (defun highlight-custom ()
   (interactive)
   (defface todo
@@ -155,7 +148,7 @@
   (highlight-regexp "<%=\\|%>"             'todo)
   (highlight-regexp " CTF"                 'ctf))
 
-(defun highlight-custim-enable ()
+(defun highlight-custum-enable ()
   (interactive)
   (add-hook 'post-command-hook 'highlight-custom))
 
@@ -225,6 +218,13 @@
                    '(pre . shr-tag-pre-highlight))
       (message "on"))))
 
+(defun gc-change-threshold ()
+  ;; for some crazy usage
+  (interactive)
+  (if (eq gc-cons-threshold normal-gc-threshold)
+      (progn (setq gc-cons-threshold #x40000000) (message "big"))
+  (setq gc-cons-threshold normal-gc-threshold)))
+
 
 
 ;; =========== ;;
@@ -233,7 +233,7 @@
 (use-package evil
   :ensure t
   :init
-  ;; https://emacstalk.github.io/post/025/
+  ;; https://emacstalk.codeberg.page/post/025/
   (setq evil-want-C-i-jump nil)
   (setq evil-undo-system 'undo-tree)
   (evil-mode 1)
@@ -253,6 +253,11 @@
   ;; * https://emacs-china.org/t/org-mode-tag/22291
   ;; ** https://list.orgmode.org/87lfh745ch.fsf@localhost/T/
   ;; but it looks not satisfying and add a bit of lag, so I don't use it
+  :init
+  (require 'org-crypt)
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance '("crypt"))
+  (setq org-crypt-key "2394861A728929E3755D8FFADB55889E730F5B41")
   :config
 ;;;ifdef dump
   (setq org-startup-indented t
@@ -305,25 +310,6 @@
   (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
   (evil-define-key 'normal neotree-mode-map (kbd "<return>") 'neotree-enter))
 
-;;;ifdef excl
-(use-package dashboard
-  :if (and window-system (not (getenv "NO_DASHBOARD")))
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner 'logo
-        ;; https://github.com/snackon/Witchmacs/blob/master/marivector.png
-        dashboard-banner-logo-png "~/.emacs.d/marisa.png"
-        dashboard-image-banner-max-width 256
-        dashboard-image-banner-max-hight 256)
-  (setq dashboard-items '((recents . 7)
-                          (bookmarks . 5)
-                          (agenda . 3)))
-  (setq org-agenda-files '("~/org/TODO.org"))
-  (setq dashboard-set-heading-icons t
-        dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "董地瓜@bilibili"))
-;;;endif excl
-
 (use-package smart-hungry-delete
   :if window-system ; in terminal the key just don't work
   :defer 1
@@ -364,6 +350,8 @@
   (setq pyim-cloudim 'google)  ; I hate baidu
   (setq pyim-dicts
         '((:name "tsinghua" :file "~/.emacs.d/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
+  (add-hook 'pyim-activate-hook   (lambda () (setq gc-cons-threshold (* normal-gc-threshold 10))))
+  (add-hook 'pyim-deactivate-hook (lambda () (setq gc-cons-threshold normal-gc-threshold)))
   :bind
   ("C-|" . pyim-punctuation-toggle))
 
@@ -413,6 +401,7 @@
 
 ;;;ifdef excl
 (use-package doom-modeline
+  ;; if the icons go wrong, try nerd-icons-install-fonts
   :config
   (doom-modeline-mode))
 ;;;endif excl
@@ -448,6 +437,7 @@
   ;; https://web-mode.org/
   :mode "\\.eex\\'"
   :mode "\\.html\\'"
+  :mode "\\.xml\\'" ; when editing https://dongdigua.github.io/anaconda_kickstart
   :config
   (setq web-mode-markup-indent-offset 2))
 
@@ -491,7 +481,8 @@
 (use-package sly
   :defer t
   :config
-  (setq inferior-lisp-program "sbcl"))
+  (setq inferior-lisp-program "sbcl")
+  (setq sly-mrepl-history-file-name ""))
 
 (use-package flycheck
   :defer t
@@ -501,6 +492,15 @@
 (use-package nasm-mode
   ;; https://vishnudevtj.github.io/notes/assembly-in-emacs
   :hook (asm-mode-hook nasm-mode))
+
+(use-package go-mode
+  :defer t
+  :config
+  (setq-local tab-width 4)
+  (indent-tabs-mode t)
+  (setq whitespace-style '(face tabs tab-mark)) ; setq-local won't work
+  :hook
+  (go-mode . whitespace-mode))
 
 ;; ==================== ;;
 ;; use-package/internet ;;
@@ -617,11 +617,6 @@
   (setq plz-curl-default-args
         '("--proxy" "http://127.0.0.1:20172" "--silent" "--compressed" "--location" "--dump-header" "-")))
 
-(use-package gnus
-  :defer t
-  :config
-  (setq gnus-select-method '(nntp "news.tilde.club")))
-
 
 
 ;; =========== ;;
@@ -639,4 +634,4 @@
        "\n"
        ))
 
-(setq gc-cons-threshold 6400000)
+(setq gc-cons-threshold normal-gc-threshold)
