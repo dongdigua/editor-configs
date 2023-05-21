@@ -1,6 +1,8 @@
 function fish_greeting
-    echo '( .-.)'
-    # cat ~/TODO.md
+    # https://github.com/qlkzy/elisp/blob/master/fortunes
+    # dos2unix it otherwise it won't work
+    # fortune probably makes me aware of opening up too many terminal
+    fortune ~/.emacs.d/fortunes
 end
 
 alias gdbtool="emacs --eval (gdb \"gdb -i=mi $argv\")&"

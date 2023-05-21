@@ -1,25 +1,26 @@
+# https://nethackwiki.com/wiki/Options
+
+# curses
 OPTIONS=windowtype:curses
-OPTIONS=toptenwin, color
-OPTIONS=hilite_pet
-# hilite 醒目
-OPTIONS=fixinv,safe_pet,sortpack,tombstone
-OPTIONS=verbose,news,fruit:potato
+OPTIONS=perm_invent
 
-OPTIONS=dogname:Doge
-OPTIONS=catname:Rex
+# essensial
+OPTIONS=color
+#OPTIONS=hilite_pet
 OPTIONS=pickup_types:$
-#OPTIONS=nomail
 
-#
-# Some sane menucolor defaults
-#
+# name
+OPTIONS=fruit:Apple
+OPTIONS=dogname:Doge
+OPTIONS=catname:Jellie
 
+# make it colorful
 OPTIONS=menucolors
 MENUCOLOR=" blessed "=green
 MENUCOLOR=" holy "=green
 MENUCOLOR=" uncursed "=yellow
 MENUCOLOR=" cursed "=red
 MENUCOLOR=" unholy "=red
-MENUCOLOR=" cursed .* (being worn)"=orange&underline
+MENUCOLOR=" cursed .* (being worn) "=orange&underline
 
-
+OPTIONS=hitpointbar
