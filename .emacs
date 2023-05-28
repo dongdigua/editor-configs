@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf go-translate expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(imenu-list writeroom-mode sdcv go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -24,12 +24,10 @@
 ;;;ifdef dump
 (tool-bar-mode               -1)
 (menu-bar-mode               -1)
-(toggle-scroll-bar          nil)
+(scroll-bar-mode             -1)
 (column-number-mode           t)
 (setq inhibit-startup-message t)
-
-;(add-to-list 'default-frame-alist '(width . 80))
-;(add-to-list 'default-frame-alist '(height . 40))
+(setq use-dialog-box        nil)
 
 ;; theme-start
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
@@ -44,7 +42,7 @@
     (progn ;(load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
 ;;;ifdef excl
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
-           (load-theme 'everforest-hard-dark t)
+           (load-theme 'adwaita t)
 ;;;endif excl
            )
   (progn
@@ -148,7 +146,7 @@
   (highlight-regexp "<%=\\|%>"             'todo)
   (highlight-regexp " CTF"                 'ctf))
 
-(defun highlight-custum-enable ()
+(defun highlight-custom-enable ()
   (interactive)
   (add-hook 'post-command-hook 'highlight-custom))
 
@@ -263,9 +261,7 @@
   (setq org-startup-indented t
         org-src-preserve-indentation t
         org-startup-with-inline-images t
-        ;; org-display-remote-inline-images only works for trump
-        org-return-follows-link t  ; in insert mode
-        org-catch-invisible-edits 'show)
+        org-return-follows-link t)  ; in insert mode
 ;;;endif dump
   (setq-local browse-url-browser-function 'eww-browse-url)
 
@@ -277,8 +273,7 @@
      ("e" . "EXAMPLE")
      ("E" . "EXPORT")
      ("q" . "QUOTE")
-     ("s" . "SRC")
-     ("v" . "VERSE")))
+     ("s" . "SRC")))
 
   (defmacro my/orgurl (proto)
     `(org-link-set-parameters ,proto
@@ -350,8 +345,6 @@
   (setq pyim-cloudim 'google)  ; I hate baidu
   (setq pyim-dicts
         '((:name "tsinghua" :file "~/.emacs.d/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
-  (add-hook 'pyim-activate-hook   (lambda () (setq gc-cons-threshold (* normal-gc-threshold 10))))
-  (add-hook 'pyim-deactivate-hook (lambda () (setq gc-cons-threshold normal-gc-threshold)))
   :bind
   ("C-|" . pyim-punctuation-toggle))
 
@@ -362,16 +355,12 @@
   (("C-x c v" . clippy-describe-variable)
    ("C-x c f" . clippy-describe-function)))
 
-(use-package go-translate
+(use-package sdcv
+  ;; http://download.huzheng.org/zh_CN/stardict-oxford-gb-formated-2.4.2.tar.bz2
+  :init
+  (defalias 'sdcv 'sdcv-search-input)
   :bind
-  ("C-x M-t" . gts-do-translate)
-  :config
-  (setq gts-translate-list '(("en" "zh")))
-  (setq gts-default-translator
-        (gts-translator
-         :picker (gts-prompt-picker :texter (gts-current-or-selection-texter) :single t)
-         :engines (list (gts-bing-engine))
-         :render (gts-buffer-render))))
+  ("C-x M-t" . sdcv-search-pointer))
 
 (use-package fzf
   ;; hacker news: How FZF and ripgrep improved my workflow
@@ -403,6 +392,7 @@
 (use-package doom-modeline
   ;; if the icons go wrong, try nerd-icons-install-fonts
   :config
+  (setq doom-modeline-modal-icon nil) ; the icon for evil is dumb
   (doom-modeline-mode))
 ;;;endif excl
 
@@ -414,6 +404,24 @@
 (use-package paren-face
   :config
   (global-paren-face-mode 1))
+
+(use-package imenu-list
+  :defer t
+  ;; https://youtu.be/YM0TD8Eg9qg
+  :config
+  (setq imenu-list-persist-when-imenu-index-unavailable nil)
+  (evil-define-key 'normal imenu-list-major-mode-map (kbd "SPC") 'imenu-list-display-dwim))
+
+(use-package imenu
+  :config
+  (setq elisp-usepackage-expression
+        ;; I love regxp!!!
+        '("Packages" "^\\s-*(\\(use-package\\)\\s-+\\(\\(?:\\sw\\|\\s_\\|\\\\.\\)+\\)" 2))
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (setq-local imenu-generic-expression
+                          (cons elisp-usepackage-expression lisp-imenu-generic-expression))))
+  )
 
 ;; ===================== ;;
 ;; use-package/languages ;;
@@ -601,7 +609,8 @@
   :defer t
   :config
   ;; I usually fire up a local agate server to test my content
-  (setq elpher-default-url-type "gemini"))
+  (setq elpher-default-url-type "gemini")
+  (setq elpher-open-urls-with-eww t))
 
 (use-package shr-tag-pre-highlight
   ;; render code block in eww
@@ -617,6 +626,18 @@
   (setq plz-curl-default-args
         '("--proxy" "http://127.0.0.1:20172" "--silent" "--compressed" "--location" "--dump-header" "-")))
 
+(use-package gnus
+  ;; BUG: it will load after org, which is not expected
+  :defer t
+  :config
+  ;; yeah I can access the usenet in China
+  ;; found this address on wikipedia
+  (setq gnus-select-method '(nntp "freenews.netfront.net"))
+  (setq gnus-default-directory "~/.emacs.d/Gnus/") 
+  (setq gnus-dribble-directory "~/.emacs.d/Gnus/") 
+  (setq gnus-startup-file "~/.emacs.d/Gnus/.newsrc") 
+  (setq gnus-asynchronous t))
+
 
 
 ;; =========== ;;
@@ -626,11 +647,11 @@
       (concat
        (emacs-init-time ";; %2.4f secs, ")
        (format "%d gcs\n" gcs-done)
-       (button-buttonize ";; (config)" (lambda (_) (find-file-existing "~/.emacs")))
+       (buttonize ";; (config)" (lambda (_) (find-file-existing "~/.emacs")))
        "\n"
-       (button-buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
+       (buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
        "\n"
-       (button-buttonize ";; (YW)" (lambda (_) (dired "~/git/digua-YW")))
+       (buttonize ";; (gmi)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/gmi/collections.gmi")))
        "\n"
        ))
 
