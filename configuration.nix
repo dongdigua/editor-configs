@@ -116,7 +116,7 @@ alias cls=clear
     # fun
     nyancat
     nethack
-    av-98
+    offpunk
     libsixel
     weechat
 
