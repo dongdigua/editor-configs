@@ -1,13 +1,16 @@
 { config, lib, pkgs, ... }:
 {
+  ### service
   services = {
     sshd.enable = true;
     getty.autologinUser = lib.mkDefault "nix";
     openssh.settings.PermitRootLogin = lib.mkDefault "yes";
-    xserver.xkbOptions = "caps:escape"; # I don't know if this will corrupt sway's xkb_options
+    xserver.xkbOptions = "caps:escape";
+    pcscd.enable = true;
   };
 
   systemd.services.sync-home = {
+    # don't touch this
     enable = true;
     wantedBy = [ "default.target" ];
     description = "Copy home contents from iso";
@@ -28,19 +31,19 @@
     serviceConfig = {
       Type = "forking";
       ExecStartPre = "${pkgs.nix}/bin/nix-channel --remove nixos";
-      ExecStart = "${pkgs.nix}/bin/nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixos";
-      ExecStop = "${pkgs.nix}/bin/nix-channel --update";
+      ExecStop = "${pkgs.nix}/bin/nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixos";
     };
   };
 
+  ### network
   networking = {
     firewall.allowedTCPPorts = [ 22 80 1965 2333 ];
     hostName = "nixos";
-    extraHosts =
-      ''
-140.82.112.3 github.com
-      ''; # fuck DNS pollution
+    networkmanager.enable = true;
+    extraHosts = "140.82.112.3 github.com"; # fuck DNS pollution
   };
+
+  ### misc
   time.timeZone = "Asia/Shanghai";
 
   users.users.root.password = "nixos";
@@ -48,14 +51,11 @@
     password = "nixos";
     isNormalUser = true;
     home = "/home/nix";
-    shell = pkgs.oksh;
-    extraGroups = [ "wheel" "disk" "audio" "video" "input" "systemd-journal" "networkmanager" "network" "gnunet" ];
+    extraGroups = [ "wheel" "disk" "audio" "video" "input" "systemd-journal" "networkmanager" "network" ];
   };
 
-  environment.shellInit = ''
+  environment.interactiveShellInit = ''
 export PATH=$PATH:$HOME/bin
-export HISTFILE=$HOME/.ksh_hist
-export HISTCONTROL=ignoredup
 export VISUAL=vi
 export CLICOLOR=1
 export PS1='\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w λ\[\033[00m\] '
@@ -64,16 +64,21 @@ alias vim=nvim
 alias e='emacs -nw'
 alias cls=clear
   '';
+
   console.useXkbConfig = true;
 
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.gpgSmartcards.enable = true;
+  hardware = {
+    pulseaudio.enable = true;
+    gpgSmartcards.enable = true;
+  };
+
   security.doas = {
     enable = true;
     wheelNeedsPassword = false;
   };
 
+  ### pkgs
   # https://mirrors.tuna.tsinghua.edu.cn/help/nix/
   nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
   nixpkgs.overlays = [
@@ -81,21 +86,25 @@ alias cls=clear
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
     }))
   ];
-  nixpkgs.config.packageOverrides = pkgs: {
-    myRepo = import (builtins.fetchTarball "https://github.com/dongdigua/nur-pkg/archive/master.tar.gz") {
-      inherit pkgs;
+  nixpkgs.config = {
+    packageOverrides = pkgs: {
+      myRepo = import (builtins.fetchTarball "https://github.com/dongdigua/nur-pkg/archive/master.tar.gz") {
+        inherit pkgs;
+      };
     };
+    allowUnfree = true;
   };
 
   environment.systemPackages = with pkgs; [
     # basic
     neovim
-    elvis # fantastic
+    elvis
     git
     netcat
     curl
     doas
     psmisc
+    tmux
 
     # util
     neofetch
@@ -111,7 +120,7 @@ alias cls=clear
     pigz
     htop
     ripgrep
-    w3m
+    myRepo.w3m-gmi
 
     # fun
     nyancat
@@ -125,12 +134,8 @@ alias cls=clear
     myRepo.bsdtetris
   ];
 
-  # https://nixos.wiki/wiki/Linux_kernel
-#ifndef hack
-  boot.kernelPackages = pkgs.linuxPackages_lqx;
-#endif
+  programs.light.enable = true;
 
-  programs.xwayland.enable = pkgs.lib.mkForce false; # well, seems it can't do this, unlike gentoo
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = false;
@@ -155,7 +160,6 @@ alias cls=clear
         # network.proxy.type -> 0
         # network.dns.disabled -> false
       })
-      neovide
       pcmanfm
       ffmpeg-full
       gparted
@@ -164,8 +168,7 @@ alias cls=clear
       frp
 
       # development
-      myRepo.cproc # just try sonething new, probably change back
-      qbe
+      gcc
       gdb
       gnumake
       lua
@@ -173,14 +176,12 @@ alias cls=clear
       rustup # rust itself is 2GiB
       racket-minimal # 400MiB, enough for slideshow? full is 900MiB
       binutils
-      picocom # better than minicom
 
       # net
       inetutils
       hping
       nmap
       tcpdump
-      gnunet
 
 #ifdef hack
       nikto
@@ -197,6 +198,7 @@ alias cls=clear
 
   isoImage.contents = [
     { source = ./.emacs;                   target = "/files/.emacs"; }
+    { source = ./.tmux.conf;               target = "/files/.tmux.conf"; }
     { source = ./init.vim;                 target = "/files/.config/nvim/init.vim"; }
     { source = ./.nethackrc;               target = "/files/.nethackrc"; }
     { source = ./sway;                     target = "/files/.config/sway"; }
