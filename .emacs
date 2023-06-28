@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(imenu-list writeroom-mode sdcv go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode ement shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(lua-mode imenu-list writeroom-mode sdcv go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -33,7 +33,7 @@
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 ;;;ifdef excl
-(set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
+(set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-19-*-*-*-m-0-iso10646-1")
 ;;;endif excl
 ;;;endif dump
 
@@ -246,26 +246,32 @@
   (global-evil-mc-mode 1))
 
 (use-package org
-  :defer t
   ;; to make tags aligned:
-  ;; * https://emacs-china.org/t/org-mode-tag/22291
-  ;; ** https://list.orgmode.org/87lfh745ch.fsf@localhost/T/
+  ;; https://emacs-china.org/t/org-mode-tag/22291
   ;; but it looks not satisfying and add a bit of lag, so I don't use it
+  :defer t
   :init
-  (require 'org-crypt)
+  ;; https://dongdigua.github.io/gmi/org_load_gnus_disable.gmi.txt
+  (setq org-modules '(org-crypt org-id ol-info)
+        org-tags-exclude-from-inheritance '("crypt")
+        org-crypt-key "2394861A728929E3755D8FFADB55889E730F5B41")
   (org-crypt-use-before-save-magic)
-  (setq org-tags-exclude-from-inheritance '("crypt"))
-  (setq org-crypt-key "2394861A728929E3755D8FFADB55889E730F5B41")
   :config
 ;;;ifdef dump
   (setq org-startup-indented t
         org-src-preserve-indentation t
         org-startup-with-inline-images t
-        org-return-follows-link t)  ; in insert mode
+        org-agenda-files '("~/org/TODO.org"))
 ;;;endif dump
-  (setq-local browse-url-browser-function 'eww-browse-url)
+  (defun org-writer ()
+    ;; https://www.reddit.com/r/emacs/comments/43vfl1/enable_wordwrap_in_orgmode/
+    (interactive)
+    (org-indent-mode)
+    (visual-line-mode))
 
-  (add-to-list 'org-export-backends 'md)
+  (define-key org-mode-map (kbd "M-n") #'org-next-link)
+  (define-key org-mode-map (kbd "M-p") #'org-previous-link)
+
   ;; https://d12frosted.io/posts/2017-07-30-block-templates-in-org-mode.html
   (setq org-structure-template-alist
    '(("c" . "CENTER")
@@ -619,12 +625,6 @@
   :config
   (add-to-list 'shr-external-rendering-functions
                '(pre . shr-tag-pre-highlight)))
-
-(use-package ement
-  :defer t
-  :config
-  (setq plz-curl-default-args
-        '("--proxy" "http://127.0.0.1:20172" "--silent" "--compressed" "--location" "--dump-header" "-")))
 
 (use-package gnus
   ;; BUG: it will load after org, which is not expected
