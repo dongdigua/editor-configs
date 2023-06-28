@@ -568,12 +568,14 @@
   ;; sasl support! (29)
   :defer t
   :init
-  (defun erc-connect ()
-      (interactive)
-      (erc-tls :server "irc.libera.chat" :port 6697
-               :nick "dongdigua"
-               :user "dongdigua"))
-  
+  (defun erc-libera ()
+    (interactive)
+    (erc-tls :server "irc.libera.chat" :port 6697
+             :nick "dongdigua"
+             :client-certificate
+             ;; must use absolute path, otherwise it will stuck at "Opening connection.."
+             '("/home/digua/.emacs.d/cert/libera.key"
+               "/home/digua/.emacs.d/cert/libera.crt")))
   :config
 ;;ifdef dump
   (setq erc-modules
@@ -581,7 +583,9 @@
         '(button completion fill irccontrols log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track truncate))
 ;;endif dump
   (erc-update-modules)
-  (setq erc-log-channels-directory "~/.emacs.d/erc-log"))
+  (setq erc-email-userid "dongdigua"
+        erc-log-channels-directory "~/.emacs.d/erc-log"
+        erc-notice-prefix "! "))
 
 (use-package eww
   :init
@@ -615,8 +619,8 @@
   :defer t
   :config
   ;; I usually fire up a local agate server to test my content
-  (setq elpher-default-url-type "gemini")
-  (setq elpher-open-urls-with-eww t))
+  (setq elpher-default-url-type "gemini"
+        elpher-certificate-directory "~/.emacs.d/cert/"))
 
 (use-package shr-tag-pre-highlight
   ;; render code block in eww
@@ -651,7 +655,7 @@
        "\n"
        (buttonize ";; (collections)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/org/internet_collections.org")))
        "\n"
-       (buttonize ";; (gmi)" (lambda (_) (find-file-existing "~/git/dongdigua.github.io/gmi/collections.gmi")))
+       (buttonize ";; (agenda)" #'org-agenda)
        "\n"
        ))
 
