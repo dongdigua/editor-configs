@@ -2,7 +2,6 @@
 cp ~/.emacs                            .
 cp ~/.tmux.conf                        .
 cp ~/.nethackrc                        .
-cp ~/.zshenv                           .
 cp ~/.config/starship.toml             .
 cp ~/.config/libinput-gestures.conf    .
 cp ~/.config/nvim/init.vim             .

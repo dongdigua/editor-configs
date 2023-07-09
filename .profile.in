@@ -1,0 +1,33 @@
+# ksh login & init file template (gpp)
+# sway wrapper: in sway.desktop `oksh -lc sway`
+
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+export HISTFILE=$HOME/.ksh_hist
+export HISTCONTROL=ignoredup
+export VISUAL=vi
+# https://gitweb.gentoo.org/repo/gentoo.git/tree/app-shells/bash/files/bashrc
+export PS1='\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w λ\[\033[00m\] '
+#ifdef OBSD
+export AUTOCONF_VERSION=2.71
+export CLICOLOR=1
+#endif
+
+#ifdef LINUX
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+#endif
+
+alias vim=nvim
+alias e='emacs -nw'
+alias gs='git status'
+alias cls=clear
+#ifdef OBSD
+alias tree='colortree -aC'
+#endif
+
+#ifdef LINUX
+. $HOME/.cargo/env
+. $HOME/.nix-profile/etc/profile.d/nix.sh
+#endif

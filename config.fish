@@ -23,8 +23,6 @@ export EDITOR=vim
 export LANG=en_US.UTF-8 # translated documents are not good
 export LC_ALL=en_US.UTF-8
 export FZF_DEFAULT_COMMAND='rg --hidden --files'
-export FZF_DEFAULT_OPTS='--height=50% --layout=reverse'
-export ENV=$HOME/.kshrc # for ksh
 export SDCV_PAGER='less' # not using -F
 
 # ~ cleanup
