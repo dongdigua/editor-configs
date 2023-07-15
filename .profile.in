@@ -5,6 +5,7 @@ export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export HISTFILE=$HOME/.ksh_hist
 export HISTCONTROL=ignoredup
 export VISUAL=vi
+export ENV=$HOME/.profile
 # https://gitweb.gentoo.org/repo/gentoo.git/tree/app-shells/bash/files/bashrc
 export PS1='\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w λ\[\033[00m\] '
 #ifdef OBSD
@@ -30,4 +31,5 @@ alias tree='colortree -aC'
 #ifdef LINUX
 . $HOME/.cargo/env
 . $HOME/.nix-profile/etc/profile.d/nix.sh
+ps -p $SSH_AGENT_PID > /dev/null || eval $(ssh-agent -s)
 #endif
