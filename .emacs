@@ -272,6 +272,15 @@
   (define-key org-mode-map (kbd "M-n") #'org-next-link)
   (define-key org-mode-map (kbd "M-p") #'org-previous-link)
 
+  (use-package org-capture
+    :config
+    (setq org-capture-templates
+          '(("t" "Task" entry (file+headline "~/org/capture.org" "Tasks")
+              "* TODO %?\n  %u\n  %a")
+            ("i" "Inbox" entry (file "~/org/capture.org")
+             "* %U - %^{heading}\n%?\n")
+            )))
+
   ;; https://d12frosted.io/posts/2017-07-30-block-templates-in-org-mode.html
   (setq org-structure-template-alist
    '(("c" . "CENTER")
@@ -589,7 +598,6 @@
 
 (use-package eww
   :init
-;;;ifdef dump
   (setq browse-url-handlers
         '( ; use alist in browse-url-browser-function is deprecated
           ("^https?://youtu\\.be"            . browse-url-firefox)
@@ -605,7 +613,6 @@
           ("gopher://.*"                     . elpher-browse-url-elpher)
           ("gemini://.*"                     . elpher-browse-url-elpher)
           ))
-;;;endif dump
   :defer t
   :config
   (defun eww-browse-no-pre-hl (url &optional new-window)
@@ -631,7 +638,6 @@
                '(pre . shr-tag-pre-highlight)))
 
 (use-package gnus
-  ;; BUG: it will load after org, which is not expected
   :defer t
   :config
   ;; yeah I can access the usenet in China

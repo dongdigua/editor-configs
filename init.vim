@@ -47,6 +47,9 @@ Plug 'sainnhe/everforest'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'hachy/eva01.vim' " Evangelion!
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'lambdalisue/suda.vim'
+Plug 'eandrju/cellular-automaton.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
 call plug#end()
 
 nmap <f3> :NERDTreeToggle<CR>

@@ -226,7 +226,7 @@ exec {
 #ifdef local
     rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
 #endif
-    wlsunset -s 18:00
+    wlsunset -s 18:00 -S 6:30
     # activate-linux -c 1-1-1-0.3
 }
 
