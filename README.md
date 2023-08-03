@@ -24,6 +24,7 @@ too many plugins, just look at my config file<br>
 [some notes](https://dongdigua.github.io/wayland)
 
 ## wallpapers
+/^f\d{2}/ are fedora wallpapers
 [miku](https://wallpapers.com/wallpapers/cute-blue-aesthetic-hatsune-miku-hd-8n3mld5aokfzhjn3.html)
     [i think this is better, but it's for mobile](https://wallpapers.com/wallpapers/cute-blue-aesthetic-hatsune-miku-hd-8n3mld5aokfzhjn3.html)<br>
 [crystal-water](https://www.reddit.com/r/wallpaper/comments/wid6qs/crystal_water_theme_1920x1080/)<br>

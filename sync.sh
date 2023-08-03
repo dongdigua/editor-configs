@@ -14,4 +14,4 @@ cp ~/.config/qutebrowser/config.py     qutebrowser/
 cp ~/.config/qutebrowser/home.html     qutebrowser/
 #cp ~/.config/qutebrowser/home.html     ~/Documents/
 #sed -i "s/duckduckgo/bing/g"           ~/Documents/home.html
-elixir epp.ex .emacs dump >            ~/.emacs.d/emacs/lisp/site-init.el
+./epp.lua dump < .emacs >              ~/.emacs.d/emacs/lisp/site-init.el
