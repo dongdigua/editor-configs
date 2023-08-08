@@ -52,25 +52,12 @@
 ;; theme-end
 
 ;; set transparent effect (29)
-(add-to-list 'default-frame-alist '(alpha-background . 90))
+(add-to-list 'default-frame-alist '(alpha-background . 75))
 
 ;; native smooth scrolling (29)
 (pixel-scroll-precision-mode)
 ;; normally it is for touchpad, enable for mouse:
 (setq pixel-scroll-precision-large-scroll-height 40.0)
-
-;; manually do the gcmh https://akrl.sdf.org
-(setq normal-gc-threshold 6400000)
-(defmacro k-time (&rest body)
-  "Measure and return the time it takes evaluating BODY."
-  `(let ((time (current-time)))
-     ,@body
-     (float-time (time-since time))))
-(run-with-idle-timer 30 t
-                     (lambda ()
-                       (message "gcmh: %.04fsec"
-                                (k-time (garbage-collect)))))
-
 
 
 ;; =============== ;;
@@ -119,6 +106,18 @@
 (electric-pair-mode t)
 
 (setq shr-use-fonts nil)
+
+;; manually do the gcmh https://akrl.sdf.org
+(setq normal-gc-threshold 6400000)
+(defmacro k-time (&rest body)
+  "Measure and return the time it takes evaluating BODY."
+  `(let ((time (current-time)))
+     ,@body
+     (float-time (time-since time))))
+(run-with-idle-timer 30 t
+                     (lambda ()
+                       (message "gcmh: %.04fsec"
+                                (k-time (garbage-collect)))))
 
 
 

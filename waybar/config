@@ -43,7 +43,8 @@
         "spacing": 10
     },
     "clock": {
-        "format": "{: %I:%M %p   %d/%m/%Y}"
+        "format": "{: %I:%M %p   %d/%m/%Y}",
+        "tooltip-format": "<tt>{calendar}</tt>"
     },
     "cpu": {
         "interval": 15,

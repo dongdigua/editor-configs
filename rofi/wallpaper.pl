@@ -56,6 +56,7 @@ if ($arg1 eq "-random") {
     }
 }
 elsif ($arg1 eq "-time") {
+    # to work with cron
     if (cur_bg() =~ /day|dawn|dusk|night/) {
         do_bg("$`$arg2$'");
     }
