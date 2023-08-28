@@ -127,6 +127,7 @@ alias cls=clear
     testdisk
     p7zip
     pigz
+    zstd
     htop
     ripgrep
     findutils
@@ -137,7 +138,7 @@ alias cls=clear
     nethack
     offpunk
     libsixel
-    weechat
+    irssi
 
     # not quite official
     emacsPgtk
@@ -183,6 +184,7 @@ alias cls=clear
       racket-minimal # 400MiB, enough for slideshow? full is 900MiB
 
       # net
+      v2raya
       inetutils
       hping
       nmap
