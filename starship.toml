@@ -1,5 +1,5 @@
 # catppuccin cyan color is great
-format = "$elixir$rust$package[\\[$directory\b\\]─$nix_shell─ $git_status$git_branch$character](cyan)"
+format = "$elixir$rust$package[\\[$directory\\]─$nix_shell─$git_status$git_branch$character](cyan)"
 
 add_newline = false
 
@@ -13,9 +13,10 @@ disabled = true
 
 [directory]
 style = "bold"
+format = "[$path]($style)[$read_only]($read_only_style)"
 
 [git_status]
-format = "(\b[\\[$all_status$ahead_behind\\]]($style))"
+format = "([\\[$all_status$ahead_behind\\]]($style))"
 
 [git_branch]
 symbol = ""
