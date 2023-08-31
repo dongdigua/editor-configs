@@ -8,11 +8,11 @@ compinit -d .cache/zcompdump
 HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
-setopt autocd beep extendedglob
+setopt autocd beep extendedglob sharehistory histignoredups
 bindkey -e
 autoload -U select-word-style
 select-word-style bash
-WORDCHARS='.-'
+WORDCHARS=''
 
 # alias
 alias lla="exa -alh --git --icons"
@@ -39,6 +39,9 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # ~ cleanup
 export SQLITE_HISTORY=
 export W3M_DIR="$XDG_DATA_HOME"/w3m
+
+# functions
+mkcd() { mkdir $1 && cd $1 }
 
 # post-init
 . /etc/profile.d/autojump.sh
