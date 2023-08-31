@@ -37,9 +37,10 @@ input "type:keyboard" {
     bindsym $mod+x      exec emacs
     bindsym $mod+m      exec $term mocp
     # Start a terminal, floating
-    bindsym $mod+Shift+Return exec $term -T dropdown-terminal
-    for_window [title="dropdown-terminal"] floating enable
-    for_window [title="dropdown-terminal"] border csd
+    bindsym $mod+Shift+Return exec $term -T floating-terminal
+    for_window [title="floating-terminal"] floating enable
+    for_window [title="floating-terminal"] border csd
+    for_window [title="floating-terminal"] blur disable
     # Start a terminal without tmux
     bindsym $mod+Ctrl+Return exec $term fish
 
