@@ -38,6 +38,7 @@ too many plugins, just look at my config file<br>
 [debian9-softwaves](https://wiki.debian.org/DebianArt/Themes/softWaves?action=AttachFile&do=view&target=attachment_wallpaper.png)<br>
 [Miku_Winter](https://steamcommunity.com/sharedfiles/filedetails/?id=1205035458)
 [Miku_Landscape](https://steamcommunity.com/sharedfiles/filedetails/?id=1260143865)
+[winter_mountain](https://mdh.anjiurine.top/download/6cf8895d7f6dda8ffce8fc1f352fc1da0ec10a626b4c336d2a70b32bf14a02ac)
 
 # foot
 it's default config is easy to use, than other terminal<br>

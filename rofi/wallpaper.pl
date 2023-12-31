@@ -3,6 +3,8 @@
 
 $base_dir = "~/Pictures/wallpaper/";
 @list = (
+    "ocean-waves.jpg",
+    "winter_mountain.jpg",
     "miku-wallpaper-modified.jpg",
     "centos7-bg.jpg",
     "crystal-water.jpg",
