@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(erlang lua-mode imenu-list writeroom-mode sdcv go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(darkman rime erlang lua-mode imenu-list writeroom-mode sdcv go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -42,7 +42,7 @@
     (progn ;(load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
 ;;;ifdef excl
            (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
-           (load-theme 'adwaita t)
+           ;(load-theme 'nord t)
 ;;;endif excl
            )
   (progn
@@ -65,7 +65,6 @@
 ;; =============== ;;
 (setq package-archives'(("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                         ("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
-;(package-initialize) ;; (29) seems don't need, and dump will crash
 (setq use-package-verbose t)
 
 (defmacro setup-what-pkg (what)
@@ -200,8 +199,7 @@
 (defun proxy ()
   (interactive)
   (if (eq url-proxy-services nil)
-      (setq url-proxy-services '(("http"  . "127.0.0.1:20172")
-                                 ("https" . "127.0.0.1:20172")))
+      (setq url-proxy-services '(("http"  . "127.0.0.1:20171")))
     (progn
       (setq url-proxy-services nil)
       (message "no proxy"))))
@@ -351,17 +349,17 @@
   (defalias 'disas 'gdb-display-disassembly-buffer)
   (tool-bar-mode t))
 
-(use-package pyim
-  :init
-  (setq default-input-method "pyim")
-  (setq pyim-punctuation-translate-p '(no yes auto)) ; must be 3-long
-  :config
-  (setq pyim-page-tooltip 'minibuffer)
-  (setq pyim-cloudim 'google)  ; I hate baidu
-  (setq pyim-dicts
-        '((:name "tsinghua" :file "~/.emacs.d/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
-  :bind
-  ("C-|" . pyim-punctuation-toggle))
+;; (use-package pyim
+;;   :init
+;;   (setq default-input-method "pyim")
+;;   (setq pyim-punctuation-translate-p '(no yes auto)) ; must be 3-long
+;;   :config
+;;   (setq pyim-page-tooltip 'minibuffer)
+;;   (setq pyim-cloudim 'google)  ; I hate baidu
+;;   (setq pyim-dicts
+;;         '((:name "tsinghua" :file "~/.emacs.d/pyim-tsinghua-dict/pyim-tsinghua-dict.pyim")))
+;;   :bind
+;;   ("C-|" . pyim-punctuation-toggle))
 
 (use-package clippy
   ;; also from DistroTube
@@ -437,6 +435,18 @@
               (setq-local imenu-generic-expression
                           (cons elisp-usepackage-expression lisp-imenu-generic-expression))))
   )
+
+(use-package rime
+  :config
+  (setq default-input-method "rime")
+  (setq rime-show-candidate 'popup)
+  :bind
+  ("C-|" . 'rime-inline-ascii))
+
+(use-package darkman
+  :config
+  (setq darkman-themes '(:light adwaita :dark nord))
+  (darkman-mode))
 
 ;; ===================== ;;
 ;; use-package/languages ;;
