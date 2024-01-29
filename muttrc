@@ -7,20 +7,18 @@ set realname = "Digua Dong"
 set use_from = yes
 
 # smtp
+set ssl_starttls = yes
 set smtp_authenticators = "login"
-set smtp_url = smtp://$my_user@mail.openmbox.net:587
+set smtp_url = smtp://$my_user@mail.cock.li:587
 set smtp_pass = $my_pass
 
 # imap
 #set imap_authenticators = "login"
-#set folder = imaps://mail.openmbox.net:993/
+#set folder = imaps://mail.cock.li:993
 #set imap_user = $my_user
 #set imap_pass = $my_pass
-
-# refresh
-set ssl_starttls = yes
-set mail_check = 120
-unset imap_passive
+#set mail_check = 120
+#unset imap_passive
 
 # mailbox
 mailboxes =INBOX =Sent =Trash =Drafts

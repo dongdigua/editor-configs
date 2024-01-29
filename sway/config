@@ -6,7 +6,6 @@ set $up k
 set $right l
 set $term foot
 set $menu rofi -show drun
-set $audio ~/.config/waybar/scripts/audio.pl
 
 ### Output configuration
 # symlink, inspired by my solution in OpenBSD
@@ -135,10 +134,10 @@ input "type:keyboard" {
     #bindsym Print grim - | wl-copy
     bindsym $mod+Ctrl+Shift+s    exec grim -g "$(slurp)" - | wl-copy
     bindsym $mod+Shift+s         exec grim
-    bindsym XF86AudioMute        exec $audio mute
-    bindsym XF86AudioLowerVolume exec $audio -
-    bindsym XF86AudioRaiseVolume exec $audio +
-    bindsym XF86AudioMicMute     exec $audio mic
+    bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 #
 #
 # Resizing containers:
@@ -166,6 +165,15 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 #
+# gestures
+#
+bindgesture swipe:3:right exec ~/.config/sway/scripts/workspace.sh prev
+bindgesture swipe:3:left  exec ~/.config/sway/scripts/workspace.sh next
+bindgesture swipe:3:up    floating disable
+bindgesture swipe:3:down  floating enable
+
+
+#
 # Status Bar:
 #
 bar {
@@ -188,19 +196,14 @@ corner_radius 5
 # Autostart
 #
 seat seat0 xcursor_theme Oxygen_Yellow
-exec_always {
-    mako
-#ifdef local
-    /usr/libexec/polkit-gnome-authentication-agent-1
-    libinput-gestures
-#endif
-}
 exec {
 #ifdef local
-    rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
+    fcitx5 -d
+    libinput-gestures
 #endif
     wlsunset -s 17:00 -S 6:30
-    # activate-linux -c 1-1-1-0.3
+    swaync
+    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 }
 
 

@@ -1,70 +1,59 @@
 {
     "layer": "top",
-    "modules-left": ["custom/launcher","sway/workspaces"],
+    "position": "top", 
+    "height": 36, 
+    "spacing": 6,
+    "modules-left": ["custom/launcher", "sway/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["battery","backlight","pulseaudio","cpu","memory","tray","custom/power"],
-
+    "modules-right": ["tray", "battery", "backlight", "pulseaudio", "memory", "cpu", "custom/notification"],
     "sway/workspaces": {
-        "disable-scroll": true,
         "all-outputs": true,
-        "format": "{icon}",
-        "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "E",
-            "4": "",
-            "5": ""
-        }
     },
-    "pulseaudio": {
-        "tooltip": true,
-        "scroll-step": 5,
-        "format": "{icon} {volume}%",
-        "format-muted": "{icon} {volume}%",
-        "on-click":"pactl set-sink-mute @DEFAULT_SINK@ toggle",
-        "format-icons": {
-            "default": ["", "", ""]
-        }
-    },
-    "network": {
-        "format": "{ifname}",
-        "format-wifi": "{essid} ",
-        "format-ethernet": "{ipaddr}",
-    },
-    "backlight": {
-        "tooltip": false,
-        "format": " {}%",
-        "interval":1,
-        "on-scroll-up": "light -A 5",
-        "on-scroll-down": "light -U 5"
-    },
-    "tray":{
-        "icon-size":18,
+    "tray": {
+        "icon-size": 21,
         "spacing": 10
     },
     "clock": {
-        "format": "{: %I:%M %p   %d/%m/%Y}",
-        "tooltip-format": "<tt>{calendar}</tt>"
+        "interval": 1,
+        "format": "{:\uf133 %m-%d \uf017 %H:%M:%S}",
+        "format-alt": "{:\uf017 %H:%M:%S}",
+        "tooltip-format": "<span font='Noto Sans Mono CJK SC'>{calendar}</span>",
+        "calendar": {
+                    "weeks-pos"     : "right",
+                    "on-scroll"     : 1,
+                    "format": {
+                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                              "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                              }
+                    },
+        "actions":  {
+                    "on-scroll-up": "shift_down",
+                    "on-scroll-down": "shift_up"
+                    }
     },
     "cpu": {
-        "interval": 15,
-        "format": " {}",
-        "max-length": 10
+        "interval": 1,
+        "format": "\uf2db {usage}%",
+        "tooltip": true
     },
     "memory": {
-        "interval": 30,
-        "format": " {}%",
-        "max-length": 10
+        "interval": 1,
+        "format": "\uf538 {used}G",
+        "tooltip": true,
+        "tooltip-format": "RAM: {used}G / {total}G\nSwap: {swapUsed}G / {swapTotal}G"
     },
-    "custom/launcher":{
-        "format": " ☭ ",
-        "on-click": "rofi -show drun",
-        "on-click-right": "killall rofi"
-    },
-    "custom/power":{
-        "tooltip": false,
-        "format": " ⏻ ",
-        "on-click": "rofi -show powermenu",
+    "pulseaudio": {
+        "scroll-step": 5,
+        "format": "{icon} {volume}%",
+        "format-muted": "\uf6a9",
+        "format-bluetooth": "{icon}\uf294 {volume}%",
+        "format-bluetooth-muted": "\ufa69 {icon}\uf294",
+        "format-icons": {
+            "default": ["\uf026", "\uf027", "\uf028"]
+        },
+        "on-click":"pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "ignored-sinks": ["AudioRelay Virtual Sink", "Recorder Sink"]
     },
     "battery": {
         "interval": 120,
@@ -72,7 +61,40 @@
             "warning": 30,
             "critical": 15,
         },
-        "format": "{icon} {capacity}%",
+        "format": "{icon}  {capacity}%",
         "format-icons": ["", "", "", "", ""],
+    },
+    "backlight": {
+        "tooltip": false,
+        "format": " {}%",
+        "interval":1,
+        "on-scroll-up": "brightnessctl s 2%+",
+        "on-scroll-down": "brightnessctl s 2%-"
+    },
+    "custom/launcher":{
+        "tooltip": false,
+        "format": " ",
+        "on-click": "rofi -show drun",
+        "on-click-right": "killall rofi"
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon} {}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     },
 }

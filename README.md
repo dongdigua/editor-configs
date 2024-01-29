@@ -1,24 +1,28 @@
 # 我的一些配置
-Emacs 和 Nvim 双料特工
 
-# emacs
-too many plugins, just look at my config file<br>
+TODO: switch to stow or other dotfile manager
 
-# vim
-- nerdtree
-- vim-airline
-- vim-airline-themes
-- oceanic-next
-- onedark.vim
-- julia-vim
-- vim-elixir
-- wildfire.vim
-- vim-visual-multi
-- everforest
-- vim-color-spring-nignt
+# Arch Packages
+```
+swayfx
+waybar
+swaybg
+swaylock
+swaync
+wlsunset
+slurp
+grim
+rofi-lbonn-wayland
+jq
+brightnessctl
+polkit-gnome
+foot
+otf-font-awesome
+ttf-intone-nerd
+```
 
 # tmux
-`.tmux.conf` available on https://dongdigua.github.io/tmux.conf
+`.tmux.conf` available on https://dongdigua.github.io/misc/tmux.conf
 
 # sway
 [some notes](https://dongdigua.github.io/wayland)

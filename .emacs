@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(darkman rime erlang lua-mode imenu-list writeroom-mode sdcv go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(evil-god-state god-mode darkman rime erlang lua-mode imenu-list writeroom-mode sdcv go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -31,9 +31,9 @@
 
 ;; theme-start
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
-;(set-frame-font "-JB-JetBrains Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
 ;;;ifdef excl
-(set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-19-*-*-*-m-0-iso10646-1")
+;(set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-19-*-*-*-m-0-iso10646-1")
+(set-frame-font "-FRJN-IntoneMono Nerd Font-regular-normal-normal-*-19-*-*-*-m-0-iso10646-1")
 ;;;endif excl
 ;;;endif dump
 
@@ -258,7 +258,6 @@
 ;;;ifdef dump
   (setq org-startup-indented t
         org-src-preserve-indentation t
-        org-startup-with-inline-images t
         org-agenda-files '("~/org/TODO.org"))
 ;;;endif dump
   (defun org-writer ()
@@ -439,6 +438,7 @@
 (use-package rime
   :config
   (setq default-input-method "rime")
+  (setq rime-user-data-dir "~/.local/share/fcitx5/rime/")
   (setq rime-show-candidate 'popup)
   :bind
   ("C-|" . 'rime-inline-ascii))
@@ -447,6 +447,11 @@
   :config
   (setq darkman-themes '(:light adwaita :dark nord))
   (darkman-mode))
+
+(use-package evil-god-state
+  :config
+  (evil-define-key 'normal global-map (kbd "SPC") 'evil-execute-in-god-state)
+  (evil-define-key 'god global-map [escape] 'evil-god-state-bail))
 
 ;; ===================== ;;
 ;; use-package/languages ;;

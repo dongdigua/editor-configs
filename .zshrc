@@ -1,13 +1,13 @@
 # init
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -Uz compinit promptinit
 compinit -d .cache/zcompdump
 
 # zsh
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt autocd beep extendedglob sharehistory histignoredups
 bindkey -e
 autoload -U select-word-style
@@ -28,6 +28,7 @@ alias e="emacs -nw"
 alias vim=nvim
 alias irc='TERM=tmux proxychains -q irssi'
 alias potato='echo notify-send -u critical stop! | at now+25 minutes'
+alias firefox=firefox-developer-edition
 
 # env
 export LANG=en_US.UTF-8
@@ -35,6 +36,7 @@ export EDITOR=vim
 export FZF_DEFAULT_COMMAND='rg --hidden --files'
 export SDCV_PAGER='less' # not using -F
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+export PASSWORD_STORE_SIGNING_KEY=2394861A728929E3755D8FFADB55889E730F5B41
 
 # ~ cleanup
 export SQLITE_HISTORY=
@@ -42,7 +44,12 @@ export W3M_DIR="$XDG_DATA_HOME"/w3m
 
 # functions
 mkcd() { mkdir $1 && cd $1 }
+colorman() {
+# https://wiki.archlinux.org/title/Color_output_in_console#man
+export LESS='-R --use-color -Dd+c'
+export MANROFFOPT="-P -c"
+}
 
 # post-init
-. /etc/profile.d/autojump.sh
-eval $(starship init zsh)
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"

@@ -1,229 +1,152 @@
-@keyframes blink-warning {
-    70% {
-        color: @light;
-    }
-    to {
-        color: @light;
-        background-color: @warning;
-    }
-}
-@keyframes blink-critical {
-    70% {
-      color: @light;
-    }
-    to {
-        color: @light;
-        background-color: @critical;
-    }
-}
+/* based on https://github.com/Isoheptane/dotfiles/blob/main/waybar/style.css */
 
-/* -----------------------------------------------------------------------------
- * Styles
- * -------------------------------------------------------------------------- */
-
-/* Nord */
-@define-color bg #2E3440;
-@define-color light #D8DEE9;
 @define-color warning #ebcb8b;
 @define-color critical #BF616A;
-@define-color mode #434C5E;
-@define-color workspacesfocused #4d5c78;
-@define-color network #5D7096;
-@define-color layout #5e81ac;
-@define-color nord_bg #434C5E;
-@define-color nord_bg_blue #546484;
 
-/* Reset all styles */
 * {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: "IntoneMono Nerd Font", "Font Awesome 6 Free";
+    font-weight: 500;
+    font-size: 16px;
+
+    border-radius: 18px;
+    text-shadow: none;
+    
+    transition-property: background;
+    transition-duration: 0.2s;
+}
+
+#window {
+    font-family: 'IntelOne Mono', 'Noto Sans CJK SC', sans-serif;
+    font-weight: 400;
+    background-color: #cbecff;
+    color: #000000;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    margin-top: 6px;
+    transition: none;
+    background-color: rgba(16, 20, 24, 0.5);
+    font-size: 12px;
+}
+
+#workspaces button {
+    margin: 3px;
     border: none;
-    border-radius: 3px;
-    min-height: 0;
-    margin: 0.2em 0.3em 0.2em 0.3em;
-}
-
-/* The whole bar */
-#waybar {
+    padding: 0 8px;
     background: transparent;
-    color: @light;
-    font-family: "JetBrains Nerd Font";
-    font-size: 13px;
-    font-weight: bold;
+    color: #ffffff;
 }
 
-/* Each module */
-#battery,
+#workspaces button:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+#workspaces button.focused {
+    background: #fff9bb;
+    color: #000000;
+}
+
+#workspaces button.active:hover {
+    background: #fffcdf;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+#mode {
+    background-color: #64727D;
+    border-bottom: 3px solid #ffffff;
+}
+
 #clock,
 #cpu,
-#custom-layout,
 #memory,
-#mode,
-#network,
-#pulseaudio,
-#temperature,
-#custom-alsa,
-#custom-gpu,
-#tray,
 #backlight,
-#language,
-#custom-cpugovernor {
-    padding-left: 0.6em;
-    padding-right: 0.6em;
-}
-
-/* Each module that should blink */
+#battery,
+#pulseaudio,
+#tray,
 #mode,
-#memory,
-#temperature,
-#battery {
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+#custom-launcher,
+#custom-notification,
+#window {
+    margin-top: 6px;
+    padding: 0 12px;
+    color: #ffffff;
 }
 
-/* Each critical module */
-#memory.critical,
-#cpu.critical,
-#temperature.critical,
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > * {
+    margin-left: 16px;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > * {
+    margin-right: 16px;
+}
+
+#clock {
+    background-color: #D8DEE9; /* nord4 */
+    color: #000000;
+}
+
+#cpu {
+    background-color: #FE968B;
+    color: #000000;
+}
+
+#memory {
+    background-color: #FFEAAA;
+    color: #000000;
+}
+
+#pulseaudio {
+    background-color: #b0f5e5;
+    color: #000000;
+}
+
+#pulseaudio.source-muted {
+    background: @warning;
+    color: #000000;
+}
+
+#backlight {
+    background-color: #87ddff;
+    color: #000000;
+}
+
+#battery {
+	background-color: #C9CBFF;
+    color: #161320;
+}
+#battery.warning {
+    color: @warning;
+}
 #battery.critical {
     color: @critical;
 }
 
-/* Each critical that should blink */
-#mode,
-#memory.critical,
-#temperature.critical,
-#battery.critical.discharging {
-    animation-name: blink-critical;
-    animation-duration: 2s;
-}
-
-/* Each warning */
-#network.disconnected,
-#memory.warning,
-#cpu.warning,
-#temperature.warning,
-#battery.warning {
-    background: @warning;
-    color: @nord_bg;
-}
-
-/* Each warning that should blink */
-#battery.warning.discharging {
-    animation-name: blink-warning;
-    animation-duration: 3s;
-}
-
-/* And now modules themselves in their respective order */
-#mode { /* Shown current Sway mode (resize etc.) */
-    color: @light;
-    background: @mode;
-}
-
-/* Workspaces stuff */
-#workspaces button {
-    font-weight: bold; /* Somewhy the bar-wide setting is ignored*/
-    padding: 0;
-    opacity: 0.3;
-    background: @light;
-}
-#workspaces button.focused {
-    background: @workspacesfocused;
-    color: @light;
-    opacity: 1;
-    padding: 0 0.4em;
-}
-#workspaces button.urgent {
-    border-color: #c9545d;
-    color: #c9545d;
-    opacity: 1;
-}
-#window {
-    margin-right: 40px;
-    margin-left: 40px;
-    font-weight: normal;
-}
-#custom-gpu {
-    background: @nord_bg;
-    font-weight: bold;
-    padding: 0 0.6em;
-}
-#custom-scratchpad-indicator {
-    background: @light;
-    color: @nord_bg;
-    font-weight: bold;
-    padding: 0 0.6em;
-}
-#custom-alsa {
-    background: @warning;
-}
-#network {
-    background: @nord_bg_blue;
-}
-#memory {
-    background: @nord_bg_blue;
-}
-#cpu {
-    background: @nord_bg;
-    color: @light;
-}
-#cpu.critical {
-    color: @nord_bg;
-}
-#language {
-    background: @nord_bg_blue;
-    color: @light;
-    padding: 0 0.4em;
-}
-#custom-cpugovernor {
-    background-color: @light;
-    color: @nord_bg;
-}
-#temperature {
-    background-color: @nord_bg;
-    color: @light;
-}
-#temperature.critical {
-    background:  @critical;
-}
-#custom-wallpaper {
-    background: @nord_bg_blue;
-}
-#battery {
-    background: @nord_bg_blue;
-}
-#backlight {
-    background: @mode;
-}
-#clock {
-    background: @nord_bg_blue;
-    color: @light;
-}
-#clock.date {
-    background: @mode;
-}
-#clock.time {
-    background: @mode;
-}
-#pulseaudio { /* Unsused but kept for those who needs it */
-    background: @nord_bg_blue;
-    color: @light;
-}
-#pulseaudio.muted {
-    background: @critical;
-    color: @critical;
-}
-#pulseaudio.source-muted {
-    background: @warning;
-    color: @light;
-}
 #tray {
-    background: @nord_bg;
+	background: rgba(16, 20, 24, 0.3);
 }
-#custom-power {
-    background: #88c0d0;
-    color: @critical;
-}
+
 #custom-launcher {
-    color: #ffe000;
-    background: @critical;
+    color: #89DCEB;
+    background-color: #161320;
+    padding-left: 10px;
+    padding-right: 6px;
+}
+
+#custom-notification {
+    background-color: #eefff1;
+    color: #000000;
 }
