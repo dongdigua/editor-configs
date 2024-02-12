@@ -13,6 +13,7 @@ bindkey -e
 autoload -U select-word-style
 select-word-style bash
 WORDCHARS=''
+zstyle ':completion:*' menu select
 
 # alias
 alias lla="exa -alh --git --icons"
@@ -26,9 +27,12 @@ alias ra=ranger
 alias bat='bat -p'
 alias e="emacs -nw"
 alias vim=nvim
+alias vi=vis
 alias irc='TERM=tmux proxychains -q irssi'
 alias potato='echo notify-send -u critical stop! | at now+25 minutes'
 alias firefox=firefox-developer-edition
+alias pandock='docker run -v "$(pwd):/data" -u $(id -u):$(id -g) pandoc/minimal'
+
 
 # env
 export LANG=en_US.UTF-8
@@ -48,6 +52,9 @@ colorman() {
 # https://wiki.archlinux.org/title/Color_output_in_console#man
 export LESS='-R --use-color -Dd+c'
 export MANROFFOPT="-P -c"
+}
+fh() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
 }
 
 # post-init

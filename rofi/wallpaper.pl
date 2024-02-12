@@ -10,12 +10,9 @@ $base_dir = "~/Pictures/wallpaper/";
     "crystal-water.jpg",
     "plain-flower.png",
     "beautiful-ocean.jpg",
-    "f37-day.png",
     "Miku_Day_2020.png",
     "Miku_Winter.png",
     "Miku_Landscape.png",
-    "golden-field.png",
-    "win11.jpg",
     "centos9-motif.png",
     "Cardinali.jpg",
     "debian9-softwaves.png",
@@ -24,6 +21,9 @@ $base_dir = "~/Pictures/wallpaper/";
     "f26-day.png",
     "f26-dusk.png",
     "f26-night.png",
+    "aurora.jpg",
+    "nord-pixel-moon.png",
+    "landscape-1216423.jpg",
 );
 
 $arg1 = $ARGV[0];

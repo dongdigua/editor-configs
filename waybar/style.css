@@ -1,5 +1,3 @@
-/* based on https://github.com/Isoheptane/dotfiles/blob/main/waybar/style.css */
-
 @define-color warning #ebcb8b;
 @define-color critical #BF616A;
 
@@ -95,7 +93,7 @@ window#waybar.hidden {
 }
 
 #clock {
-    background-color: #D8DEE9; /* nord4 */
+    background-color: #eefff1;
     color: #000000;
 }
 
@@ -147,6 +145,6 @@ window#waybar.hidden {
 }
 
 #custom-notification {
-    background-color: #eefff1;
+    background-color: #D8DEE9;
     color: #000000;
 }

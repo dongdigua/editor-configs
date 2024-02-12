@@ -550,7 +550,7 @@
   (setq-local browse-url-browser-function 'browse-url-firefox)
   (setq elfeed-use-curl t)
   (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
-  (elfeed-search-set-filter "@2-weeks-ago -cve -weixin")
+  (elfeed-search-set-filter "@2-weeks-ago")
   (unbind-key "v" shr-map) ; for copying url
   ;; (custom-set-faces
   ;;  '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
