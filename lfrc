@@ -1,0 +1,16 @@
+set icons true
+set sixel true
+set previewer ~/.config/lf/preview.sh
+
+# (xkcd link: https://xkcd.com/1168/)
+cmd extract ${{
+    set -f
+    folder=${f%%.*}
+    case $f in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2|*.tar.gz|*.tgz|*.tar.xz|*.txz)
+            tar xaf $f --one-top-level;;
+        *.zip|*.rar|*.7z) 7z x $f -o$folder;;
+    esac
+}}
+
+cmd open &gio open $f

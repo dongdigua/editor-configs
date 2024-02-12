@@ -8,8 +8,6 @@ set $term foot
 set $menu rofi -show drun
 
 ### Output configuration
-# symlink, inspired by my solution in OpenBSD
-output * bg ~/Pictures/wallpaper/sway-bg fill
 xwayland enabled
 
 ### Input configuration
@@ -204,6 +202,7 @@ exec {
     wlsunset -s 17:00 -S 6:30
     swaync
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+    settimed .config/sway/sway.stw
 }
 
 
