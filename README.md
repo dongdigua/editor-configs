@@ -7,12 +7,14 @@ TODO: switch to stow or other dotfile manager
 swayfx
 waybar
 swaybg
+wallutils
 swaylock
 swaync
 wlsunset
 slurp
 grim
 rofi-lbonn-wayland
+wmenu
 jq
 brightnessctl
 polkit-gnome
@@ -43,11 +45,6 @@ ttf-intone-nerd
 [Miku_Winter](https://steamcommunity.com/sharedfiles/filedetails/?id=1205035458)
 [Miku_Landscape](https://steamcommunity.com/sharedfiles/filedetails/?id=1260143865)
 [winter_mountain](https://mdh.anjiurine.top/download/6cf8895d7f6dda8ffce8fc1f352fc1da0ec10a626b4c336d2a70b32bf14a02ac)
-
-# foot
-it's default config is easy to use, than other terminal<br>
-color: default + catppuccin-macchiato's fg&bg<br>
-a fan of catppuccin-mocha: [EdenQwQ](https://github.com/EdenQwQ/dots)<br>
 
 # starship
 I found [this prompt](https://github.com/zimfw/magicmace) from KiteAB and EndlessPeak

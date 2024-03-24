@@ -127,10 +127,10 @@ window#waybar.hidden {
     color: #161320;
 }
 #battery.warning {
-    color: @warning;
+    background-color: @warning;
 }
 #battery.critical {
-    color: @critical;
+    background-color: @critical;
 }
 
 #tray {

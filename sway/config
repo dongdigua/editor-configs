@@ -37,7 +37,7 @@ input "type:keyboard" {
     bindsym $mod+Shift+Return exec $term -T floating-terminal
     for_window [title="floating-terminal"] floating enable
     for_window [title="floating-terminal"] border csd
-    for_window [title="floating-terminal"] blur disable
+    #for_window [title="floating-terminal"] blur disable
     # Start a terminal without tmux
     bindsym $mod+Ctrl+Return exec $term fish
 
@@ -133,9 +133,11 @@ input "type:keyboard" {
     bindsym $mod+Ctrl+Shift+s    exec grim -g "$(slurp)" - | wl-copy
     bindsym $mod+Shift+s         exec grim
     bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -3%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +3%
     bindsym XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    bindsym XF86MonBrightnessUp  exec brightnessctl s 1%+
+    bindsym XF86MonBrightnessDown exec brightnessctl s 1%-
 #
 #
 # Resizing containers:
@@ -186,9 +188,8 @@ gaps inner 6
 gaps top -6
 
 # SwayFX
-blur enable
-blur_radius 2
-corner_radius 5
+#blur enable
+#corner_radius 5
 
 #
 # Autostart
@@ -197,11 +198,11 @@ seat seat0 xcursor_theme Oxygen_Yellow
 exec {
 #ifdef local
     fcitx5 -d
-    libinput-gestures
 #endif
     wlsunset -s 17:00 -S 6:30
     swaync
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+    pkill settimed
     settimed .config/sway/sway.stw
 }
 

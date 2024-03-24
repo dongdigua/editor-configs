@@ -48,15 +48,32 @@ export W3M_DIR="$XDG_DATA_HOME"/w3m
 
 # functions
 mkcd() { mkdir $1 && cd $1 }
+
 colorman() {
 # https://wiki.archlinux.org/title/Color_output_in_console#man
 export LESS='-R --use-color -Dd+c'
 export MANROFFOPT="-P -c"
 }
+
 fh() {
-  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+	print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+proxy() {
+	export http_proxy=http://127.0.0.1:20172
+	export https_proxy=http://127.0.0.1:20172
+}
+
+noproxy() {
+	unset http_proxy
+	unset https_proxy
+}
+
+colorpicker() {
+	grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:-
 }
 
 # post-init
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+cat ~/TODO

@@ -15,8 +15,8 @@
     },
     "clock": {
         "interval": 1,
-        "format": "{:\uf133 %m-%d \uf017 %H:%M:%S}",
-        "format-alt": "{:\uf017 %H:%M:%S}",
+        "format": "{:%m-%d | %H:%M:%S}",
+        "format-alt": "{:%H:%M:%S}",
         "tooltip-format": "<span font='Noto Sans Mono CJK SC'>{calendar}</span>",
         "calendar": {
                     "weeks-pos"     : "right",
@@ -68,8 +68,8 @@
         "tooltip": false,
         "format": " {}%",
         "interval":1,
-        "on-scroll-up": "brightnessctl s 2%+",
-        "on-scroll-down": "brightnessctl s 2%-"
+        "on-scroll-up": "brightnessctl s 1%+",
+        "on-scroll-down": "brightnessctl s 1%-"
     },
     "custom/launcher":{
         "tooltip": false,
