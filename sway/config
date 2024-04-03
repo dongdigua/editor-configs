@@ -202,9 +202,8 @@ exec {
     wlsunset -s 17:00 -S 6:30
     swaync
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-    pkill settimed
-    settimed .config/sway/sway.stw
 }
+exec_always settimed ~/.config/sway/sway.stw
 
 
 # DONOT TOUCH

@@ -6,8 +6,8 @@ compinit -d .cache/zcompdump
 
 # zsh
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=16384
+SAVEHIST=16384
 setopt autocd beep extendedglob sharehistory histignoredups
 bindkey -e
 autoload -U select-word-style
@@ -32,6 +32,7 @@ alias irc='TERM=tmux proxychains -q irssi'
 alias potato='echo notify-send -u critical stop! | at now+25 minutes'
 alias firefox=firefox-developer-edition
 alias pandock='docker run -v "$(pwd):/data" -u $(id -u):$(id -g) pandoc/minimal'
+alias todo='vi ~/TODO'
 
 
 # env
@@ -76,4 +77,5 @@ colorpicker() {
 # post-init
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
 cat ~/TODO

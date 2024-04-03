@@ -11,4 +11,5 @@ cp ~/.config/lf/lfrc                   .
 cp -r ~/.config/sway/*                 sway/
 cp -r ~/.config/waybar/*               waybar/
 cp ~/.config/rofi/*                    rofi/
+cp ~/.config/newsboat/config           newsboat/
 ./epp.lua dump < .emacs >              ~/.emacs.d/emacs/lisp/site-init.el
