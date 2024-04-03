@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(evil-god-state god-mode darkman rime erlang lua-mode imenu-list writeroom-mode sdcv go-mode age restclient paren-face haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode elfeed-org elfeed undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(vterm rainbow-delimiters clojure-mode evil-god-state god-mode darkman rime erlang lua-mode imenu-list writeroom-mode sdcv go-mode age restclient haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -17,10 +17,7 @@
  ;; If there is more than one, they won't work right.
  )
 
-
-;; =================== ;;
-;; Graphical Interface ;;
-;; =================== ;;
+;;@ Graphical Interface ;;
 ;;;ifdef dump
 (tool-bar-mode               -1)
 (menu-bar-mode               -1)
@@ -60,9 +57,7 @@
 (setq pixel-scroll-precision-large-scroll-height 40.0)
 
 
-;; =============== ;;
-;; package manager ;;
-;; =============== ;;
+;;@ package manager ;;
 (setq package-archives'(("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                         ("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 (setq use-package-verbose t)
@@ -79,9 +74,7 @@
 (defun setup-full-pkg () (interactive) (setup-what-pkg package-selected-packages))
 
 
-;; ====== ;;
-;; custom ;;
-;; ====== ;;
+;;@ custom ;;
 (setq make-backup-files nil
       auto-save-file-name-transforms
       '((".*" "~/.emacs.d/autosave/" t)))
@@ -120,9 +113,7 @@
 
 
 
-;; ========= ;;
-;; functions ;;
-;; ========= ;;
+;;@ functions ;;
 (defun animate-text (text)
   ;; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
   (interactive "stext: ")  ; s means read-string
@@ -147,21 +138,6 @@
 (defun highlight-custom-enable ()
   (interactive)
   (add-hook 'post-command-hook 'highlight-custom))
-
-(defun bili ($from $to)
-  ;; well, I always report those fucking video thieves on bilibili,
-  ;; so this tool is helpful, for filter out BVid from link
-  ;; http://xahlee.info/emacs/emacs/elisp_command_working_on_string_or_region.html
-  (interactive "r")
-  (let (inputStr outputStr)
-    (setq inputStr (buffer-substring-no-properties $from $to))
-    (setq outputStr
-          (replace-regexp-in-string "?spm_id_from=[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+" ""
-                                    (replace-regexp-in-string "https://www.bilibili.com/video/" "" inputStr)))
-    (save-excursion
-      (delete-region $from $to)
-      (goto-char $from)
-      (insert outputStr))))
 
 (defun convert-punctuation ($from $to)
   ;; convert Chinese pubctuation to normal
@@ -220,11 +196,18 @@
       (progn (setq gc-cons-threshold #x40000000) (message "big"))
   (setq gc-cons-threshold normal-gc-threshold)))
 
+(defun yy/outline-setup ()
+  ;; https://egh0bww1.com/posts/2024-01-09-48-use-outline-manage-init-file/
+  (interactive)
+  (setq-local outline-regexp ";;; Code\\|;;@+")
+  (setq-local outline-minor-mode-use-buttons 'in-margins)
+  (setq-local outline-minor-mode-highlight 'append)
+  (setq-local outline-minor-mode-cycle t)
+  (outline-minor-mode))
 
 
-;; =========== ;;
-;; use-package ;;
-;; =========== ;;
+
+;;@ use-package ;;
 (use-package evil
   :ensure t
   :init
@@ -413,10 +396,6 @@
   :config
   (setq rfc-mode-directory (expand-file-name "~/.emacs.d/rfc/")))
 
-(use-package paren-face
-  :config
-  (global-paren-face-mode 1))
-
 (use-package imenu-list
   :defer t
   ;; https://youtu.be/YM0TD8Eg9qg
@@ -453,9 +432,11 @@
   (evil-define-key 'normal global-map (kbd "SPC") 'evil-execute-in-god-state)
   (evil-define-key 'god global-map [escape] 'evil-god-state-bail))
 
-;; ===================== ;;
-;; use-package/languages ;;
-;; ===================== ;;
+(use-package writeroom-mode
+  :config
+  (setq writeroom-fullscreen-effect 'maximized))
+
+;;@ use-package/languages ;;
 (use-package cc-mode
   :defer t
   :init
@@ -486,11 +467,6 @@
     (rust--compile "%s test -- --nocapture %s" rust-cargo-bin fun))
   :bind
   ("C-c C-c c" . rust-compile))
-
-(use-package nim-mode
-  :defer t
-  :config
-  (setq nim-compile-default-command '("c" "-r" "--excessiveStackTrace:on" "--debuginfo:on" "--cc:clang")))
 
 (use-package gemini-mode
   :defer t
@@ -540,54 +516,12 @@
   :hook
   (go-mode . whitespace-mode))
 
-;; ==================== ;;
-;; use-package/internet ;;
-;; ==================== ;;
-(use-package elfeed
+(use-package eglot
   :defer t
   :config
-  (elfeed-org)
-  (setq-local browse-url-browser-function 'browse-url-firefox)
-  (setq elfeed-use-curl t)
-  (setq elfeed-curl-extra-arguments '("--proxy" "http://127.0.0.1:20172"))
-  (elfeed-search-set-filter "@2-weeks-ago")
-  (unbind-key "v" shr-map) ; for copying url
-  ;; (custom-set-faces
-  ;;  '(elfeed-search-date-face ((t (:foreground "#8fbcbb"))))
-  ;;  '(elfeed-search-feed-face ((t (:foreground "#ebcb8b"))))
-  ;;  '(elfeed-search-tag-face  ((t (:foreground "#66ccff")))))
+  (add-to-list 'eglot-server-programs '(elixir-mode "~/git/elixir-ls/release/language_server.sh")))
 
-  ;; https://github.com/skeeto/elfeed/issues/404
-  ;; https://github.com/chuxubank/cat-emacs/blob/main/cats/+elfeed.el
-  (when (functionp #'valign--put-overlay)
-    (defun elfeed-search-print-valigned-entry (entry)
-      "Print valign-ed ENTRY to the buffer."
-      (let* ((date (elfeed-search-format-date (elfeed-entry-date entry)))
-             (date-width (car (cdr elfeed-search-date-format)))
-             (title (or (elfeed-meta entry :title) (elfeed-entry-title entry) ""))
-             (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
-             (feed (elfeed-entry-feed entry))
-             (feed-title (when feed (or (elfeed-meta feed :title) (elfeed-feed-title feed))))
-             (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
-             (tags-str (mapconcat (lambda (s) (propertize s 'face 'elfeed-search-tag-face)) tags ","))
-             (title-width (- (window-width) 10 elfeed-search-trailing-width))
-             (title-column (elfeed-format-column
-                            title (elfeed-clamp elfeed-search-title-min-width title-width elfeed-search-title-max-width)
-                            :left))
-             (align-to (* (+ date-width 2 (min title-width elfeed-search-title-max-width)) (default-font-width))))
-        (insert (propertize date 'face 'elfeed-search-date-face) " ")
-        (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
-        (valign--put-overlay (1- (point)) (point) 'display (valign--space align-to))
-        (when feed-title (insert (propertize feed-title 'face 'elfeed-search-feed-face) " "))
-        (when tags (insert "(" tags-str ")"))))
-    (setq elfeed-search-print-entry-function #'elfeed-search-print-valigned-entry)))
-
-(use-package elfeed-org
-  :defer t
-  :after elfeed
-  :config
-  (setq rmh-elfeed-org-files '("~/org/elfeed.org")))
-
+;;@ use-package/internet ;;
 (use-package erc
   ;; sasl support! (29)
   :defer t
@@ -665,9 +599,7 @@
 
 
 
-;; =========== ;;
-;; end of init ;;
-;; =========== ;;
+;;@ end of init ;;
 (setq initial-scratch-message
       (concat
        (emacs-init-time ";; %2.4f secs, ")
