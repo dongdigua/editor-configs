@@ -7,7 +7,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(package-selected-packages
-   '(vterm rainbow-delimiters clojure-mode evil-god-state god-mode darkman rime erlang lua-mode imenu-list writeroom-mode sdcv go-mode age restclient haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide sly gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
+   '(vterm rainbow-delimiters clojure-mode evil-god-state god-mode darkman rime erlang lua-mode imenu-list writeroom-mode sdcv go-mode age restclient haskell-mode rfc-mode nasm-mode yaml-mode org-tree-slide gemini-mode shr-tag-pre-highlight rainbow-mode nix-mode htmlize doom-modeline nyan-mode benchmark-init webfeeder elpher use-package indent-guide nim-mode zenburn-theme valign fzf expand-region selectric-mode clippy catppuccin-theme pyim web-mode undo-tree smart-hungry-delete magit evil-mc neotree all-the-icons rust-mode nord-theme company markdown-mode elixir-mode racket-mode evil))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces
@@ -26,27 +26,9 @@
 (setq inhibit-startup-message t)
 (setq use-dialog-box        nil)
 
-;; theme-start
 ;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
-;;;ifdef excl
 ;(set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-19-*-*-*-m-0-iso10646-1")
 (set-frame-font "-FRJN-IntoneMono Nerd Font-regular-normal-normal-*-19-*-*-*-m-0-iso10646-1")
-;;;endif excl
-;;;endif dump
-
-(setq catppuccin-flavor 'latte)
-(if (display-graphic-p)
-    (progn ;(load-theme 'zenburn t)  ; seems I'm using the same theme as tsoding
-;;;ifdef excl
-           (add-to-list 'custom-theme-load-path "~/.emacs.d/everforest")
-           ;(load-theme 'nord t)
-;;;endif excl
-           )
-  (progn
-    (load-theme 'zenburn t)
-    (custom-set-faces
-     '(default ((t (:background "unspecified-bg" :foreground "#eeeeec")))))))
-;; theme-end
 
 ;; set transparent effect (29)
 (add-to-list 'default-frame-alist '(alpha-background . 75))
@@ -55,6 +37,7 @@
 (pixel-scroll-precision-mode)
 ;; normally it is for touchpad, enable for mouse:
 (setq pixel-scroll-precision-large-scroll-height 40.0)
+;;;endif dump
 
 
 ;;@ package manager ;;
@@ -121,24 +104,6 @@
   (erase-buffer)
   (animate-string text 10))
 
-(defun highlight-custom ()
-  (interactive)
-  (defface todo
-    '((((background dark))  :foreground "#66CCFF" :bold t))
-    "highlight todo"
-    :group 'basic-faces)
-  (defface ctf
-    '((((background dark))  :foreground "#39C5BB" :bold t))
-    "highlight ctf mark"
-    :group 'basic-faces)
-  (highlight-regexp " TODO\\| BUG\\|todo!" 'todo)
-  (highlight-regexp "<%=\\|%>"             'todo)
-  (highlight-regexp " CTF"                 'ctf))
-
-(defun highlight-custom-enable ()
-  (interactive)
-  (add-hook 'post-command-hook 'highlight-custom))
-
 (defun convert-punctuation ($from $to)
   ;; convert Chinese pubctuation to normal
   ;; http://xahlee.info/emacs/emacs/emacs_zap_gremlins.html
@@ -204,6 +169,13 @@
   (setq-local outline-minor-mode-highlight 'append)
   (setq-local outline-minor-mode-cycle t)
   (outline-minor-mode))
+
+(defun newsboat ()
+  ;; newsboat is the best RSS reader
+  (interactive)
+  (vterm)
+  (writeroom-mode)
+  (vterm-send-string "newsboat\n"))
 
 
 
@@ -404,7 +376,8 @@
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "SPC") 'imenu-list-display-dwim))
 
 (use-package imenu
-  :config
+  :defer t
+  :init
   (setq elisp-usepackage-expression
         ;; I love regxp!!!
         '("Packages" "^\\s-*(\\(use-package\\)\\s-+\\(\\(?:\\sw\\|\\s_\\|\\\\.\\)+\\)" 2))
@@ -424,7 +397,10 @@
 
 (use-package darkman
   :config
-  (setq darkman-themes '(:light adwaita :dark nord))
+  (setq modus-themes-mode-line '(borderless))
+  (if (display-graphic-p)
+      (setq darkman-themes '(:light adwaita :dark nord))
+    (setq darkman-themes '(:light zenburn :dark modus-vivendi)))
   (darkman-mode))
 
 (use-package evil-god-state
@@ -433,6 +409,7 @@
   (evil-define-key 'god global-map [escape] 'evil-god-state-bail))
 
 (use-package writeroom-mode
+  :defer t
   :config
   (setq writeroom-fullscreen-effect 'maximized))
 
@@ -492,12 +469,6 @@
   :bind
   (:map gemini-mode-map ("C-c C-o" . #'my/gemini-open-link-at-point)))
 
-(use-package sly
-  :defer t
-  :config
-  (setq inferior-lisp-program "sbcl")
-  (setq sly-mrepl-history-file-name ""))
-
 (use-package flycheck
   :defer t
   :init
@@ -534,16 +505,27 @@
              ;; must use absolute path, otherwise it will stuck at "Opening connection.."
              '("/home/digua/.emacs.d/cert/libera.key"
                "/home/digua/.emacs.d/cert/libera.crt")))
+  (defun erc-bouncer ()
+    (interactive)
+    (erc :server "r2s.local" :port 6667
+         :nick "dongdigua"
+         :user "dongdigua/irc.libera.chat"
+         :password ""))
+  (defun erc-chathistory ()
+    ;; https://lists.sr.ht/~sircmpwn/sr.ht-discuss/<87il2c12e0.fsf@ryzen.jonjfineman.com>
+    (interactive)
+    (insert (concat "/quote CHATHISTORY LATEST " (buffer-name) " * 100")))
   :config
 ;;ifdef dump
   (setq erc-modules
         ;; customize and copy to here
-        '(button completion fill irccontrols log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track truncate))
+        '(button completion fill irccontrols log match menu move-to-prompt netsplit networks noncommands notifications readonly ring sasl stamp track truncate list replace))
 ;;endif dump
   (erc-update-modules)
   (setq erc-email-userid "dongdigua"
         erc-log-channels-directory "~/.emacs.d/erc-log"
-        erc-notice-prefix "! "))
+        erc-notice-prefix "! "
+        erc-replace-alist '(("<nichi_bot> " . ""))))
 
 (use-package eww
   :init

@@ -191,6 +191,11 @@ gaps top -6
 #blur enable
 #corner_radius 5
 
+# zoom in/out (https://github.com/swaywm/sway/issues/2781#issuecomment-2037789223)
+bindsym --inhibited $mod+Shift+z	output * scale 1
+bindsym --inhibited $mod+i	exec set -euo pipefail && scale=$(bc -l <<< $(swaymsg -t get_outputs | jq -r '.. | select(.focused?) | .scale')+.1) && [[ $(bc -l <<< "${scale} < 5"  ) == 1 ]] && swaymsg "output * scale ${scale}"
+bindsym --inhibited $mod+o	exec set -euo pipefail && scale=$(bc -l <<< $(swaymsg -t get_outputs | jq -r '.. | select(.focused?) | .scale')-.1) && [[ $(bc -l <<< "${scale} > .25") == 1 ]] && swaymsg "output * scale ${scale}"
+
 #
 # Autostart
 #

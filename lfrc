@@ -13,4 +13,5 @@ cmd extract ${{
     esac
 }}
 
-cmd open &gio open $f
+cmd open $IFS="$(printf '\n\t')"; gio open $f
+cmd delete $IFS="$(printf '\n\t')"; gio trash $fx

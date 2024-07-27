@@ -10,7 +10,7 @@ filetypes.lua.cmd = { 'set tw 4' }
 
 vis.events.subscribe(vis.events.INIT, function()
 	-- Your global configuration options
-	vis:command('set theme minimal-dark-clear')
+	-- vis:command('set theme minimal-dark-clear')
 end)
 
 vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused args

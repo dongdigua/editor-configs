@@ -1,6 +1,6 @@
 # based on lukesmith's
 
-browser firefox
+browser url_handler.sh
 
 bind-key j down
 bind-key k up
@@ -10,8 +10,8 @@ bind-key J next-feed articlelist
 bind-key K prev-feed articlelist
 bind-key G end
 bind-key g home
-bind-key d pagedown
-bind-key u pageup
+bind-key d halfpagedown
+bind-key u halfpageup
 bind-key l open
 bind-key h quit
 bind-key a toggle-article-read

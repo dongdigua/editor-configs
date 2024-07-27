@@ -24,6 +24,8 @@ $base_dir = "~/Pictures/wallpaper/";
     "aurora.jpg",
     "nord-pixel-moon.png",
     "landscape-1216423.jpg",
+    "View_through_a_broken_window_from_a_room_in_Sanatorium_du_Basil.jpg",
+    "wallpaper_minecraft_burberry_2560x1440.png",
 );
 
 $arg1 = $ARGV[0];

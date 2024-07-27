@@ -33,6 +33,7 @@ alias potato='echo notify-send -u critical stop! | at now+25 minutes'
 alias firefox=firefox-developer-edition
 alias pandock='docker run -v "$(pwd):/data" -u $(id -u):$(id -g) pandoc/minimal'
 alias todo='vi ~/TODO'
+alias py=python
 
 
 # env

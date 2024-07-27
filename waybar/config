@@ -35,6 +35,7 @@
     "cpu": {
         "interval": 1,
         "format": "\uf2db {usage}%",
+        "on-click": "gnome-system-monitor",
         "tooltip": true
     },
     "memory": {
