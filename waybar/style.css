@@ -15,7 +15,7 @@
 }
 
 #window {
-    font-family: 'IntelOne Mono', 'Noto Sans CJK SC', sans-serif;
+    font-family: 'InteloneMono NF', 'Noto Sans CJK SC', sans-serif;
     font-weight: 400;
     background-color: #cbecff;
     color: #000000;
@@ -33,6 +33,12 @@ window#waybar.hidden {
     margin-top: 6px;
     transition: none;
     background-color: rgba(16, 20, 24, 0.5);
+    font-size: 12px;
+}
+
+#custom-workspaces {
+    background-color: rgba(246,245,244, 0.3);
+    margin-top: 6px;
     font-size: 12px;
 }
 
@@ -76,7 +82,8 @@ window#waybar.hidden {
 #mode,
 #custom-launcher,
 #custom-notification,
-#window {
+#window,
+#taskbar {
     margin-top: 6px;
     padding: 0 12px;
     color: #ffffff;
@@ -146,5 +153,22 @@ window#waybar.hidden {
 
 #custom-notification {
     background-color: #D8DEE9;
+    color: #000000;
+}
+
+#taskbar {
+    background: transparent;
+}
+
+#taskbar button {
+    margin: 3px;
+    border: none;
+    padding: 0 8px;
+    background-color: rgba(246,245,244, 0.5);
+    color: #000000;
+}
+
+#taskbar button.active {
+    background: rgba(225,222,219, 0.9);
     color: #000000;
 }

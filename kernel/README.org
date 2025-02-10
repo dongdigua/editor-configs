@@ -103,7 +103,6 @@ I think I need performance at boot
 *** ADD Enable by default
 
 * Networking support
-** RM Bluetooth subsystem
 ** RM NFC subsystem
 ** Networking Options
 *** ADD IP: tunneling
@@ -117,6 +116,11 @@ BBR(2?)
 *** Wireless LAN
 **** MOD iwlwifi
 if compile into kernel, you need to put firmware in-kernel
+*** ADD Virtual ethernet pair device
+for docker
 
 * TODO File systems
 ** ADD DOS/FAT/EXFAT/NT Filesystems
+FAT_DEFAULT_IOCHARSET=ascii and NLS_ASCII=y (otherwise boot will fail)
+** Miscellaneous filesystems
+*** UFS_FS_WRITE

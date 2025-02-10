@@ -177,8 +177,13 @@ bindgesture swipe:3:down  floating enable
 # Status Bar:
 #
 bar {
-    position top
-    swaybar_command waybar
+    id bar-1
+    position bottom
+    #swaybar_command waybar
+    status_command i3status
+    colors {
+        separator #39c5bb
+    }
 }
 
 # Gap
@@ -207,6 +212,7 @@ exec {
     wlsunset -s 17:00 -S 6:30
     swaync
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+    ~/bin/somebar
 }
 exec_always settimed ~/.config/sway/sway.stw
 

@@ -42,9 +42,12 @@ ttf-intone-nerd
 [centos9-motif](https://people.centos.org/areguera/backgrounds/c9/default/standard/hue-0.png) 帅! 跟 waybar 的 nord-theme 简直绝配!<br>
 [Cardinali-bing](https://cn.bing.com/th?id=OHR.WinterberryBush_ZH-CN1414026440_1920x1200.jpg) 北美冬青灌木丛中的北美红雀<br>
 [debian9-softwaves](https://wiki.debian.org/DebianArt/Themes/softWaves?action=AttachFile&do=view&target=attachment_wallpaper.png)<br>
-[Miku_Winter](https://steamcommunity.com/sharedfiles/filedetails/?id=1205035458)
-[Miku_Landscape](https://steamcommunity.com/sharedfiles/filedetails/?id=1260143865)
-[winter_mountain](https://mdh.anjiurine.top/download/6cf8895d7f6dda8ffce8fc1f352fc1da0ec10a626b4c336d2a70b32bf14a02ac)
+[Miku_Winter](https://steamcommunity.com/sharedfiles/filedetails/?id=1205035458)<br>
+[Miku_Landscape](https://steamcommunity.com/sharedfiles/filedetails/?id=1260143865)<br>
+[winter_mountain](https://mdh.anjiurine.top/download/6cf8895d7f6dda8ffce8fc1f352fc1da0ec10a626b4c336d2a70b32bf14a02ac)<br>
+[HM2](https://github.com/Pahasara/HyprDots/blob/main/.walls/HM2.jpg)<br>
+[aesthetic-feathers](https://4kwallpapers.com/abstract/aesthetic-feathers-17061.html)<br>
+[deepin-15](https://github.com/linuxdeepin/deepin-wallpapers/blob/2f594f9ada0efa1b1ef04fce043704c46bbfa2e7/deepin/desktop.jpg)<br>
 
 # starship
 I found [this prompt](https://github.com/zimfw/magicmace) from KiteAB and EndlessPeak

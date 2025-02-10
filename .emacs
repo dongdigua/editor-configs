@@ -26,12 +26,14 @@
 (setq inhibit-startup-message t)
 (setq use-dialog-box        nil)
 
-;(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
-;(set-frame-font "-JB-JetBrainsMono Nerd Font Mono-normal-normal-normal-*-19-*-*-*-m-0-iso10646-1")
 (set-frame-font "-FRJN-IntoneMono Nerd Font-regular-normal-normal-*-19-*-*-*-m-0-iso10646-1")
+(set-fontset-font t 'han "LXGW WenKai")
+
+(setq frame-title-format '(multiple-frames "%b"
+                 ("" "%b - Black Source: Emacs @ " system-name)))
 
 ;; set transparent effect (29)
-(add-to-list 'default-frame-alist '(alpha-background . 75))
+(add-to-list 'default-frame-alist '(alpha-background . 85))
 
 ;; native smooth scrolling (29)
 (pixel-scroll-precision-mode)
@@ -64,11 +66,12 @@
 
 (setq-default tab-width 4
               c-basic-offset 4
+              sh-basic-offset 2
               indent-tabs-mode nil)    ; must be setq-default
 (setq backward-delete-char-untabify-method 'hungry)
 
 ;;;ifdef dump
-(setq display-line-numbers-type 'relative)    ; relative number, make d d easier
+(setq display-line-numbers-type 'relative)
 ;;;endif dump
 (global-display-line-numbers-mode)
 
@@ -568,16 +571,16 @@
   (add-to-list 'shr-external-rendering-functions
                '(pre . shr-tag-pre-highlight)))
 
-(use-package gnus
-  :defer t
-  :config
-  ;; yeah I can access the usenet in China
-  ;; found this address on wikipedia
-  (setq gnus-select-method '(nntp "freenews.netfront.net"))
-  (setq gnus-default-directory "~/.emacs.d/Gnus/") 
-  (setq gnus-dribble-directory "~/.emacs.d/Gnus/") 
-  (setq gnus-startup-file "~/.emacs.d/Gnus/.newsrc") 
-  (setq gnus-asynchronous t))
+;; (use-package gnus
+;;   :defer t
+;;   :config
+;;   ;; yeah I can access the usenet in China
+;;   ;; found this address on wikipedia
+;;   (setq gnus-select-method '(nntp "freenews.netfront.net"))
+;;   (setq gnus-default-directory "~/.emacs.d/Gnus/") 
+;;   (setq gnus-dribble-directory "~/.emacs.d/Gnus/") 
+;;   (setq gnus-startup-file "~/.emacs.d/Gnus/.newsrc") 
+;;   (setq gnus-asynchronous t))
 
 
 

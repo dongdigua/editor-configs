@@ -34,6 +34,7 @@ alias firefox=firefox-developer-edition
 alias pandock='docker run -v "$(pwd):/data" -u $(id -u):$(id -g) pandoc/minimal'
 alias todo='vi ~/TODO'
 alias py=python
+alias dnstatus='journalctl -u dnscrypt-proxy.service -f'
 
 
 # env
@@ -43,6 +44,7 @@ export FZF_DEFAULT_COMMAND='rg --hidden --files'
 export SDCV_PAGER='less' # not using -F
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export PASSWORD_STORE_SIGNING_KEY=2394861A728929E3755D8FFADB55889E730F5B41
+export PF_INFO="ascii title os host cpu kernel uptime pkgs cpu memory wm palette"
 
 # ~ cleanup
 export SQLITE_HISTORY=
@@ -76,6 +78,7 @@ colorpicker() {
 }
 
 # post-init
+. $HOME/.cargo/env
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"

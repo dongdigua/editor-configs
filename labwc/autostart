@@ -1,0 +1,8 @@
+swaybg -c '#113344' >/dev/null 2>&1 &
+waybar >/dev/null 2>&1 &
+settimed ~/.config/sway/sway.stw >/dev/null 2>&1 &
+fcitx5 -d >/dev/null 2>&1 &
+wlsunset -s 17:00 -S 6:30 >/dev/null 2>&1 &
+swaync >/dev/null 2>&1 &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 >/dev/null 2>&1 &
+offlineimap -o >/dev/null 2>&1 &

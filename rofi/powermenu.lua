@@ -22,6 +22,11 @@ local options = {
     name = "Restart",
     icon = "system-reboot",
     command = "systemctl reboot"
+  },
+  {
+    name = "Soft Reboot",
+    icon = "system-reboot",
+    command = "systemctl soft-reboot"
   }
 }
 
